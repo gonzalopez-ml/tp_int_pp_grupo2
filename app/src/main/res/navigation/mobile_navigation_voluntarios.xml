@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/nav_home_voluntarios">
+
+    <fragment
+        android:id="@+id/nav_home_voluntarios"
+        android:name="com.example.tp_integrador.uiVoluntarios.homeVoluntarios.HomeVoluntariosFragment"
+        android:label="Inicio Voluntarios"
+        tools:layout="@layout/fragment_home_voluntarios" />
+
+    <fragment
+        android:id="@+id/nav_busquedapropuestas"
+        android:name="com.example.tp_integrador.uiVoluntarios.busquedaPropuestas.BusquedaPropuestasFragment"
+        android:label="@string/menu_gallery"
+        tools:layout="@layout/fragment_busquedapropuestas" />
+
+    <fragment
+        android:id="@+id/nav_busqueda_geo"
+        android:name="com.example.tp_integrador.uiVoluntarios.busquedaPropuestasGeo.BusquedaPropuestasGeoFragment"
+        android:label="Busqueda de Propuestas por Geolocalizacion"
+        tools:layout="@layout/fragment_busquedapropuestasgeo" />
+
+    <fragment
+        android:id="@+id/nav_ver_perfil_ong"
+        android:name="com.example.tp_integrador.uiVoluntarios.verONGsVoluntarios.PerfilONGVoluntariosFragment"
+        android:label="Ver perfil de ONG"
+        tools:layout="@layout/fragment_perfil_o_n_g_voluntarios" />
+
+    <fragment
+        android:id="@+id/nav_editar_perfil"
+        android:name="com.example.tp_integrador.uiVoluntarios.EditarPefilVoluntarios.EditarPerfilVoluntariosFragment"
+        android:label="Editar Perfil"
+        tools:layout="@layout/fragment_editar_perfil_voluntarios" />
+
+    <fragment
+        android:id="@+id/nav_cerrar_sesion_voluntarios"
+        android:name="com.example.tp_integrador.uiVoluntarios.busquedaPropuestas.BusquedaPropuestasFragment"
+        android:label="Cerrar Sesion"
+        tools:layout="@layout/fragment_cerrar_sesion" />
+
+</navigation>

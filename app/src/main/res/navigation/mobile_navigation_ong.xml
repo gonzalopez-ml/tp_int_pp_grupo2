@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation2"
+    app:startDestination="@+id/nav_home_ongs">
+
+    <fragment
+        android:id="@+id/nav_home_ongs"
+        android:name="com.example.tp_integrador.uiONG.homeONG.HomeOngFragment"
+        android:label="Inicio ONG"
+        tools:layout="@layout/fragment_home_ong" />
+
+    <fragment
+        android:id="@+id/nav_crear_propuesta"
+        android:name="com.example.tp_integrador.uiONG.publicarPropuestasLaborales.PublicarPrupuestasLaboralesFragment"
+        android:label="Crear propuesta"
+        tools:layout="@layout/fragment_publicar_prupuestas_laborales" />
+
+    <fragment
+        android:id="@+id/nav_editar_propuesta"
+        android:name="com.example.tp_integrador.uiONG.editarPropuestasLaborales.EditarPropuestasLaboralesFragment"
+        android:label="Editar propuesta"
+        tools:layout="@layout/fragment_editar_propuestas_laborales" />
+
+    <fragment
+        android:id="@+id/nav_eliminar_propuesta"
+        android:name="com.example.tp_integrador.uiONG.eliminarPropuestasLaborales.EliminarPropuestasLaboralesFragment"
+        android:label="Eliminar propuesta"
+        tools:layout="@layout/fragment_eliminar_propuestas_laborales" />
+
+    <fragment
+        android:id="@+id/nav_editar_perfil_ong"
+        android:name="com.example.tp_integrador.uiONG.editarPerfilONG.EditarPerfilONGFragment"
+        android:label="Editar perfil"
+        tools:layout="@layout/fragment_editar_perfil_o_n_g" />
+
+    <fragment
+        android:id="@+id/nav_cerrar_sesion_ong"
+        android:name="com.example.tp_integrador.uiONG.homeONG.HomeOngFragment"
+        android:label="Cerrar Sesion"
+        tools:layout="@layout/fragment_cerrar_sesion" />
+
+</navigation>

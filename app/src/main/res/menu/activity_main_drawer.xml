@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_home_voluntarios"
+            android:icon="@drawable/ic_menu_camera"
+            android:title="Inicio Voluntarios" />
+
+        <item
+            android:id="@+id/nav_busquedapropuestas"
+            android:icon="@drawable/ic_menu_gallery"
+            android:title="Busqueda de Propuestas" />
+
+        <item
+            android:id="@+id/nav_busqueda_geo"
+            android:icon="@drawable/ic_menu_slideshow"
+            android:title="Busqueda de Propuestas por Geolocalizacion" />
+
+        <item
+            android:id="@+id/nav_ver_perfil_ong"
+            android:icon="@drawable/ic_menu_slideshow"
+            android:title="Ver perfil de ONGs" />
+        <item
+            android:id="@+id/nav_editar_perfil"
+            android:icon="@drawable/ic_menu_slideshow"
+            android:title="Editar Perfil" />
+        <item
+            android:id="@+id/nav_cerrar_sesion_voluntarios"
+            android:icon="@drawable/ic_menu_slideshow"
+            android:title="Cerrar Sesion" />
+
+    </group>
+</menu>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_home_ongs"
+            android:icon="@drawable/ic_menu_camera"
+            android:title="Inicio ONG" />
+
+        <item
+            android:id="@+id/nav_crear_propuesta"
+            android:icon="@drawable/ic_menu_gallery"
+            android:title="Crear Propuesta" />
+
+        <item
+            android:id="@+id/nav_editar_propuesta"
+            android:icon="@drawable/ic_menu_slideshow"
+            android:title="Editar Propuesta" />
+
+        <item
+            android:id="@+id/nav_eliminar_propuesta"
+            android:icon="@drawable/ic_menu_slideshow"
+            android:title="Eliminar Propuesta" />
+        <item
+            android:id="@+id/nav_editar_perfil_ong"
+            android:icon="@drawable/ic_menu_slideshow"
+            android:title="Editar Perfil" />
+        <item
+            android:id="@+id/nav_cerrar_sesion_ong"
+            android:icon="@drawable/ic_menu_slideshow"
+            android:title="Cerrar Sesion" />
+
+    </group>
+</menu>
