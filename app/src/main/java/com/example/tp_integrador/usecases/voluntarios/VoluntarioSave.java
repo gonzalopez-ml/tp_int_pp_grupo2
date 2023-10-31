@@ -23,14 +23,12 @@ public class VoluntarioSave implements IVoluntarioSave {
 
     @Override
     public SaveResult save(Usuario usuario, Voluntario voluntario) {
-        Usuario userExist = new Usuario();
-        Boolean isUserSave = false;
         try {
-            userExist = usuarioDao.get(usuario).get();
+            Usuario userExist = usuarioDao.get(usuario).get();
             if (userExist != null) {
                 return new SaveResult(false, "El usuario ya esta registrado");
             } else {
-                isUserSave = usuarioDao.save(usuario).get();
+                Boolean isUserSave = usuarioDao.save(usuario).get();
 
                 if (isUserSave) {
                     Usuario usuarioGuardado = usuarioDao.get(usuario).get();

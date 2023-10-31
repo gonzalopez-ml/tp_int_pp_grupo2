@@ -42,4 +42,17 @@ public class UsuarioDao implements IUsuarioDao {
             return false;
         });
     }
+
+    @Override
+    public CompletableFuture<Usuario> getAllowAccess(Usuario usuario) {
+        return CompletableFuture.supplyAsync(() -> {
+            CompletableFuture<Usuario> usuarioFuture = usuariosRepository.getAllowAccess(usuario);
+            try {
+                return usuarioFuture.get();
+            } catch (ExecutionException | InterruptedException e) {
+                e.printStackTrace();
+            }
+            return null;
+        });
+    }
 }
