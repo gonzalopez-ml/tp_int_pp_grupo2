@@ -7,4 +7,5 @@ import java.util.concurrent.CompletableFuture;
 public interface IUsuariosRepository {
     CompletableFuture<Usuario> get(Usuario usuario);
     CompletableFuture<Boolean> save(Usuario usuario);
+    CompletableFuture<Usuario> getAllowAccess(Usuario usuario);
 }

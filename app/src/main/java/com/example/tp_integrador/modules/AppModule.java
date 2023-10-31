@@ -2,6 +2,7 @@ package com.example.tp_integrador.modules;
 
 import com.example.tp_integrador.data.dao.ongs.IOngDao;
 import com.example.tp_integrador.data.dao.ongs.OngDao;
+import com.example.tp_integrador.data.domain.Usuario;
 import com.example.tp_integrador.data.repository.ongs.IOngRepository;
 import com.example.tp_integrador.data.repository.ongs.OngRepository;
 import com.example.tp_integrador.data.repository.usuarios.IUsuariosRepository;
@@ -13,6 +14,8 @@ import com.example.tp_integrador.data.dao.usuarios.UsuarioDao;
 import com.example.tp_integrador.data.dao.voluntarios.IVoluntarioDao;
 import com.example.tp_integrador.usecases.ongs.IOngSave;
 import com.example.tp_integrador.usecases.ongs.OngSave;
+import com.example.tp_integrador.usecases.usuarios.ILoginAllowAccess;
+import com.example.tp_integrador.usecases.usuarios.LoginAllowAccess;
 import com.example.tp_integrador.usecases.voluntarios.IVoluntarioSave;
 import com.example.tp_integrador.data.dao.voluntarios.VoluntarioDao;
 import com.example.tp_integrador.usecases.voluntarios.VoluntarioSave;
@@ -53,6 +56,12 @@ public class AppModule {
     @Singleton
     static IOngSave provideOngSave(IUsuarioDao usuarioDao, IOngDao ongdao) {
         return new OngSave(usuarioDao, ongdao);
+    }
+
+    @Provides
+    @Singleton
+    static ILoginAllowAccess provideLoginAllowAccess(UsuarioDao usuarioDao) {
+        return new LoginAllowAccess(usuarioDao);
     }
 
     //repositories
