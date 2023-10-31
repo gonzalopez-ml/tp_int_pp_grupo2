@@ -10,17 +10,15 @@ import java.util.concurrent.ExecutionException;
 
 public class VoluntarioRepository implements IVoluntariosRepository {
 
-    private IVoluntariosRepository voluntariosRepository;
-
     @Override
     public CompletableFuture<Voluntario> get(Integer id) {
-        new GetVoluntarioTask(voluntariosRepository).execute(id);
+        new GetVoluntarioTask().execute(id);
         return null;
     }
 
     @Override
     public CompletableFuture<Boolean> update(Voluntario voluntario) {
-        new UpdateVoluntarioTask(voluntariosRepository).execute(voluntario);
+        new UpdateVoluntarioTask().execute(voluntario);
         return null;
     }
 

@@ -19,13 +19,11 @@ public class SaveUsuarioTask extends AsyncTask<Usuario, Void, Boolean> {
         Usuario usuario = usuarios[0];
 
         try (Connection connection = DriverManager.getConnection(DB_URL, USER, PASSWORD)) {
-            String insertQuery = "INSERT INTO Usuarios (nombre, apellido, mail, password, tipo_usuario) VALUES (?, ?, ?, ?, ?)";
+            String insertQuery = "INSERT INTO Usuarios (mail, password, tipo_usuario) VALUES (?, ?, ?)";
             try (PreparedStatement preparedStatement = connection.prepareStatement(insertQuery)) {
-                preparedStatement.setString(1, usuario.getName());
-                preparedStatement.setString(2, usuario.getApellido());
-                preparedStatement.setString(3, usuario.getMail());
-                preparedStatement.setString(4, usuario.getPassword());
-                preparedStatement.setString(5, usuario.getTipoUser().getId().toString());
+                preparedStatement.setString(1, usuario.getMail());
+                preparedStatement.setString(2, usuario.getPassword());
+                preparedStatement.setString(3, usuario.getTipoUser().getId().toString());
 
                 int rowsAffected = preparedStatement.executeUpdate();
 

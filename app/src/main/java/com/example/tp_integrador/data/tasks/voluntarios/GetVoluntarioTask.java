@@ -7,12 +7,6 @@ import com.example.tp_integrador.data.domain.Voluntario;
 
 public class GetVoluntarioTask extends AsyncTask<Integer, Void, Voluntario> {
 
-    private IVoluntariosRepository voluntariosRepository;
-
-    public GetVoluntarioTask(IVoluntariosRepository repository) {
-        voluntariosRepository = repository;
-    }
-
     @Override
     protected Voluntario doInBackground(Integer... ids) {
         int id = ids[0];

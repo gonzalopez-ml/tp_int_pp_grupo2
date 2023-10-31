@@ -1,14 +1,16 @@
-package com.example.tp_integrador.data.tasks.voluntarios;
+package com.example.tp_integrador.data.tasks.ongs;
 
 import android.os.AsyncTask;
 
-import com.example.tp_integrador.data.repository.voluntarios.IVoluntariosRepository;
+import com.example.tp_integrador.data.domain.Ong;
 import com.example.tp_integrador.data.domain.Voluntario;
+import com.example.tp_integrador.data.repository.ongs.IOngRepository;
+import com.example.tp_integrador.data.repository.voluntarios.IVoluntariosRepository;
 
-public class UpdateVoluntarioTask extends AsyncTask<Voluntario, Void, Void> {
+public class UpdateOngTask extends AsyncTask<Ong, Void, Void> {
 
     @Override
-    protected Void doInBackground(Voluntario... voluntarios) {
+    protected Void doInBackground(Ong... ongs) {
         return null;
     }
 

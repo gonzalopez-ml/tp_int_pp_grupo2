@@ -74,7 +74,7 @@ public class RegistroVoluntario extends AppCompatActivity {
 
                 Voluntario voluntario = retrieveAndValidateInputsVoluntarios();
                 if (voluntario != null) {
-                    usuario = retrieveAndValidateInputsUser(voluntario.getName(), voluntario.getLastName());
+                    usuario = retrieveAndValidateInputsUser();
                     if (usuario == null) return;
                 } else return;
 
@@ -137,7 +137,7 @@ public class RegistroVoluntario extends AppCompatActivity {
         editTextSkills.setText(savedInstanceState.getString("skills"));
     }
 
-    private Usuario retrieveAndValidateInputsUser(String name, String lastname) {
+    private Usuario retrieveAndValidateInputsUser() {
         String email = editTextEmail.getText().toString();
         String password = editTextPassword.getText().toString();
 
@@ -146,7 +146,7 @@ public class RegistroVoluntario extends AppCompatActivity {
             return null;
         }
 
-        return new Usuario(name, lastname, email, password, new TipoUser(2));
+        return new Usuario(email, password, new TipoUser(2));
     }
 
 
