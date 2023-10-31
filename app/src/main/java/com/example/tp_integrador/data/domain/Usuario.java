@@ -2,8 +2,6 @@ package com.example.tp_integrador.data.domain;
 
 public class Usuario {
     private Integer idUser;
-    private String name;
-    private String apellido;
     private String mail;
     private String password;
     private TipoUser tipoUser;
@@ -14,22 +12,6 @@ public class Usuario {
 
     public void setIdUser(Integer idUser) {
         this.idUser = idUser;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getApellido() {
-        return apellido;
-    }
-
-    public void setApellido(String apellido) {
-        this.apellido = apellido;
     }
 
     public String getMail() {
@@ -56,9 +38,7 @@ public class Usuario {
         this.tipoUser = tipoUser;
     }
 
-    public Usuario(String name, String apellido, String mail, String password, TipoUser tipoUser) {
-        this.name = name;
-        this.apellido = apellido;
+    public Usuario(String mail, String password, TipoUser tipoUser) {
         this.mail = mail;
         this.password = password;
         this.tipoUser = tipoUser;

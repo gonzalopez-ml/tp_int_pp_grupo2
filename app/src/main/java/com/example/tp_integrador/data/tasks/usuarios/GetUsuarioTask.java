@@ -32,8 +32,6 @@ public class GetUsuarioTask extends AsyncTask<Usuario, Void, Usuario> {
                 if (resultSet.next()) {
                     Usuario usuarioBase = new Usuario();
                     usuarioBase.setIdUser(Integer.valueOf(resultSet.getString("id_usuario")));
-                    usuarioBase.setName(resultSet.getString("nombre"));
-                    usuarioBase.setApellido(resultSet.getString("apellido"));
                     usuarioBase.setMail(resultSet.getString("mail"));
 
                     return usuarioBase;
