@@ -3,10 +3,12 @@ package com.example.tp_integrador.uiRegistro;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.tp_integrador.LoginActivity;
@@ -14,10 +16,13 @@ import com.example.tp_integrador.R;
 import com.example.tp_integrador.data.domain.TipoUser;
 import com.example.tp_integrador.data.domain.Usuario;
 import com.example.tp_integrador.data.domain.Voluntario;
+import com.example.tp_integrador.data.domain.enums.RequestType;
 import com.example.tp_integrador.usecases.voluntarios.IVoluntarioSave;
 import com.example.tp_integrador.utils.customMessages.SaveResult;
 import com.example.tp_integrador.utils.validarCamposVacios.IValidateInputs;
 import com.example.tp_integrador.utils.validarUsuario.IValidateMail;
+import com.example.tp_integrador.utils.validateJpgFiles.IValidateJpegFiles;
+import com.example.tp_integrador.utils.validatePdfFiles.IValidatePdfFiles;
 
 import java.util.Arrays;
 import java.util.List;
@@ -38,8 +43,13 @@ public class RegistroVoluntario extends AppCompatActivity {
     EditText editTextSkills;
     EditText editTextEmail;
     EditText editTextPassword;
+    TextView fileSelectedCv;
+    TextView fileSelectedPhoto;
+
 
     Button guardarButton;
+    Button examineCvButton;
+    Button examinePhotoButton;
 
     @Inject
     IValidateInputs validateInputs;
@@ -49,6 +59,18 @@ public class RegistroVoluntario extends AppCompatActivity {
 
     @Inject
     IVoluntarioSave voluntarioSave;
+
+    @Inject
+    IValidatePdfFiles validatePdfFiles;
+
+    @Inject
+    IValidateJpegFiles validateJpgFiles;
+
+    private String cvFileName;
+    private String photoFileName;
+
+    private static final String PDF_TYPE = "application/pdf";
+    private static final String JPG_TYPE = "image/jpeg";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,8 +85,26 @@ public class RegistroVoluntario extends AppCompatActivity {
         editTextSkills = findViewById(R.id.habilidadesVoluntarioRegistro);
         editTextEmail = findViewById(R.id.emailVoluntario);
         editTextPassword = findViewById(R.id.passwordVoluntario);
+        fileSelectedCv = findViewById(R.id.archivoSeleccionadoCv);
+        fileSelectedPhoto = findViewById(R.id.archivoSeleccionadoPhoto);
 
         guardarButton = findViewById(R.id.guardarButton);
+        examineCvButton = findViewById(R.id.examinarCvButton);
+        examinePhotoButton = findViewById(R.id.examinarFotoButton);
+
+        examineCvButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                examineCvFile(view);
+            }
+        });
+
+        examinePhotoButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                examinePhotoFile(view);
+            }
+        });
 
         guardarButton.setOnClickListener(new View.OnClickListener() {
 
@@ -72,11 +112,17 @@ public class RegistroVoluntario extends AppCompatActivity {
             public void onClick(View view) {
                 Usuario usuario = new Usuario();
 
-                Voluntario voluntario = retrieveAndValidateInputsVoluntarios();
+                if (cvFileName == null || photoFileName == null) {
+                    showMessage("Selecciono archivos inválidos, por favor para CV utilize pdf y para la foto JPG.");
+                    return;
+                }
+
+                Voluntario voluntario = retrieveAndValidateInputsVoluntarios(cvFileName, photoFileName);
                 if (voluntario != null) {
                     usuario = retrieveAndValidateInputsUser();
                     if (usuario == null) return;
                 } else return;
+
 
                 SaveResult result = voluntarioSave.save(usuario, voluntario);
 
@@ -88,6 +134,7 @@ public class RegistroVoluntario extends AppCompatActivity {
                 }
                 showMessage(result.getMessage());
             }
+
         });
     }
 
@@ -95,7 +142,7 @@ public class RegistroVoluntario extends AppCompatActivity {
         Toast.makeText(RegistroVoluntario.this, message, Toast.LENGTH_SHORT).show();
     }
 
-    private Voluntario retrieveAndValidateInputsVoluntarios() {
+    private Voluntario retrieveAndValidateInputsVoluntarios(String cvFileName, String photoFileName) {
         String name = editTextName.getText().toString();
         String lastname = editTextLastName.getText().toString();
         String dni = editTextDni.getText().toString();
@@ -103,14 +150,14 @@ public class RegistroVoluntario extends AppCompatActivity {
         String availability = editTextAvailability.getText().toString();
         String skills = editTextSkills.getText().toString();
 
-        Boolean isValidateInputs = validateInputs(name, lastname, dni, phone, availability, skills);
+        Boolean isValidateInputs = validateInputs(name, lastname, dni, phone, availability, skills, cvFileName, photoFileName);
 
         if (!isValidateInputs) {
             showMessage("Por favor completar todos los campos");
             return null;
         }
 
-        return new Voluntario(name, lastname, dni, phone, availability, skills, "", "");
+        return new Voluntario(null, name, lastname, dni, phone, availability, skills, cvFileName, photoFileName);
     }
 
     @Override
@@ -150,8 +197,8 @@ public class RegistroVoluntario extends AppCompatActivity {
     }
 
 
-    private Boolean validateInputs(String nombre, String apellido, String dni, String telefono, String dispo, String habilidad) {
-        List<String> inputs = Arrays.asList(nombre, apellido, dni, telefono, dispo, habilidad);
+    private Boolean validateInputs(String nombre, String apellido, String dni, String telefono, String dispo, String habilidad, String cvFile, String photoFile) {
+        List<String> inputs = Arrays.asList(nombre, apellido, dni, telefono, dispo, habilidad, cvFile, photoFile);
 
         return validateInputs.apply(inputs);
     }
@@ -159,4 +206,49 @@ public class RegistroVoluntario extends AppCompatActivity {
     private Boolean validateMail(String mail, String password) {
         return validateMail.validate(mail, password);
     }
+
+    private void examineCvFile(View view) {
+        Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+        intent.setType(PDF_TYPE);
+
+        startActivityForResult(intent, RequestType.PDF.getValue());
+    }
+
+    private void examinePhotoFile(View view) {
+        Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+        intent.setType(JPG_TYPE);
+
+        startActivityForResult(intent, RequestType.PHOTO.getValue());
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == RequestType.PDF.getValue()) {
+            Uri selectedFileUri = data.getData();
+
+            cvFileName = validatePdfFiles.processSelectedPdfFile(this, selectedFileUri);
+
+            if (cvFileName == null) {
+                fileSelectedCv.setText("Archivo inválido");
+                fileSelectedCv.setTextColor(getResources().getColor(android.R.color.holo_red_dark));
+            } else {
+                fileSelectedCv.setText(cvFileName.substring(cvFileName.indexOf("files/")));
+                fileSelectedCv.setTextColor(getResources().getColor(android.R.color.holo_green_dark));
+            }
+        } else {
+            Uri selectedFileUri = data.getData();
+            photoFileName = validateJpgFiles.processSelectedJpgFile(this, selectedFileUri);
+
+            if (photoFileName == null) {
+                fileSelectedPhoto.setText("Archivo inválido");
+                fileSelectedPhoto.setTextColor(getResources().getColor(android.R.color.holo_red_dark));
+            } else {
+                fileSelectedPhoto.setText(photoFileName.substring(photoFileName.indexOf("files/")));
+                fileSelectedPhoto.setTextColor(getResources().getColor(android.R.color.holo_green_dark));
+            }
+        }
+    }
+
 }
