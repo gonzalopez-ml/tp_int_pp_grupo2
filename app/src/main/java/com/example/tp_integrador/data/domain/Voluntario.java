@@ -1,6 +1,7 @@
 package com.example.tp_integrador.data.domain;
 
 public class Voluntario {
+    private String idVoluntario;
     private String name;
     private String lastName;
     private String dni;
@@ -10,7 +11,8 @@ public class Voluntario {
     private String cv;
     private String photo;
 
-    public Voluntario(String name, String lastName, String dni, String phone, String skills, String availability, String cv, String photo) {
+    public Voluntario(String idVoluntario, String name, String lastName, String dni, String phone, String skills, String availability, String cv, String photo) {
+        this.idVoluntario = idVoluntario;
         this.name = name;
         this.lastName = lastName;
         this.dni = dni;

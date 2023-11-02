@@ -2,7 +2,6 @@ package com.example.tp_integrador.modules;
 
 import com.example.tp_integrador.data.dao.ongs.IOngDao;
 import com.example.tp_integrador.data.dao.ongs.OngDao;
-import com.example.tp_integrador.data.domain.Usuario;
 import com.example.tp_integrador.data.repository.ongs.IOngRepository;
 import com.example.tp_integrador.data.repository.ongs.OngRepository;
 import com.example.tp_integrador.data.repository.usuarios.IUsuariosRepository;
@@ -23,6 +22,10 @@ import com.example.tp_integrador.utils.validarCamposVacios.IValidateInputs;
 import com.example.tp_integrador.utils.validarCamposVacios.ValidateInputs;
 import com.example.tp_integrador.utils.validarUsuario.IValidateMail;
 import com.example.tp_integrador.utils.validarUsuario.ValidateMail;
+import com.example.tp_integrador.utils.validateJpgFiles.IValidateJpegFiles;
+import com.example.tp_integrador.utils.validateJpgFiles.ValidateJpegFiles;
+import com.example.tp_integrador.utils.validatePdfFiles.IValidatePdfFiles;
+import com.example.tp_integrador.utils.validatePdfFiles.ValidatePdfFiles;
 
 import javax.inject.Singleton;
 
@@ -35,6 +38,7 @@ import dagger.hilt.components.SingletonComponent;
 @InstallIn(SingletonComponent.class) // Especifica el ámbito en el que se proporcionará la implementación
 public class AppModule {
 
+    //Validates or utils
     @Provides
     static IValidateInputs provideValidateInputs() {
         return new ValidateInputs(); // Reemplaza con tu implementación concreta
@@ -43,6 +47,16 @@ public class AppModule {
     @Provides
     static IValidateMail provideValidateMail() {
         return new ValidateMail();
+    }
+
+    @Provides
+    static IValidatePdfFiles provideValidatePdfFiles() {
+        return new ValidatePdfFiles();
+    }
+
+    @Provides
+    static IValidateJpegFiles provideValidateJpgFiles() {
+        return new ValidateJpegFiles();
     }
 
     //usecases
