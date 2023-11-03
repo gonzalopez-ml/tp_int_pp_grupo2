@@ -12,8 +12,14 @@ public class VoluntarioRepository implements IVoluntariosRepository {
 
     @Override
     public CompletableFuture<Voluntario> get(Integer id) {
-        new GetVoluntarioTask().execute(id);
-        return null;
+        return CompletableFuture.supplyAsync(() -> {
+            try {
+                return new GetVoluntarioTask().execute(id).get();
+            } catch (ExecutionException | InterruptedException e) {
+                e.printStackTrace();
+            }
+            return null;
+        });
     }
 
     @Override

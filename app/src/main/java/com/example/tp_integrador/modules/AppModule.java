@@ -12,12 +12,14 @@ import com.example.tp_integrador.data.dao.usuarios.IUsuarioDao;
 import com.example.tp_integrador.data.dao.usuarios.UsuarioDao;
 import com.example.tp_integrador.data.dao.voluntarios.IVoluntarioDao;
 import com.example.tp_integrador.usecases.ongs.IOngSave;
-import com.example.tp_integrador.usecases.ongs.OngSave;
+import com.example.tp_integrador.usecases.ongs.impl.OngSave;
 import com.example.tp_integrador.usecases.usuarios.ILoginAllowAccess;
-import com.example.tp_integrador.usecases.usuarios.LoginAllowAccess;
+import com.example.tp_integrador.usecases.usuarios.impl.LoginAllowAccess;
+import com.example.tp_integrador.usecases.voluntarios.IVoluntarioGet;
 import com.example.tp_integrador.usecases.voluntarios.IVoluntarioSave;
 import com.example.tp_integrador.data.dao.voluntarios.VoluntarioDao;
-import com.example.tp_integrador.usecases.voluntarios.VoluntarioSave;
+import com.example.tp_integrador.usecases.voluntarios.impl.VoluntarioSave;
+import com.example.tp_integrador.usecases.voluntarios.impl.VoluntarioGet;
 import com.example.tp_integrador.utils.validarCamposVacios.IValidateInputs;
 import com.example.tp_integrador.utils.validarCamposVacios.ValidateInputs;
 import com.example.tp_integrador.utils.validarUsuario.IValidateMail;
@@ -64,6 +66,11 @@ public class AppModule {
     @Singleton
     static IVoluntarioSave provideVoluntarioSave(IUsuarioDao usuarioDao, IVoluntarioDao voluntarioDao) {
         return new VoluntarioSave(usuarioDao, voluntarioDao);
+    }
+
+    @Provides
+    static IVoluntarioGet provideVoluntarioGet(IVoluntarioDao voluntarioDao) {
+        return new VoluntarioGet(voluntarioDao);
     }
 
     @Provides
