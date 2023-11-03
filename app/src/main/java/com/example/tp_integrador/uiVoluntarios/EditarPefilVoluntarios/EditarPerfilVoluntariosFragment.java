@@ -6,18 +6,36 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.tp_integrador.R;
+import com.example.tp_integrador.data.domain.TipoUser;
+import com.example.tp_integrador.data.domain.Usuario;
+import com.example.tp_integrador.data.domain.Voluntario;
+import com.example.tp_integrador.utils.validarCamposVacios.IValidateInputs;
+import com.example.tp_integrador.utils.validarUsuario.IValidateMail;
+
+import java.util.Arrays;
+import java.util.List;
+
+import javax.inject.Inject;
 
 import dagger.hilt.android.AndroidEntryPoint;
 
 @AndroidEntryPoint
 public class EditarPerfilVoluntariosFragment extends Fragment {
+
+    @Inject
+    IValidateInputs validateInputs;
+
+    @Inject
+    IValidateMail validateMail;
 
     private EditarPerfilVoluntariosViewModel mViewModel;
 
@@ -33,6 +51,9 @@ public class EditarPerfilVoluntariosFragment extends Fragment {
     private EditText editPassword;
 
     private Button btnEditarVoluntario;
+
+    private Integer idUser;
+    private int idType;
 
     public static EditarPerfilVoluntariosFragment newInstance() {
         return new EditarPerfilVoluntariosFragment();
@@ -58,6 +79,8 @@ public class EditarPerfilVoluntariosFragment extends Fragment {
 
         mViewModel.getVoluntarioLiveData().observe(getViewLifecycleOwner(), voluntario -> {
             if (voluntario != null) {
+                idUser = voluntario.getUsuario().getIdUser();
+                idType = voluntario.getUsuario().getTipoUser().getId();
                 editTextName.setText(voluntario.getName());
                 editTextLastName.setText(voluntario.getLastName());
                 editTextDNI.setText(voluntario.getDni());
@@ -67,6 +90,7 @@ public class EditarPerfilVoluntariosFragment extends Fragment {
                 //editTextCurriculum.setText(voluntario.getCv());
                 //editTextPhoto.setText(voluntario.getPhoto());
                 editTextMail.setText(voluntario.getUsuario().getMail());
+                editPassword.setText(voluntario.getUsuario().getPassword());
             }
         });
 
@@ -82,10 +106,48 @@ public class EditarPerfilVoluntariosFragment extends Fragment {
                 String mail = editTextMail.getText().toString();
                 String contraseña = editPassword.getText().toString();
 
-                //mViewModel.editarVoluntario(name, lastName, dni, skills, phone, availability, mail);
+                Boolean isValidateInputs = validateInputsVoluntarios(name, lastName, dni, skills, phone, availability, mail, contraseña);
+
+                if (!isValidateInputs) {
+                    Toast.makeText(requireContext(), "Por favor verificar los campos", Toast.LENGTH_SHORT).show();
+                } else {
+                    TipoUser tipoUser = new TipoUser(idType);
+                    Usuario usuario = new Usuario(mail, contraseña, tipoUser);
+                    usuario.setIdUser(idUser);
+                    Voluntario voluntario = new Voluntario(17, name, lastName, dni, phone, skills, availability, "", "");
+                    voluntario.setUsuario(usuario);
+
+                    Boolean isVoluntarioSave = mViewModel.saveVoluntarioLiveData(voluntario);
+
+                    if (isVoluntarioSave) {
+                        Toast.makeText(requireContext(), "Se editaron los datos con éxito!", Toast.LENGTH_SHORT).show();
+                        reloadFragment();
+                    } else {
+                        Toast.makeText(requireContext(), "Error al guardar el voluntario, intente nuevamente", Toast.LENGTH_SHORT).show();
+                    }
+                }
             }
         });
 
         return rootView;
     }
+
+    private void reloadFragment() {
+        FragmentTransaction ft = getParentFragmentManager().beginTransaction();
+        ft.replace(R.id.fragment_editar_perfil_voluntarios, new EditarPerfilVoluntariosFragment());
+        ft.commit();
+    }
+
+    private Boolean validateInputsVoluntarios(String name, String lastName, String dni, String skills, String phone,
+                                              String availability, String mail,String contraseña) {
+        List<String> inputs = Arrays.asList(name, lastName, dni, dni, skills, phone, availability, mail, contraseña);
+
+        Boolean isValidateInputs = validateInputs.apply(inputs);
+
+        if (isValidateInputs) {
+            return validateMail.validate(mail, contraseña);
+        }
+        return false;
+    }
+
 }

@@ -6,6 +6,11 @@
     android:layout_height="match_parent"
     tools:context=".uiVoluntarios.EditarPefilVoluntarios.EditarPerfilVoluntariosFragment">
 
+    <FrameLayout
+        android:id="@+id/fragment_editar_perfil_voluntarios"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
     <TextView
         android:id="@+id/textView9"
         android:layout_width="wrap_content"

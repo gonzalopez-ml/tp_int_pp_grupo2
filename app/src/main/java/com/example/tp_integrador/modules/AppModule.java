@@ -18,8 +18,10 @@ import com.example.tp_integrador.usecases.usuarios.impl.LoginAllowAccess;
 import com.example.tp_integrador.usecases.voluntarios.IVoluntarioGet;
 import com.example.tp_integrador.usecases.voluntarios.IVoluntarioSave;
 import com.example.tp_integrador.data.dao.voluntarios.VoluntarioDao;
+import com.example.tp_integrador.usecases.voluntarios.IVoluntarioUpdate;
 import com.example.tp_integrador.usecases.voluntarios.impl.VoluntarioSave;
 import com.example.tp_integrador.usecases.voluntarios.impl.VoluntarioGet;
+import com.example.tp_integrador.usecases.voluntarios.impl.VoluntarioUpdate;
 import com.example.tp_integrador.utils.validarCamposVacios.IValidateInputs;
 import com.example.tp_integrador.utils.validarCamposVacios.ValidateInputs;
 import com.example.tp_integrador.utils.validarUsuario.IValidateMail;
@@ -66,6 +68,11 @@ public class AppModule {
     @Singleton
     static IVoluntarioSave provideVoluntarioSave(IUsuarioDao usuarioDao, IVoluntarioDao voluntarioDao) {
         return new VoluntarioSave(usuarioDao, voluntarioDao);
+    }
+
+    @Provides
+    static IVoluntarioUpdate provideVoluntarioUpdate(IUsuarioDao usuarioDao, IVoluntarioDao voluntarioDao) {
+        return new VoluntarioUpdate(usuarioDao, voluntarioDao);
     }
 
     @Provides

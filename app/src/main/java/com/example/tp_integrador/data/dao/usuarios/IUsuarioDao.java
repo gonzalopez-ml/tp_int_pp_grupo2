@@ -8,4 +8,5 @@ public interface IUsuarioDao {
     CompletableFuture<Usuario> get(Usuario usuario);
     CompletableFuture<Boolean> save(Usuario usuario);
     CompletableFuture<Usuario> getAllowAccess(Usuario usuario);
+    CompletableFuture<Boolean> update(Usuario usuario);
 }
