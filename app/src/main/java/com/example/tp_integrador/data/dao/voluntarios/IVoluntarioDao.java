@@ -7,4 +7,5 @@ import java.util.concurrent.CompletableFuture;
 public interface IVoluntarioDao {
     CompletableFuture<Voluntario> get(Integer id);
     CompletableFuture<Boolean> save(Integer idUser, Voluntario voluntario);
+    CompletableFuture<Boolean> update(Voluntario voluntario);
 }

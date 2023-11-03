@@ -2,6 +2,7 @@ package com.example.tp_integrador.data.tasks.voluntarios;
 
 import android.os.AsyncTask;
 
+import com.example.tp_integrador.data.domain.TipoUser;
 import com.example.tp_integrador.data.domain.Usuario;
 import com.example.tp_integrador.data.domain.Voluntario;
 import java.sql.Connection;
@@ -35,6 +36,7 @@ public class GetVoluntarioTask extends AsyncTask<Integer, Void, Voluntario> {
                 if (resultSet.next()) {
                     Voluntario voluntario = new Voluntario();
                     Usuario usuario = new Usuario();
+                    TipoUser tipoUser = new TipoUser();
 
                     voluntario.setIdVoluntario(idVoluntario);
                     voluntario.setName(resultSet.getString("nombre"));
@@ -48,7 +50,10 @@ public class GetVoluntarioTask extends AsyncTask<Integer, Void, Voluntario> {
 
                     usuario.setIdUser(resultSet.getInt("id_usuario"));
                     usuario.setMail(resultSet.getString("mail"));
+                    usuario.setPassword(resultSet.getString("password"));
 
+                    tipoUser.setId(Integer.parseInt(resultSet.getString("tipo_usuario")));
+                    usuario.setTipoUser(tipoUser);
                     voluntario.setUsuario(usuario);
 
                     return voluntario;

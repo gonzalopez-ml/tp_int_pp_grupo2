@@ -44,6 +44,19 @@ public class UsuarioDao implements IUsuarioDao {
     }
 
     @Override
+    public CompletableFuture<Boolean> update(Usuario usuario) {
+        return CompletableFuture.supplyAsync(() -> {
+            CompletableFuture<Boolean> isUserSave = usuariosRepository.update(usuario);
+            try {
+                return isUserSave.get();
+            } catch (ExecutionException | InterruptedException e) {
+                e.printStackTrace();
+            }
+            return false;
+        });
+    }
+
+    @Override
     public CompletableFuture<Usuario> getAllowAccess(Usuario usuario) {
         return CompletableFuture.supplyAsync(() -> {
             CompletableFuture<Usuario> usuarioFuture = usuariosRepository.getAllowAccess(usuario);

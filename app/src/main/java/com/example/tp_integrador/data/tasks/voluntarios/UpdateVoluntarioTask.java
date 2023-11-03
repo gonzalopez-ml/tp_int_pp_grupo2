@@ -22,8 +22,8 @@ public class UpdateVoluntarioTask extends AsyncTask<Voluntario, Void, Boolean> {
 
         try (Connection connection = DriverManager.getConnection(DB_URL, USER, PASSWORD)) {
             String updateQuery = "UPDATE Perfil_voluntarios " +
-                    "SET nombre = ?, apellido = ?, dni = ?, habilidades = ?, telefono = ?, disponibilidad = ?, " +
-                    "WHERE id_usuario = ?";
+                    "SET nombre = ?, apellido = ?, dni = ?, habilidades = ?, telefono = ?, disponibilidad = ? " +
+                    "WHERE id_perfil_voluntario = ?";
 
             try (PreparedStatement preparedStatement = connection.prepareStatement(updateQuery)) {
                 preparedStatement.setString(1, voluntario.getName());
@@ -32,14 +32,16 @@ public class UpdateVoluntarioTask extends AsyncTask<Voluntario, Void, Boolean> {
                 preparedStatement.setString(4, voluntario.getSkills());
                 preparedStatement.setString(5, voluntario.getPhone());
                 preparedStatement.setString(6, voluntario.getAvailability());
-                preparedStatement.setString(7, voluntario.getCv());
-                preparedStatement.setString(8, voluntario.getPhoto());
-                preparedStatement.setInt(9, voluntario.getUsuario().getIdUser());
+                //preparedStatement.setString(7, voluntario.getCv());
+                //preparedStatement.setString(8, voluntario.getPhoto());
+                preparedStatement.setInt(7, voluntario.getIdVoluntario());
 
                 int rowsAffected = preparedStatement.executeUpdate();
-                preparedStatement.close();
 
-                return rowsAffected > 0;
+                Boolean isUpdate= rowsAffected > 0;
+
+                preparedStatement.close();
+                return isUpdate;
             }
         } catch (SQLException e) {
             e.printStackTrace();

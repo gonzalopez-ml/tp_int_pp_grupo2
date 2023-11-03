@@ -42,4 +42,17 @@ public class VoluntarioDao implements IVoluntarioDao {
             return false;
         });
     }
+
+    @Override
+    public CompletableFuture<Boolean> update(Voluntario voluntario) {
+        return CompletableFuture.supplyAsync(() -> {
+            CompletableFuture<Boolean> isVoluntarioUpdate = voluntariosRepository.update(voluntario);
+            try {
+                return isVoluntarioUpdate.get();
+            } catch (ExecutionException | InterruptedException e) {
+                e.printStackTrace();
+            }
+            return false;
+        });
+    }
 }
