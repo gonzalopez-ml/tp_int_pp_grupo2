@@ -19,6 +19,21 @@
         app:layout_constraintTop_toBottomOf="@+id/textView13"
         app:srcCompat="@drawable/logoapp" />
 
+    <EditText
+        android:id="@+id/editTxtLoginMail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="101dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="100dp"
+        android:ems="10"
+        android:inputType="textEmailAddress"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView2"
+        android:hint="User"/>
+
     <TextView
         android:id="@+id/textView13"
         android:layout_width="wrap_content"
@@ -72,7 +87,7 @@
         android:layout_marginEnd="115dp"
         android:clickable="true"
         android:onClick="onLinkClickVoluntario"
-        android:text="Registrarse como voluntario"
+        android:text="Registrarse como Voluntario"
         android:textColorLink="@color/colorLink"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -98,19 +113,6 @@
         app:layout_constraintTop_toBottomOf="@+id/linkTextView"
         />
 
-    <EditText
-        android:id="@+id/editTxtLoginMail"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="101dp"
-        android:layout_marginTop="30dp"
-        android:layout_marginEnd="100dp"
-        android:ems="10"
-        android:inputType="textEmailAddress"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView2"
-        android:hint="User"/>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
