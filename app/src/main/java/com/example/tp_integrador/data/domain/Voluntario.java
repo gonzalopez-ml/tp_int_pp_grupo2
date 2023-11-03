@@ -1,7 +1,7 @@
 package com.example.tp_integrador.data.domain;
 
 public class Voluntario {
-    private String idVoluntario;
+    private Integer idVoluntario;
     private String name;
     private String lastName;
     private String dni;
@@ -11,7 +11,12 @@ public class Voluntario {
     private String cv;
     private String photo;
 
-    public Voluntario(String idVoluntario, String name, String lastName, String dni, String phone, String skills, String availability, String cv, String photo) {
+    private Usuario usuario;
+
+    public Voluntario() {
+    }
+
+    public Voluntario(Integer idVoluntario, String name, String lastName, String dni, String phone, String skills, String availability, String cv, String photo) {
         this.idVoluntario = idVoluntario;
         this.name = name;
         this.lastName = lastName;
@@ -21,6 +26,22 @@ public class Voluntario {
         this.availability = availability;
         this.cv = cv;
         this.photo = photo;
+    }
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
+
+    public Integer getIdVoluntario() {
+        return idVoluntario;
+    }
+
+    public void setIdVoluntario(Integer idVoluntario) {
+        this.idVoluntario = idVoluntario;
     }
 
     public String getName() {

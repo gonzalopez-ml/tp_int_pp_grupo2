@@ -1,9 +1,10 @@
-package com.example.tp_integrador.usecases.ongs;
+package com.example.tp_integrador.usecases.ongs.impl;
 
 import com.example.tp_integrador.data.dao.ongs.IOngDao;
 import com.example.tp_integrador.data.dao.usuarios.IUsuarioDao;
 import com.example.tp_integrador.data.domain.Ong;
 import com.example.tp_integrador.data.domain.Usuario;
+import com.example.tp_integrador.usecases.ongs.IOngSave;
 import com.example.tp_integrador.utils.customMessages.SaveResult;
 
 import java.util.concurrent.ExecutionException;

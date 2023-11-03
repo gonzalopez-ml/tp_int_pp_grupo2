@@ -27,7 +27,8 @@ public class VoluntarioDao implements IVoluntarioDao {
                 e.printStackTrace();
             }
             return null;
-        });    }
+        });
+    }
 
     @Override
     public CompletableFuture<Boolean> save(Integer idUser, Voluntario voluntario) {

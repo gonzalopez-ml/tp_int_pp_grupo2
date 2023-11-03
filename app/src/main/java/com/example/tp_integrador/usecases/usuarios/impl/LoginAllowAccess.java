@@ -1,7 +1,8 @@
-package com.example.tp_integrador.usecases.usuarios;
+package com.example.tp_integrador.usecases.usuarios.impl;
 
 import com.example.tp_integrador.data.dao.usuarios.IUsuarioDao;
 import com.example.tp_integrador.data.domain.Usuario;
+import com.example.tp_integrador.usecases.usuarios.ILoginAllowAccess;
 import com.example.tp_integrador.utils.customMessages.LoginResult;
 
 import java.util.concurrent.ExecutionException;

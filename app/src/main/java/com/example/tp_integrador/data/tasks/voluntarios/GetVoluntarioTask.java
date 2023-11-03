@@ -2,21 +2,68 @@ package com.example.tp_integrador.data.tasks.voluntarios;
 
 import android.os.AsyncTask;
 
-import com.example.tp_integrador.data.repository.voluntarios.IVoluntariosRepository;
+import com.example.tp_integrador.data.domain.Usuario;
 import com.example.tp_integrador.data.domain.Voluntario;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 public class GetVoluntarioTask extends AsyncTask<Integer, Void, Voluntario> {
 
+    private static final String DB_URL = "jdbc:mysql://btw.com.ar:3306/btw_db";
+    private static final String USER = "btw_db";
+    private static final String PASSWORD = "12345";
+
     @Override
-    protected Voluntario doInBackground(Integer... ids) {
-        int id = ids[0];
-        return null;
+    protected Voluntario doInBackground(Integer... params) {
+        int idVoluntario = params[0];
+
+        try {
+            Connection connection = DriverManager.getConnection(DB_URL, USER, PASSWORD);
+            Class.forName("com.mysql.jdbc.Driver");
+
+            String selectQuery = "SELECT * FROM Perfil_voluntarios " +
+                    "INNER JOIN Usuarios ON Perfil_voluntarios.id_usuario = Usuarios.id_usuario " +
+                    "WHERE Perfil_voluntarios.id_perfil_voluntario = ?";
+
+            try (PreparedStatement preparedStatement = connection.prepareStatement(selectQuery)) {
+                preparedStatement.setInt(1, idVoluntario);
+                ResultSet resultSet = preparedStatement.executeQuery();
+
+                if (resultSet.next()) {
+                    Voluntario voluntario = new Voluntario();
+                    Usuario usuario = new Usuario();
+
+                    voluntario.setIdVoluntario(idVoluntario);
+                    voluntario.setName(resultSet.getString("nombre"));
+                    voluntario.setLastName(resultSet.getString("apellido"));
+                    voluntario.setDni(resultSet.getString("dni"));
+                    voluntario.setSkills(resultSet.getString("habilidades"));
+                    voluntario.setPhone(resultSet.getString("telefono"));
+                    voluntario.setAvailability(resultSet.getString("disponibilidad"));
+                    voluntario.setCv(resultSet.getString("curriculum"));
+                    voluntario.setPhoto(resultSet.getString("foto"));
+
+                    usuario.setIdUser(resultSet.getInt("id_usuario"));
+                    usuario.setMail(resultSet.getString("mail"));
+
+                    voluntario.setUsuario(usuario);
+
+                    return voluntario;
+                } else {
+                    return null;
+                }
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     @Override
     protected void onPostExecute(Voluntario voluntario) {
-        // Este método se ejecuta en el hilo principal después de obtener el voluntario.
-        // Puedes actualizar la interfaz de usuario aquí.
     }
 }
 
