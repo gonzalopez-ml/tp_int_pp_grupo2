@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -50,6 +51,7 @@ public class RegistroVoluntario extends AppCompatActivity {
     Button guardarButton;
     Button examineCvButton;
     Button examinePhotoButton;
+    Button cancelarVolutarioButton;
 
     @Inject
     IValidateInputs validateInputs;
@@ -91,6 +93,15 @@ public class RegistroVoluntario extends AppCompatActivity {
         guardarButton = findViewById(R.id.guardarButton);
         examineCvButton = findViewById(R.id.examinarCvButton);
         examinePhotoButton = findViewById(R.id.examinarFotoButton);
+        cancelarVolutarioButton = findViewById(R.id.cancelarVoluntarioButton);
+
+        cancelarVolutarioButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(RegistroVoluntario.this, LoginActivity.class);
+                startActivity(intent);
+            }
+        });
 
         examineCvButton.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -99,7 +99,7 @@
         app:layout_constraintTop_toBottomOf="@+id/disponibilidadVoluntarioRegistro" />
 
     <Button
-        android:id="@+id/cancelarButton"
+        android:id="@+id/cancelarVoluntarioButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="36dp"
@@ -173,7 +173,7 @@
         android:layout_marginTop="20dp"
         android:layout_marginBottom="38dp"
         android:text=""
-        app:layout_constraintBottom_toTopOf="@+id/cancelarButton"
+        app:layout_constraintBottom_toTopOf="@+id/cancelarVoluntarioButton"
         app:layout_constraintStart_toEndOf="@+id/examinarCvButton"
         app:layout_constraintTop_toBottomOf="@+id/examinarFotoButton" />
 
