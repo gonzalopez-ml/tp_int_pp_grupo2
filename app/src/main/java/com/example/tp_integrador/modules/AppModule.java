@@ -2,8 +2,12 @@ package com.example.tp_integrador.modules;
 
 import com.example.tp_integrador.data.dao.ongs.IOngDao;
 import com.example.tp_integrador.data.dao.ongs.OngDao;
+import com.example.tp_integrador.data.dao.proyectos.IProyectoDao;
+import com.example.tp_integrador.data.dao.proyectos.ProyectoDao;
 import com.example.tp_integrador.data.repository.ongs.IOngRepository;
 import com.example.tp_integrador.data.repository.ongs.OngRepository;
+import com.example.tp_integrador.data.repository.proyectos.IProyectoRepository;
+import com.example.tp_integrador.data.repository.proyectos.ProyectoRepository;
 import com.example.tp_integrador.data.repository.usuarios.IUsuariosRepository;
 import com.example.tp_integrador.data.repository.usuarios.UsuarioRepository;
 import com.example.tp_integrador.data.repository.voluntarios.IVoluntariosRepository;
@@ -13,6 +17,8 @@ import com.example.tp_integrador.data.dao.usuarios.UsuarioDao;
 import com.example.tp_integrador.data.dao.voluntarios.IVoluntarioDao;
 import com.example.tp_integrador.usecases.ongs.IOngSave;
 import com.example.tp_integrador.usecases.ongs.OngSave;
+import com.example.tp_integrador.usecases.proyectos.IProyectoSave;
+import com.example.tp_integrador.usecases.proyectos.ProyectoSave;
 import com.example.tp_integrador.usecases.usuarios.ILoginAllowAccess;
 import com.example.tp_integrador.usecases.usuarios.LoginAllowAccess;
 import com.example.tp_integrador.usecases.voluntarios.IVoluntarioSave;
@@ -78,6 +84,13 @@ public class AppModule {
         return new LoginAllowAccess(usuarioDao);
     }
 
+
+    @Provides
+    @Singleton
+    static IProyectoSave provideProyectoSave(IProyectoDao proyectoDao,IOngDao ongDao){
+        return new ProyectoSave(proyectoDao,ongDao);
+    }
+
     //repositories
     @Provides
     static IUsuariosRepository provideUsuariosRepository() {
@@ -93,6 +106,10 @@ public class AppModule {
     static IOngRepository provideOngRepository() {
         return new OngRepository();
     }
+
+
+    @Provides
+    static IProyectoRepository provideProyectoRepository(){return new ProyectoRepository();}
 
     //daos
     @Provides
@@ -110,6 +127,10 @@ public class AppModule {
     @Singleton
     static IOngDao provideOngDao(IOngRepository ongRepository) {
         return new OngDao(ongRepository);
+    }
+
+    static IProyectoDao provideProyectoDao(IProyectoRepository proyectoRepository){
+        return new ProyectoDao(proyectoRepository);
     }
 
 }
