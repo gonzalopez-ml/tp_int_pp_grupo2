@@ -24,7 +24,7 @@ public class SaveProyectoTask extends AsyncTask<Object,Void,Boolean> {
 
 // REVISAR Valor null en el id
         try(Connection connection = DriverManager.getConnection(DB_URL,USER,PASSWORD)){
-            String insertQuery= "INSERT INTO proyectos_ong (id_proyecto,id_perfil_ong, nombre, necesidades,descripcion,ubicacion,disponibilidad) VALUES (?, ?, ?, ?, ?, ?,?)";
+            String insertQuery= "INSERT INTO Proyectos_ong (id_proyecto,id_perfil_ong, nombre, necesidades,descripcion,ubicacion,disponibilidad) VALUES (?, ?, ?, ?, ?, ?,?)";
             try(PreparedStatement preparedStatement = connection.prepareStatement(insertQuery)){
                 preparedStatement.setInt(1,idProyecto);
                 preparedStatement.setObject(2,idOng);
