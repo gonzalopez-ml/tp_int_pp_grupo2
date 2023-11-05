@@ -124,6 +124,7 @@
         app:layout_constraintTop_toBottomOf="@+id/editTxtHabilidadesVoluntario" />
 
     <EditText
+
         android:id="@+id/editTxtContraVoluntario"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
