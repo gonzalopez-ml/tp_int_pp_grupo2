@@ -129,6 +129,8 @@ public class AppModule {
         return new OngDao(ongRepository);
     }
 
+    @Provides
+    @Singleton
     static IProyectoDao provideProyectoDao(IProyectoRepository proyectoRepository){
         return new ProyectoDao(proyectoRepository);
     }
