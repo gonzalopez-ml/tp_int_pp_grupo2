@@ -14,4 +14,7 @@ public class TipoUser {
     public TipoUser(int id) {
         this.id = id;
     }
+
+    public TipoUser() {
+    }
 }

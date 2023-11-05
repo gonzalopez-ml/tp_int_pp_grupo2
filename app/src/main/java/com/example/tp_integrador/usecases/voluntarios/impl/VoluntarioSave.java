@@ -1,9 +1,10 @@
-package com.example.tp_integrador.usecases.voluntarios;
+package com.example.tp_integrador.usecases.voluntarios.impl;
 
 import com.example.tp_integrador.data.dao.voluntarios.IVoluntarioDao;
 import com.example.tp_integrador.data.domain.Usuario;
 import com.example.tp_integrador.data.domain.Voluntario;
 import com.example.tp_integrador.data.dao.usuarios.IUsuarioDao;
+import com.example.tp_integrador.usecases.voluntarios.IVoluntarioSave;
 import com.example.tp_integrador.utils.customMessages.SaveResult;
 
 import java.util.concurrent.ExecutionException;

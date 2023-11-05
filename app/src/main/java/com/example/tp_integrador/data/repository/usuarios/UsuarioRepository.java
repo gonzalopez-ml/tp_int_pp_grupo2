@@ -4,6 +4,7 @@ import com.example.tp_integrador.data.tasks.usuarios.GetAllowLoginTask;
 import com.example.tp_integrador.data.tasks.usuarios.GetUsuarioTask;
 import com.example.tp_integrador.data.tasks.usuarios.SaveUsuarioTask;
 import com.example.tp_integrador.data.domain.Usuario;
+import com.example.tp_integrador.data.tasks.usuarios.UpdateUsuarioTask;
 
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
@@ -40,6 +41,19 @@ public class UsuarioRepository implements IUsuariosRepository {
             return null;
         });
     }
+
+    @Override
+    public CompletableFuture<Boolean> update(Usuario usuario) {
+        return CompletableFuture.supplyAsync(() -> {
+            try {
+                return new UpdateUsuarioTask().execute(usuario).get();
+            } catch (ExecutionException | InterruptedException e) {
+                e.printStackTrace();
+            }
+            return null;
+        });
+    }
+
 
     @Override
     public CompletableFuture<Usuario> getAllowAccess(Usuario usuario) {

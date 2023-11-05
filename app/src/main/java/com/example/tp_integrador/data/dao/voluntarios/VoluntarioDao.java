@@ -27,7 +27,8 @@ public class VoluntarioDao implements IVoluntarioDao {
                 e.printStackTrace();
             }
             return null;
-        });    }
+        });
+    }
 
     @Override
     public CompletableFuture<Boolean> save(Integer idUser, Voluntario voluntario) {
@@ -35,6 +36,19 @@ public class VoluntarioDao implements IVoluntarioDao {
             CompletableFuture<Boolean> isVoluntarioSave = voluntariosRepository.save(idUser, voluntario);
             try {
                 return isVoluntarioSave.get();
+            } catch (ExecutionException | InterruptedException e) {
+                e.printStackTrace();
+            }
+            return false;
+        });
+    }
+
+    @Override
+    public CompletableFuture<Boolean> update(Voluntario voluntario) {
+        return CompletableFuture.supplyAsync(() -> {
+            CompletableFuture<Boolean> isVoluntarioUpdate = voluntariosRepository.update(voluntario);
+            try {
+                return isVoluntarioUpdate.get();
             } catch (ExecutionException | InterruptedException e) {
                 e.printStackTrace();
             }

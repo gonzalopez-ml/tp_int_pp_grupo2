@@ -3,10 +3,12 @@ package com.example.tp_integrador.uiRegistro;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.tp_integrador.LoginActivity;
@@ -15,11 +17,13 @@ import com.example.tp_integrador.data.domain.Ong;
 import com.example.tp_integrador.data.domain.TipoUser;
 import com.example.tp_integrador.data.domain.Usuario;
 import com.example.tp_integrador.data.domain.Voluntario;
+import com.example.tp_integrador.data.domain.enums.RequestType;
 import com.example.tp_integrador.usecases.ongs.IOngSave;
 import com.example.tp_integrador.usecases.voluntarios.IVoluntarioSave;
 import com.example.tp_integrador.utils.customMessages.SaveResult;
 import com.example.tp_integrador.utils.validarCamposVacios.IValidateInputs;
 import com.example.tp_integrador.utils.validarUsuario.IValidateMail;
+import com.example.tp_integrador.utils.validateJpgFiles.IValidateJpegFiles;
 
 import java.util.Arrays;
 import java.util.List;
@@ -39,6 +43,9 @@ public class RegistroOng extends AppCompatActivity {
     EditText editTextPhone;
 
     Button guardarButton;
+    Button cancelarOngButton;
+    Button examinePhotoButton;
+    TextView fileSelectedPhoto;
 
     @Inject
     IValidateInputs validateInputs;
@@ -49,6 +56,12 @@ public class RegistroOng extends AppCompatActivity {
     @Inject
     IOngSave ongSave;
 
+    @Inject
+    IValidateJpegFiles validateJpgFiles;
+
+    private String photoFileName;
+
+    private static final String JPG_TYPE = "image/jpeg";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,8 +74,26 @@ public class RegistroOng extends AppCompatActivity {
         editTextMail = findViewById(R.id.txtOngMail);
         editTextPassword = findViewById(R.id.txtOngPassword);
         editTextPhone = findViewById(R.id.txtOngPhone);
+        fileSelectedPhoto = findViewById(R.id.archivoSeleccionadoPhotoOng);
 
         guardarButton = findViewById(R.id.btnOngGuardar);
+        cancelarOngButton = findViewById(R.id.cancelarOngButton);
+        examinePhotoButton = findViewById(R.id.examinePhotoOngButton);
+
+        cancelarOngButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(RegistroOng.this, LoginActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        examinePhotoButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                examinePhotoFile(v);
+            }
+        });
 
         guardarButton.setOnClickListener(new View.OnClickListener() {
 
@@ -70,7 +101,12 @@ public class RegistroOng extends AppCompatActivity {
             public void onClick(View view) {
                 Usuario usuario = new Usuario();
 
-                Ong ong = retrieveAndValidateInputsOngs();
+                if (photoFileName == null) {
+                    showMessage("Selecciono un archivo inválido, por favor utilize JPEG para la foto.");
+                    return;
+                }
+
+                Ong ong = retrieveAndValidateInputsOngs(photoFileName);
                 if (ong != null) {
                     usuario = retrieveAndValidateInputsUser();
                     if (usuario == null) return;
@@ -94,21 +130,21 @@ public class RegistroOng extends AppCompatActivity {
     }
 
 
-    private Ong retrieveAndValidateInputsOngs() {
+    private Ong retrieveAndValidateInputsOngs(String photoFileName) {
         String name = editTextName.getText().toString();
         String description = editTextDescription.getText().toString();
         String location = editTextLocation.getText().toString();
         String phone = editTextPhone.getText().toString();
         String mail = editTextMail.getText().toString();
 
-        Boolean isValidateInputs = validateInputs(name, description, location, phone);
+        Boolean isValidateInputs = validateInputs(name, description, location, phone, photoFileName);
 
         if (!isValidateInputs) {
             showMessage("Por favor completar todos los campos");
             return null;
         }
 
-        return new Ong(null, name, description, "", location, mail, phone);
+        return new Ong(null, name, description, photoFileName, phone, mail, location);
     }
 
     @Override
@@ -146,13 +182,39 @@ public class RegistroOng extends AppCompatActivity {
     }
 
 
-    private Boolean validateInputs(String nombre, String description, String location, String phone) {
-        List<String> inputs = Arrays.asList(nombre, description, location, phone);
+    private Boolean validateInputs(String nombre, String description, String location, String phone, String photoFileName) {
+        List<String> inputs = Arrays.asList(nombre, description, location, phone, photoFileName);
 
         return validateInputs.apply(inputs);
     }
 
     private Boolean validateMail(String mail, String password) {
         return validateMail.validate(mail, password);
+    }
+
+    private void examinePhotoFile(View view) {
+        Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+        intent.setType(JPG_TYPE);
+
+        startActivityForResult(intent, RequestType.PHOTO.getValue());
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == RequestType.PHOTO.getValue()) {
+            Uri selectedFileUri = data.getData();
+
+            photoFileName = validateJpgFiles.processSelectedJpgFile(this, selectedFileUri);
+
+            if (photoFileName == null) {
+                fileSelectedPhoto.setText("Archivo inválido");
+                fileSelectedPhoto.setTextColor(getResources().getColor(android.R.color.holo_red_dark));
+            } else {
+                fileSelectedPhoto.setText(photoFileName.substring(photoFileName.indexOf("files/")));
+                fileSelectedPhoto.setTextColor(getResources().getColor(android.R.color.holo_green_dark));
+            }
+        }
     }
 }
