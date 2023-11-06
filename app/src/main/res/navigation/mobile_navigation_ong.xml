@@ -37,7 +37,7 @@
 
     <fragment
         android:id="@+id/nav_cerrar_sesion_ong"
-        android:name="com.example.tp_integrador.uiONG.homeONG.HomeOngFragment"
+        android:name="com.example.tp_integrador.uiCerrarSesion.CerrarSesionFragment"
         android:label="Cerrar Sesion"
         tools:layout="@layout/fragment_cerrar_sesion" />
 
