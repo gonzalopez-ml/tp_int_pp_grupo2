@@ -19,6 +19,7 @@ public class OngGet implements IOngGet {
 
     @Override
     public Ong getOng(Integer idOng) {
+        Log.d("aviso","Pasa por aca getOng");
         try {
             Ong ong = ongDao.get(idOng).get();
             Log.d("aviso","Pasa por aca onDao");

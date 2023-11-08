@@ -78,7 +78,7 @@ public class EditarPerfilONGFragment extends Fragment {
 
         btnEditarOng = rootView.findViewById(R.id.btnOngGuardar);
         Log.d("Aviso","Pasa Frame 2");
-        mViewModel.getOngLiveData().removeObservers(getViewLifecycleOwner());
+
         Log.d("Aviso","Pasa Frame clean");
         mViewModel.getOngLiveData().observe(getViewLifecycleOwner(), ong -> {
 
