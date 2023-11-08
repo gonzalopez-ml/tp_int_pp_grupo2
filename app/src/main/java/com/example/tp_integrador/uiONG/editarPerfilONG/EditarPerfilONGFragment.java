@@ -65,6 +65,7 @@ public class EditarPerfilONGFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_editar_perfil_o_n_g, container, false);
 
         mViewModel = new ViewModelProvider(this).get(EditarPerfilONGViewModel.class);
+
         Log.d("Aviso","Pasa Frame 1");
         editTextName = rootView.findViewById(R.id.txtOngName);
         editTextDescripcion = rootView.findViewById(R.id.txtOngDescription);
@@ -77,7 +78,10 @@ public class EditarPerfilONGFragment extends Fragment {
 
         btnEditarOng = rootView.findViewById(R.id.btnOngGuardar);
         Log.d("Aviso","Pasa Frame 2");
+        mViewModel.getOngLiveData().removeObservers(getViewLifecycleOwner());
+        Log.d("Aviso","Pasa Frame clean");
         mViewModel.getOngLiveData().observe(getViewLifecycleOwner(), ong -> {
+
             Log.d("Aviso","Pasa Frame 3");
             if (ong != null) {
                 Log.d("Aviso","Pasa Frame 4");
@@ -96,6 +100,8 @@ public class EditarPerfilONGFragment extends Fragment {
         btnEditarOng.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Log.d("Aviso","Pasa Frame 5");
+
                 String name = editTextName.getText().toString();
                 String descripcion = editTextDescripcion.getText().toString();
                 String ubicacion = editTextUbicacion.getText().toString();
@@ -112,7 +118,7 @@ public class EditarPerfilONGFragment extends Fragment {
                     TipoUser tipoUser = new TipoUser(idType);
                     Usuario usuario = new Usuario(mail, contraseña, tipoUser);
                     usuario.setIdUser(idUser);
-                    Ong ong = new Ong(24, name, descripcion, "", telefono, mail, ubicacion);
+                    Ong ong = new Ong(1, name, descripcion, "", telefono, mail, ubicacion);
                     ong.setUsuario(usuario);
 
                     Boolean isOngSave = mViewModel.saveOngLiveData(ong);

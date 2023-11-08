@@ -34,6 +34,9 @@ public class EditarPerfilONGViewModel extends ViewModel {
         this.ongGet = ongGet;
         this.ongUpdate = ongUpdate;
         this.usuarioDao = usuarioDao;
+
+
+
     }
 
     public EditarPerfilONGViewModel() {
@@ -43,10 +46,12 @@ public class EditarPerfilONGViewModel extends ViewModel {
         Log.d("Aviso","Entra GetOngLiveData");
         try {
             Log.d("aviso","Pasa por aca OnGet.GetOng");
-            Ong ong = ongGet.getOng(24);
+            Ong ong = ongGet.getOng(1);
 
             if (ong != null) {
+
                 ongLiveData.setValue(ong);
+                Log.d("Aviso","Pasa OnlineData.SetValue");
             }
         } catch (Exception e) {
             e.printStackTrace();
