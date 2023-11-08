@@ -1,6 +1,7 @@
 package com.example.tp_integrador.data.dao.ongs;
 
 import com.example.tp_integrador.data.domain.Ong;
+import com.example.tp_integrador.data.domain.Voluntario;
 import com.example.tp_integrador.data.repository.ongs.IOngRepository;
 
 import java.util.concurrent.CompletableFuture;
@@ -42,4 +43,18 @@ public class OngDao implements IOngDao {
             return false;
         });
     }
+
+    @Override
+    public CompletableFuture<Boolean> update(Ong ong) {
+        return CompletableFuture.supplyAsync(() -> {
+            CompletableFuture<Boolean> isOngUpdate = ongRepository.update(ong);
+            try {
+                return isOngUpdate.get();
+            } catch (ExecutionException | InterruptedException e) {
+                e.printStackTrace();
+            }
+            return false;
+        });
+    }
+
 }

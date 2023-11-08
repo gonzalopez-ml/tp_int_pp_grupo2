@@ -20,7 +20,9 @@ import com.example.tp_integrador.databinding.ActivityMainOngBinding;
 
 public class MainActivityONG extends AppCompatActivity {
 
+    //private ActivityMainOngBinding binding;
     private ActivityMainOngBinding binding;
+
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle actionBarDrawerToggle;
 
