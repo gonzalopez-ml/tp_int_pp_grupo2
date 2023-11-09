@@ -34,7 +34,7 @@ public class GetOngTask extends AsyncTask<Integer, Void, Ong> {
             Connection connection = DriverManager.getConnection(DB_URL, USER, PASSWORD);
             Class.forName("com.mysql.jdbc.Driver");
 
-            String selectQuery = "SELECT * FROM Perfil_ongs " +
+            String selectQuery = "SELECT Perfil_ongs.*, Usuarios.password, Usuarios.tipo_usuario FROM Perfil_ongs " +
                     "INNER JOIN Usuarios ON Perfil_ongs.id_usuario = Usuarios.id_usuario " +
                     "WHERE Perfil_ongs.id_perfil_ong = ?";
 
@@ -45,9 +45,11 @@ public class GetOngTask extends AsyncTask<Integer, Void, Ong> {
                 ResultSet resultSet = preparedStatement.executeQuery();
                 Log.d("aviso","Pasa Query 2: "+selectQuery);
                 if (resultSet.next()) {
+
                     Log.d("aviso","pasa por next");
 
                     Ong ong = new Ong();
+
                     Usuario usuario = new Usuario();
                     TipoUser tipoUser = new TipoUser();
 
@@ -61,15 +63,17 @@ public class GetOngTask extends AsyncTask<Integer, Void, Ong> {
                     ong.setPhone(resultSet.getString("telefono"));
                     ong.setLocation(resultSet.getString("ubicacion"));
 
+
+
                     usuario.setIdUser(resultSet.getInt("id_usuario"));
                     usuario.setMail(resultSet.getString("mail"));
                     usuario.setPassword(resultSet.getString("password"));
 
                     tipoUser.setId(Integer.parseInt(resultSet.getString("tipo_usuario")));
                     usuario.setTipoUser(tipoUser);
-                    //ong.setIdOng(usuario);
+                    ong.setUsuario(usuario);
 
-                    Log.d("Aviso","Ruturn ong GetOngTask");
+                    Log.d("Aviso","Return ong GetOngTask: "+usuario.getMail());
                     return ong;
                 } else {
                     return null;

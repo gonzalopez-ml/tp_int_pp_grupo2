@@ -5,6 +5,7 @@ import com.example.tp_integrador.data.domain.Voluntario;
 import com.example.tp_integrador.data.tasks.ongs.GetOngTask;
 import com.example.tp_integrador.data.tasks.ongs.SaveOngTask;
 import com.example.tp_integrador.data.tasks.ongs.UpdateOngTask;
+import com.example.tp_integrador.data.tasks.voluntarios.GetVoluntarioTask;
 import com.example.tp_integrador.data.tasks.voluntarios.UpdateVoluntarioTask;
 
 import java.util.concurrent.CompletableFuture;
@@ -13,12 +14,18 @@ import android.util.Log;
 
 public class OngRepository implements IOngRepository {
 
+
     @Override
     public CompletableFuture<Ong> get(Integer id) {
-        Log.d("Aviso", "GetOngTask");
-        new GetOngTask().execute(id);
-
-        return null;
+        return CompletableFuture.supplyAsync(() -> {
+            try {
+                Log.d("Aviso", "GetOngTask");
+                return new GetOngTask().execute(id).get();
+            } catch (ExecutionException | InterruptedException e) {
+                e.printStackTrace();
+            }
+            return null;
+        });
     }
 
 

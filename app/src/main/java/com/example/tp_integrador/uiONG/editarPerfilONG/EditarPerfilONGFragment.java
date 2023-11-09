@@ -90,10 +90,9 @@ public class EditarPerfilONGFragment extends Fragment {
                 editTextName.setText(ong.getName());
                 editTextDescripcion.setText(ong.getDescription());
                 editTextUbicacion.setText(ong.getLocation());
-                editTextMail.setText(ong.getMail());
+                editTextMail.setText(ong.getUsuario().getMail());
                 editTextTelefono.setText(ong.getPhone());
                 editPassword.setText(ong.getUsuario().getPassword());
-
             }
         });
 
