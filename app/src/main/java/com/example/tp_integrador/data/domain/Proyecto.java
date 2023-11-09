@@ -6,8 +6,7 @@ public class Proyecto {
     private Ong ong;
     private String nombre;
     private String descripcion;
-    private String objetivos;
-
+    private String objetivos; //necesidades
     private String disponibilidad;
     private String ubicacion;
 
