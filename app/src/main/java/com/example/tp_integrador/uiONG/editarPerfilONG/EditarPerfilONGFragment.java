@@ -51,6 +51,8 @@ public class EditarPerfilONGFragment extends Fragment {
 
     private Button btnEditarOng;
 
+    private Button btnCancelarOng;
+
     private Integer idUser;
     private int idType;
 
@@ -77,6 +79,8 @@ public class EditarPerfilONGFragment extends Fragment {
         editPassword = rootView.findViewById(R.id.txtOngPassword);
 
         btnEditarOng = rootView.findViewById(R.id.btnOngGuardar);
+        btnCancelarOng = rootView.findViewById(R.id.btnOngCancelar);
+
         Log.d("Aviso","Pasa Frame 2");
 
         Log.d("Aviso","Pasa Frame clean");
@@ -96,6 +100,16 @@ public class EditarPerfilONGFragment extends Fragment {
             }
         });
 
+
+        btnCancelarOng.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.d("Aviso","click boton cancelar");
+                requireActivity().onBackPressed();
+            }
+        });
+
+
         btnEditarOng.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -108,8 +122,19 @@ public class EditarPerfilONGFragment extends Fragment {
                 String telefono = editTextTelefono.getText().toString();
                 String contraseña = editPassword.getText().toString();
 
+                Log.d("Aviso","Name: "+name);
+                Log.d("Aviso","descripcion: "+descripcion);
+                Log.d("Aviso","ubicacion: "+ubicacion);
+                Log.d("Aviso","mail: "+mail);
+                Log.d("Aviso","telefono: "+telefono);
+                Log.d("Aviso","Contraseña: "+contraseña);
+
+
+
 
                 Boolean isValidateInputs = validateInputsOng(name, descripcion, ubicacion, mail, telefono, contraseña);
+
+                Log.d("Aviso","boolen 1:"+isValidateInputs);
 
                 if (!isValidateInputs) {
                     Toast.makeText(requireContext(), "Por favor verificar los campos", Toast.LENGTH_SHORT).show();
@@ -145,6 +170,7 @@ public class EditarPerfilONGFragment extends Fragment {
         List<String> inputs = Arrays.asList(name, descripcion, ubicacion, mail, telefono, contraseña);
 
         Boolean isValidateInputs = validateInputs.apply(inputs);
+        Log.d("Aviso","boolen 2:"+isValidateInputs);
 
         if (isValidateInputs) {
             return validateMail.validate(mail, contraseña);

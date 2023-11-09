@@ -73,7 +73,7 @@ public class GetOngTask extends AsyncTask<Integer, Void, Ong> {
                     usuario.setTipoUser(tipoUser);
                     ong.setUsuario(usuario);
 
-                    Log.d("Aviso","Return ong GetOngTask: "+usuario.getMail());
+                    Log.d("Aviso","Return ong GetOngTask: "+ ong.getLocation());
                     return ong;
                 } else {
                     return null;
