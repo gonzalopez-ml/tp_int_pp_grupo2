@@ -10,7 +10,7 @@ public class HomeOngViewModel extends ViewModel {
 
     public HomeOngViewModel() {
         mText = new MutableLiveData<>();
-        mText.setValue("This is home fragment");
+        mText.setValue("ONG - Buscando la Transformación Social");
     }
 
     public LiveData<String> getText() {

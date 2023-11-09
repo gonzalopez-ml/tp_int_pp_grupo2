@@ -9,6 +9,7 @@ import java.util.concurrent.CompletableFuture;
 public interface IOngDao {
     CompletableFuture<Ong> get(Integer id);
     CompletableFuture<Boolean> save(Integer idUser, Ong ong);
+    CompletableFuture<Boolean> update(Ong ong);
     CompletableFuture<List<Proyecto>> getProjectsOng();
     CompletableFuture<List<Proyecto>> getProjectsOngByLocation(String location);
 }

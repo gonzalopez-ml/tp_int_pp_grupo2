@@ -18,9 +18,14 @@ import androidx.navigation.ui.NavigationUI;
 
 import com.example.tp_integrador.databinding.ActivityMainOngBinding;
 
+import dagger.hilt.android.AndroidEntryPoint;
+
+@AndroidEntryPoint
 public class MainActivityONG extends AppCompatActivity {
 
+    //private ActivityMainOngBinding binding;
     private ActivityMainOngBinding binding;
+
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle actionBarDrawerToggle;
 

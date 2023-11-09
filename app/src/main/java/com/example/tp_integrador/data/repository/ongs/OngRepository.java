@@ -11,19 +11,34 @@ import com.example.tp_integrador.data.tasks.ongs.UpdateOngTask;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
+import android.util.Log;
 
 public class OngRepository implements IOngRepository {
 
     @Override
     public CompletableFuture<Ong> get(Integer id) {
-        new GetOngTask().execute(id);
-        return null;
+        return CompletableFuture.supplyAsync(() -> {
+            try {
+                Log.d("Aviso", "GetOngTask");
+                return new GetOngTask().execute(id).get();
+            } catch (ExecutionException | InterruptedException e) {
+                e.printStackTrace();
+            }
+            return null;
+        });
     }
 
     @Override
     public CompletableFuture<Boolean> update(Ong ong) {
-        new UpdateOngTask().execute(ong);
-        return null;
+        return CompletableFuture.supplyAsync(() -> {
+            try {
+                return new UpdateOngTask().execute(ong).get();
+
+            } catch (ExecutionException | InterruptedException e) {
+                e.printStackTrace();
+            }
+            return null;
+        });
     }
 
     @Override

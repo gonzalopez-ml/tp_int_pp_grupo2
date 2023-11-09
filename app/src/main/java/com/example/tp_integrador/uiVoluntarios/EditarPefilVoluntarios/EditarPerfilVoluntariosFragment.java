@@ -28,6 +28,7 @@ import javax.inject.Inject;
 
 import dagger.hilt.android.AndroidEntryPoint;
 
+import android.util.Log;
 @AndroidEntryPoint
 public class EditarPerfilVoluntariosFragment extends Fragment {
 
@@ -78,6 +79,8 @@ public class EditarPerfilVoluntariosFragment extends Fragment {
         btnEditarVoluntario = rootView.findViewById(R.id.btnEditEditarVoluntario);
 
         mViewModel.getVoluntarioLiveData().observe(getViewLifecycleOwner(), voluntario -> {
+            Log.d("Aviso","pasa");
+
             if (voluntario != null) {
                 idUser = voluntario.getUsuario().getIdUser();
                 idType = voluntario.getUsuario().getTipoUser().getId();

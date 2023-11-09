@@ -15,8 +15,12 @@ import com.example.tp_integrador.data.repository.voluntarios.VoluntarioRepositor
 import com.example.tp_integrador.data.dao.usuarios.IUsuarioDao;
 import com.example.tp_integrador.data.dao.usuarios.UsuarioDao;
 import com.example.tp_integrador.data.dao.voluntarios.IVoluntarioDao;
+import com.example.tp_integrador.usecases.ongs.IOngGet;
 import com.example.tp_integrador.usecases.ongs.IOngSave;
 //import com.example.tp_integrador.usecases.ongs.OngSave;
+import com.example.tp_integrador.usecases.ongs.IOngUpdate;
+import com.example.tp_integrador.usecases.ongs.impl.OngGet;
+import com.example.tp_integrador.usecases.ongs.impl.OngUpdate;
 import com.example.tp_integrador.usecases.proyectos.IProyectoSave;
 import com.example.tp_integrador.usecases.proyectos.ProyectoSave;
 import com.example.tp_integrador.usecases.ongs.impl.OngSave;
@@ -82,9 +86,20 @@ public class AppModule {
         return new VoluntarioUpdate(usuarioDao, voluntarioDao);
     }
 
+
+    @Provides
+    static IOngUpdate provideOngUpdate(IUsuarioDao usuarioDao, IOngDao ongDao) {
+        return new OngUpdate(usuarioDao, ongDao);
+    }
+
     @Provides
     static IVoluntarioGet provideVoluntarioGet(IVoluntarioDao voluntarioDao) {
         return new VoluntarioGet(voluntarioDao);
+    }
+
+    @Provides
+    static IOngGet provideOngGet(IOngDao ongDao) {
+        return new OngGet(ongDao);
     }
 
     @Provides
