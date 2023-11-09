@@ -11,5 +11,5 @@ public interface IProyectoRepository {
 
     CompletableFuture<Boolean> update(Proyecto proyecto);
 
-    CompletableFuture<Boolean> save(Proyecto proyecto, Integer idOng);
+    CompletableFuture<Boolean> save(Proyecto proyecto);
 }

@@ -19,11 +19,23 @@ import android.widget.Toast;
 import com.example.tp_integrador.R;
 import com.example.tp_integrador.data.domain.Ong;
 import com.example.tp_integrador.data.domain.Proyecto;
+import com.example.tp_integrador.uiVoluntarios.EditarPefilVoluntarios.EditarPerfilVoluntariosFragment;
+import com.example.tp_integrador.utils.validarCamposVacios.IValidateInputs;
+import com.example.tp_integrador.utils.validarUsuario.IValidateMail;
+
+import java.util.Arrays;
+import java.util.List;
+
+import javax.inject.Inject;
 
 import dagger.hilt.android.AndroidEntryPoint;
 
 @AndroidEntryPoint
 public class PublicarPrupuestasLaboralesFragment extends Fragment {
+
+    @Inject
+    IValidateInputs validateInputs;
+
 
     private PublicarPrupuestasLaboralesViewModel mViewModel;
 
@@ -33,10 +45,6 @@ public class PublicarPrupuestasLaboralesFragment extends Fragment {
     private EditText editTextDisponibilidad;
     private EditText editTextUbicacion;
     private Button btnGuardarProyecto;
-
-
-
-
 
 
     public static PublicarPrupuestasLaboralesFragment newInstance() {
@@ -67,17 +75,22 @@ public class PublicarPrupuestasLaboralesFragment extends Fragment {
                 String disponiblidad = editTextDisponibilidad.getText().toString();
                 String ubicacion = editTextUbicacion.getText().toString();
 
-                Ong ong = new Ong();
-                Proyecto  proyecto = new Proyecto(null,ong,nombre,descripcion,objetivos,disponiblidad,ubicacion);
+                Boolean isValidateInputs = validateInputsProyecto(nombre,descripcion,objetivos,disponiblidad,ubicacion);
 
-                Boolean isProyectoSave = mViewModel.saveProyectoLiveData(proyecto);
+                if (!isValidateInputs) {
+                    Toast.makeText(requireContext(), "Por favor verificar los campos", Toast.LENGTH_SHORT).show();
+                } else {
+                    Ong ong = new Ong();
+                    Proyecto  proyecto = new Proyecto(null,ong,nombre,descripcion,objetivos,disponiblidad,ubicacion);
+                    Boolean isProyectoSave = mViewModel.saveProyectoLiveData(proyecto);
 
-                if(isProyectoSave){
-                    Toast.makeText(requireContext(),"Se grabaron los datos con exito!",Toast.LENGTH_SHORT).show();
-                }else{
+                    if(isProyectoSave){
+                        Toast.makeText(requireContext(),"Se grabaron los datos con exito!",Toast.LENGTH_SHORT).show();
+                        reiniciarCampos();
+                    }else{
                     Toast.makeText(requireContext(),"Error al guardar los datos, intente nuevamente!",Toast.LENGTH_SHORT).show();
+                    }
                 }
-
             }
         });
 
@@ -85,14 +98,28 @@ public class PublicarPrupuestasLaboralesFragment extends Fragment {
     }
 
 
+    private void reiniciarCampos(){
+        editTextName.setText("Nombre");
+        editTextUbicacion.setText("Ubicacion");
+        editTextDisponibilidad.setText("Disponibilidad");
+        editTextObjetivos.setText("Objetivos");
+        editTextDescripcion.setText("Desecripcion");
+    }
+
+    private Boolean validateInputsProyecto(String nombre, String descripcion, String objetivos, String disponibilidad, String ubicacion) {
+        List<String> inputs = Arrays.asList(nombre, descripcion,objetivos,disponibilidad,ubicacion);
+        return validateInputs.apply(inputs);
+    }
 
 
 
+
+/*
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mViewModel = new ViewModelProvider(this).get(PublicarPrupuestasLaboralesViewModel.class);
         // TODO: Use the ViewModel
     }
-
+*/
 }

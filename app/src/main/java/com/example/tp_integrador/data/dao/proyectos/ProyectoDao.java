@@ -32,9 +32,9 @@ public class ProyectoDao implements IProyectoDao {
     }
 
     @Override
-    public CompletableFuture<Boolean> save(Proyecto proyecto, Integer idOng) {
+    public CompletableFuture<Boolean> save(Proyecto proyecto) {
         return CompletableFuture.supplyAsync(()->{
-            CompletableFuture<Boolean> isProyectoSave = proyectoRepository.save(proyecto,idOng);
+            CompletableFuture<Boolean> isProyectoSave = proyectoRepository.save(proyecto);
             try{
                 return isProyectoSave.get();
             }catch (ExecutionException | InterruptedException e){

@@ -22,7 +22,7 @@ public class PublicarPrupuestasLaboralesViewModel extends ViewModel {
 
     public Boolean saveProyectoLiveData(Proyecto proyecto){
         try{
-            Boolean isProyectoSave= proyectoSave.save(proyecto,null).isSuccess();//revisar ONG
+            Boolean isProyectoSave= proyectoSave.save(proyecto).isSuccess();//revisar ONG ( la ong se guarda antes porque es el Usuario ONG.
 
             if(isProyectoSave){
                return true;

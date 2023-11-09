@@ -24,10 +24,10 @@ public class ProyectoRepository implements IProyectoRepository{
     }
 
     @Override
-    public CompletableFuture<Boolean> save(Proyecto proyecto, Integer idOng) {
+    public CompletableFuture<Boolean> save(Proyecto proyecto) {
         return CompletableFuture.supplyAsync(() -> {
             try {
-                return new SaveProyectoTask().execute(idOng,proyecto).get();
+                return new SaveProyectoTask().execute(proyecto).get();
             } catch (ExecutionException | InterruptedException e) {
                 e.printStackTrace();
             }

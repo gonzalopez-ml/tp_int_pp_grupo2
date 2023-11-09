@@ -24,9 +24,9 @@ public class ProyectoSave implements IProyectoSave{
     }
 
     @Override
-    public SaveResult save(Proyecto proyecto, Ong ong) {
+    public SaveResult save(Proyecto proyecto) {
         try{
-            Boolean isProyectoSave = proyectoDao.save(proyecto,ong.getIdOng()).get();
+            Boolean isProyectoSave = proyectoDao.save(proyecto).get();
 
             if (isProyectoSave) {
                 return new SaveResult(true, "Propuesta guardada correctamente");

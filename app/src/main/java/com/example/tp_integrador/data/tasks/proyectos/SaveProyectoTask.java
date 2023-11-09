@@ -19,20 +19,17 @@ public class SaveProyectoTask extends AsyncTask<Object,Void,Boolean> {
     @Override
     protected Boolean doInBackground(Object... params) {
         Proyecto proyecto = (Proyecto) params[0];
-        Integer idOng = (Integer) params[1];
-        Integer idProyecto = null;
+        Integer idOng = 1; // proyecto.getOng().getIdOng();
 
-// REVISAR Valor null en el id
         try(Connection connection = DriverManager.getConnection(DB_URL,USER,PASSWORD)){
-            String insertQuery= "INSERT INTO Proyectos_ong (id_proyecto,id_perfil_ong, nombre, necesidades,descripcion,ubicacion,disponibilidad) VALUES (?, ?, ?, ?, ?, ?,?)";
+            String insertQuery= "INSERT INTO Proyectos_ong (id_perfil_ong, nombre, necesidades, descripcion, disponibilidad ,ubicacion) VALUES (?, ?, ?, ?, ?, ?)";
             try(PreparedStatement preparedStatement = connection.prepareStatement(insertQuery)){
-                preparedStatement.setInt(1,idProyecto);
-                preparedStatement.setObject(2,idOng);
-                preparedStatement.setString(3,proyecto.getNombre());
-                preparedStatement.setString(4,proyecto.getObjetivos());
-                preparedStatement.setString(5,proyecto.getDescripcion());
-                preparedStatement.setString(6,proyecto.getUbicacion());
-                preparedStatement.setString(7,proyecto.getDisponibilidad());
+                preparedStatement.setObject(1,idOng);
+                preparedStatement.setString(2,proyecto.getNombre());
+                preparedStatement.setString(3,proyecto.getObjetivos());
+                preparedStatement.setString(4,proyecto.getDescripcion());
+                preparedStatement.setString(6,proyecto.getDisponibilidad());
+                preparedStatement.setString(5,proyecto.getUbicacion());
                 int rowsAffected = preparedStatement.executeUpdate();
                 preparedStatement.close();
 
