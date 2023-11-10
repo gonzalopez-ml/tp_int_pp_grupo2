@@ -28,7 +28,9 @@ public class ProyectoAdapter extends RecyclerView.Adapter<ProyectoAdapter.Proyec
     @Override
     public void onBindViewHolder(@NonNull ProyectoViewHolder holder, int position) {
         Proyecto proyecto = proyectos.get(position);
+        holder.nombreOng.setText(proyecto.getOng().getName());
         holder.nombreProyecto.setText(proyecto.getNombre());
+        holder.descripcionProyeco.setText(proyecto.getDescripcion());
     }
 
     @Override
@@ -42,11 +44,15 @@ public class ProyectoAdapter extends RecyclerView.Adapter<ProyectoAdapter.Proyec
     }
 
     public static class ProyectoViewHolder extends RecyclerView.ViewHolder {
+        public TextView nombreOng;
         public TextView nombreProyecto;
+        public TextView descripcionProyeco;
 
         public ProyectoViewHolder(@NonNull View itemView) {
             super(itemView);
+            nombreOng = itemView.findViewById(R.id.nombreOng);
             nombreProyecto = itemView.findViewById(R.id.nombreProyecto);
+            descripcionProyeco = itemView.findViewById(R.id.descripcionProyecto);
         }
     }
 }
