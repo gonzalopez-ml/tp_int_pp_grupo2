@@ -43,4 +43,17 @@ public class ProyectoDao implements IProyectoDao {
             return false;
         });
     }
+
+    @Override
+    public CompletableFuture<Boolean> update(Proyecto proyecto) {
+        return CompletableFuture.supplyAsync(()->{
+            CompletableFuture<Boolean> isProyectoSave = proyectoRepository.update(proyecto);
+            try{
+                return isProyectoSave.get();
+            }catch (ExecutionException | InterruptedException e){
+                e.printStackTrace();
+            }
+            return false;
+        });
+    }
 }
