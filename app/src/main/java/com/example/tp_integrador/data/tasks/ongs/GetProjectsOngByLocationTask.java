@@ -25,7 +25,8 @@ public class GetProjectsOngByLocationTask extends AsyncTask<String, Void, List<P
         List<Proyecto> projects = new ArrayList<>();
 
         try (Connection connection = DriverManager.getConnection(DB_URL, USER, PASSWORD)) {
-            String selectQuery = "SELECT * FROM Proyectos_ong INNER JOIN Perfil_ongs ON Proyectos_ong.id_perfil_ong = Perfil_ongs.id_perfil_ong WHERE Proyectos_ong.ubicacion like %" + location + "%";
+            String selectQuery = "SELECT * FROM Proyectos_ong INNER JOIN Perfil_ongs ON Proyectos_ong.id_perfil_ong = Perfil_ongs.id_perfil_ong LEFT JOIN relaciones ON Proyectos_ong.id_proyecto = relaciones.id_proyecto_ong WHERE relaciones.id_perfil_voluntario IS NULL AND Proyectos_ong.ubicacion LIKE '%" + location + "%'";
+            //String selectQuery = "SELECT * FROM Proyectos_ong INNER JOIN Perfil_ongs ON Proyectos_ong.id_perfil_ong = Perfil_ongs.id_perfil_ong WHERE Proyectos_ong.ubicacion like %" + location + "%";
             try (PreparedStatement preparedStatement = connection.prepareStatement(selectQuery)) {
 
                 ResultSet resultSet = preparedStatement.executeQuery();
