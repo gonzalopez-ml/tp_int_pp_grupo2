@@ -16,10 +16,12 @@ import com.example.tp_integrador.data.dao.usuarios.IUsuarioDao;
 import com.example.tp_integrador.data.dao.usuarios.UsuarioDao;
 import com.example.tp_integrador.data.dao.voluntarios.IVoluntarioDao;
 import com.example.tp_integrador.usecases.ongs.IOngGet;
+import com.example.tp_integrador.usecases.ongs.IOngProyectosGet;
 import com.example.tp_integrador.usecases.ongs.IOngSave;
 //import com.example.tp_integrador.usecases.ongs.OngSave;
 import com.example.tp_integrador.usecases.ongs.IOngUpdate;
 import com.example.tp_integrador.usecases.ongs.impl.OngGet;
+import com.example.tp_integrador.usecases.ongs.impl.OngProyectosGet;
 import com.example.tp_integrador.usecases.ongs.impl.OngUpdate;
 import com.example.tp_integrador.usecases.proyectos.IProyectoSave;
 import com.example.tp_integrador.usecases.proyectos.ProyectoSave;
@@ -120,6 +122,13 @@ public class AppModule {
     static IProyectoSave provideProyectoSave(IProyectoDao proyectoDao,IOngDao ongDao){
         return new ProyectoSave(proyectoDao,ongDao);
     }
+
+    @Provides
+    @Singleton
+    static IOngProyectosGet provideOngProyectosGetDao(IOngDao ongDao) {
+        return new OngProyectosGet(ongDao);
+    }
+
 
     //repositories
     @Provides
