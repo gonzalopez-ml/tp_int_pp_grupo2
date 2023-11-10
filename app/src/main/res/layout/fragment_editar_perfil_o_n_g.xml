@@ -6,36 +6,21 @@
     android:layout_height="match_parent"
     tools:context=".uiONG.editarPerfilONG.EditarPerfilONGFragment">
 
-    <Button
-        android:id="@+id/btnOngGuardar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="56dp"
-        android:layout_marginTop="12dp"
-        android:text="Guardar"
-        android:textColor="#000000"
-        app:backgroundTint="@color/gray"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName16" />
+    <FrameLayout
+        android:id="@+id/fragment_editar_perfil_ong"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:layout_editor_absoluteX="-55dp"
+        tools:layout_editor_absoluteY="-406dp">
 
-    <Button
-        android:id="@+id/cancelarOngButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="44dp"
-        android:layout_marginTop="12dp"
-        android:text="Cancelar"
-        android:textColor="#000000"
-        app:backgroundTint="@color/gray"
-        app:layout_constraintStart_toEndOf="@+id/btnOngGuardar"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName16" />
+    </FrameLayout>
 
     <TextView
         android:id="@+id/textView20"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="41dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="70dp"
         android:layout_marginEnd="316dp"
         android:text="Logo"
         android:textColor="@color/black"
@@ -59,15 +44,14 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.473"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/txtOngName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="41dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="13dp"
         android:layout_marginEnd="160dp"
         android:ems="10"
         android:hint="Nombre de la Ong"
@@ -85,12 +69,11 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="160dp"
         android:ems="10"
+        android:hint="Descripcion de la ONG"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtOngName"
-        android:hint="Descripcion de la ONG"
-        />
+        app:layout_constraintTop_toBottomOf="@+id/txtOngName" />
 
     <EditText
         android:id="@+id/txtOngLocation"
@@ -100,12 +83,11 @@
         android:layout_marginTop="9dp"
         android:layout_marginEnd="160dp"
         android:ems="10"
+        android:hint="Ubicacion"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtOngDescription"
-        android:hint="Ubicacion"
-        />
+        app:layout_constraintTop_toBottomOf="@+id/txtOngDescription" />
 
     <EditText
         android:id="@+id/txtOngMail"
@@ -115,19 +97,18 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="160dp"
         android:ems="10"
+        android:hint="Correo electrónico"
         android:inputType="textEmailAddress"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtOngLocation"
-        android:hint="Correo electrónico"
-        />
+        app:layout_constraintTop_toBottomOf="@+id/txtOngLocation" />
 
     <Button
         android:id="@+id/examinePhotoOngButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="43dp"
-        android:layout_marginTop="18dp"
+        android:layout_marginTop="20dp"
         android:layout_marginEnd="255dp"
         android:text="Examinar"
         android:textColor="#000000"
@@ -138,36 +119,6 @@
         app:layout_constraintTop_toBottomOf="@+id/textView20" />
 
     <EditText
-        android:id="@+id/editTextTextPersonName15"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="44dp"
-        android:layout_marginTop="13dp"
-        android:layout_marginEnd="157dp"
-        android:ems="10"
-        android:inputType="textPersonName"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/examinePhotoOngButton"
-        android:hint="Proyectos actuales"
-        />
-
-    <EditText
-        android:id="@+id/editTextTextPersonName16"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="44dp"
-        android:layout_marginTop="18dp"
-        android:layout_marginEnd="157dp"
-        android:ems="10"
-        android:inputType="textPersonName"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName15"
-        android:hint="Necesidades expecificas"
-        />
-
-    <EditText
         android:id="@+id/txtOngPhone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -175,11 +126,48 @@
         android:layout_marginTop="13dp"
         android:layout_marginEnd="160dp"
         android:ems="10"
+        android:hint="Numero de telefono"
         android:inputType="phone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtOngMail"
-        android:hint="Numero de telefono"
-        />
+        app:layout_constraintTop_toBottomOf="@+id/txtOngMail" />
+
+    <EditText
+        android:id="@+id/txtOngPassword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="41dp"
+        android:layout_marginTop="13dp"
+        android:layout_marginEnd="160dp"
+        android:ems="10"
+        android:hint="Contraseña"
+        android:inputType="textPassword"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtOngPhone" />
+
+    <Button
+        android:id="@+id/btnOngGuardar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="45dp"
+        android:layout_marginEnd="16dp"
+        android:text="Guardar"
+        android:textColor="#000000"
+        app:backgroundTint="@color/gray"
+        app:layout_constraintEnd_toStartOf="@+id/btnOngCancelar"
+        app:layout_constraintTop_toBottomOf="@+id/examinePhotoOngButton" />
+
+    <Button
+        android:id="@+id/btnOngCancelar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="200dp"
+        android:layout_marginTop="44dp"
+        android:text="Cancelar"
+        android:textColor="#000000"
+        app:backgroundTint="@color/gray"
+        app:layout_constraintStart_toStartOf="@+id/fragment_editar_perfil_ong"
+        app:layout_constraintTop_toBottomOf="@+id/examinePhotoOngButton" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

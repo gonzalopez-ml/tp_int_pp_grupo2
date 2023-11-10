@@ -3,10 +3,12 @@ package com.example.tp_integrador.usecases.ongs.impl;
 import com.example.tp_integrador.data.dao.ongs.IOngDao;
 import com.example.tp_integrador.data.dao.usuarios.IUsuarioDao;
 import com.example.tp_integrador.data.domain.Ong;
+import com.example.tp_integrador.data.domain.Proyecto;
 import com.example.tp_integrador.data.domain.Usuario;
 import com.example.tp_integrador.usecases.ongs.IOngSave;
 import com.example.tp_integrador.utils.customMessages.SaveResult;
 
+import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 import javax.inject.Inject;
@@ -44,6 +46,16 @@ public class OngSave implements IOngSave {
             return new SaveResult(false, "La Ong no pudo ser registrada");
         }
         return new SaveResult(false, "La Ong no pudo ser registrada");
+    }
+
+    @Override
+    public List<Proyecto> getProjectsOng() throws ExecutionException, InterruptedException {
+        return ongDao.getProjectsOng().get();
+    }
+
+    @Override
+    public List<Proyecto> getProjectsOngByLocation(String location) throws ExecutionException, InterruptedException {
+        return ongDao.getProjectsOngByLocation(location).get();
     }
 
 }

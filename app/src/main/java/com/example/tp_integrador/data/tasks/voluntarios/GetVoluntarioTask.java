@@ -1,6 +1,7 @@
 package com.example.tp_integrador.data.tasks.voluntarios;
 
 import android.os.AsyncTask;
+import android.util.Log;
 
 import com.example.tp_integrador.data.domain.TipoUser;
 import com.example.tp_integrador.data.domain.Usuario;
@@ -55,6 +56,8 @@ public class GetVoluntarioTask extends AsyncTask<Integer, Void, Voluntario> {
                     tipoUser.setId(Integer.parseInt(resultSet.getString("tipo_usuario")));
                     usuario.setTipoUser(tipoUser);
                     voluntario.setUsuario(usuario);
+
+
 
                     return voluntario;
                 } else {

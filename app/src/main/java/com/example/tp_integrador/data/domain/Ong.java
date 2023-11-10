@@ -31,6 +31,10 @@ public class Ong {
         this.usuario = usuario;
     }
 
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
     @Nullable
     public Integer getIdOng() {
         return idOng;

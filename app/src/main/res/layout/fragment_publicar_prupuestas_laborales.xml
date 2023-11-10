@@ -37,7 +37,7 @@
 
 
     <EditText
-        android:id="@+id/editTextOngNombre"
+        android:id="@+id/editTextProyectoNombre"
         android:layout_width="271dp"
         android:layout_height="42dp"
         android:layout_marginStart="26dp"
@@ -52,7 +52,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView8" />
 
     <EditText
-        android:id="@+id/editTextOngDescripcion"
+        android:id="@+id/editTextProyectoDescripcion"
         android:layout_width="275dp"
         android:layout_height="40dp"
         android:layout_marginStart="26dp"
@@ -64,10 +64,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextOngNombre" />
+        app:layout_constraintTop_toBottomOf="@+id/editTextProyectoNombre" />
 
-    <EditText
-        android:id="@+id/editTextTextPersonName5"
+        <EditText
+        android:id="@+id/editTextProyectoUbicacion"
         android:layout_width="278dp"
         android:layout_height="41dp"
         android:layout_marginStart="26dp"
@@ -79,11 +79,11 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextPhone2" />
+        app:layout_constraintTop_toBottomOf="@+id/editTextProyectoDisponiblidad" />
 
 
     <EditText
-        android:id="@+id/editTextUbicacion"
+        android:id="@+id/editTextProyectoObjetivos"
         android:layout_width="274dp"
         android:layout_height="41dp"
         android:layout_marginStart="25dp"
@@ -95,10 +95,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextOngDescripcion" />
+        app:layout_constraintTop_toBottomOf="@+id/editTextProyectoDescripcion" />
 
     <EditText
-        android:id="@+id/editTextPhone2"
+        android:id="@+id/editTextProyectoDisponiblidad"
         android:layout_width="275dp"
         android:layout_height="39dp"
         android:layout_marginStart="26dp"
@@ -110,11 +110,11 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextUbicacion" />
+        app:layout_constraintTop_toBottomOf="@+id/editTextProyectoObjetivos" />
 
 
     <Button
-        android:id="@+id/button5"
+        android:id="@+id/btnGuardarProyecto"
         android:layout_width="110dp"
         android:layout_height="47dp"
         android:layout_marginStart="60dp"
@@ -123,10 +123,10 @@
         android:textColor="#000000"
         app:backgroundTint="@color/gray"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName5" />
+        app:layout_constraintTop_toBottomOf="@+id/editTextProyectoUbicacion" />
 
     <Button
-        android:id="@+id/button6"
+        android:id="@+id/btnCancelarProyecto"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="48dp"
@@ -134,7 +134,7 @@
         android:text="Cancelar"
         android:textColor="#000000"
         app:backgroundTint="@color/gray"
-        app:layout_constraintStart_toEndOf="@+id/button5"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName5" />
+        app:layout_constraintStart_toEndOf="@+id/btnGuardarProyecto"
+        app:layout_constraintTop_toBottomOf="@+id/editTextProyectoUbicacion" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
