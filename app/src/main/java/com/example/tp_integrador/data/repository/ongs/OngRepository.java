@@ -1,9 +1,11 @@
 package com.example.tp_integrador.data.repository.ongs;
 
 import com.example.tp_integrador.data.domain.Ong;
+import com.example.tp_integrador.data.tasks.ongs.DeleteProjectOngTask;
 import com.example.tp_integrador.data.tasks.ongs.GetOngByUserIDTask;
 import com.example.tp_integrador.data.domain.Proyecto;
 import com.example.tp_integrador.data.tasks.ongs.GetOngTask;
+import com.example.tp_integrador.data.tasks.ongs.GetProjectsOngByIdPerfilOngTask;
 import com.example.tp_integrador.data.tasks.ongs.GetProjectsOngByLocationTask;
 import com.example.tp_integrador.data.tasks.ongs.GetProjectsOngTask;
 import com.example.tp_integrador.data.tasks.ongs.SaveOngTask;
@@ -57,6 +59,18 @@ public class OngRepository implements IOngRepository {
     }
 
     @Override
+    public CompletableFuture<Boolean> delete(Integer id) {
+        return CompletableFuture.supplyAsync(() -> {
+            try {
+                return new DeleteProjectOngTask().execute(id).get();
+            } catch (ExecutionException | InterruptedException e) {
+                e.printStackTrace();
+            }
+            return null;
+        });
+    }
+
+    @Override
     public CompletableFuture<Ong> getByUserID(Integer idUser) {
         return CompletableFuture.supplyAsync(() -> {
             try {
@@ -85,6 +99,18 @@ public class OngRepository implements IOngRepository {
         return CompletableFuture.supplyAsync(() -> {
             try {
                 return new GetProjectsOngByLocationTask().execute(location).get();
+            } catch (ExecutionException | InterruptedException e) {
+                e.printStackTrace();
+            }
+            return null;
+        });
+    }
+
+    @Override
+    public CompletableFuture<List<Proyecto>> getProjectsOng(Integer id) {
+        return CompletableFuture.supplyAsync(() -> {
+            try {
+                return new GetProjectsOngByIdPerfilOngTask().execute(id).get();
             } catch (ExecutionException | InterruptedException e) {
                 e.printStackTrace();
             }

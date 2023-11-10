@@ -3,6 +3,7 @@ package com.example.tp_integrador.data.dao.ongs;
 import com.example.tp_integrador.data.domain.Ong;
 import com.example.tp_integrador.data.domain.Proyecto;
 import com.example.tp_integrador.data.repository.ongs.IOngRepository;
+import com.example.tp_integrador.data.tasks.ongs.GetProjectsOngByIdPerfilOngTask;
 import com.example.tp_integrador.data.tasks.ongs.GetProjectsOngByLocationTask;
 import com.example.tp_integrador.data.tasks.ongs.GetProjectsOngTask;
 
@@ -73,12 +74,37 @@ public class OngDao implements IOngDao {
         });
     }
 
+    @Override
+    public CompletableFuture<Boolean> delete(Integer id) {
+        return CompletableFuture.supplyAsync(() -> {
+            CompletableFuture<Boolean> isOngDelete = ongRepository.delete(id);
+            try {
+                return isOngDelete.get();
+            } catch (ExecutionException | InterruptedException e) {
+                e.printStackTrace();
+            }
+            return false;
+        });
+    }
+
 
     @Override
     public CompletableFuture<List<Proyecto>> getProjectsOng() {
         return CompletableFuture.supplyAsync(() -> {
             try {
                 return new GetProjectsOngTask().execute().get();
+            } catch (ExecutionException | InterruptedException e) {
+                e.printStackTrace();
+            }
+            return null;
+        });
+    }
+
+    @Override
+    public CompletableFuture<List<Proyecto>> getProjectsOngById(Integer id) {
+        return CompletableFuture.supplyAsync(() -> {
+            try {
+                return new GetProjectsOngByIdPerfilOngTask().execute(id).get();
             } catch (ExecutionException | InterruptedException e) {
                 e.printStackTrace();
             }

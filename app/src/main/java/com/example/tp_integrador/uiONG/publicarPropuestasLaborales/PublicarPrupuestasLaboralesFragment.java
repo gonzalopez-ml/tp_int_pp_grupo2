@@ -46,6 +46,8 @@ public class PublicarPrupuestasLaboralesFragment extends Fragment {
     private EditText editTextUbicacion;
     private Button btnGuardarProyecto;
 
+    private Button btnCancelarProyecto;
+
 
     public static PublicarPrupuestasLaboralesFragment newInstance() {
         return new PublicarPrupuestasLaboralesFragment();
@@ -65,6 +67,10 @@ public class PublicarPrupuestasLaboralesFragment extends Fragment {
         editTextUbicacion = rootView.findViewById(R.id.editTextProyectoUbicacion);
 
         btnGuardarProyecto = rootView.findViewById(R.id.btnGuardarProyecto);
+        btnCancelarProyecto = rootView.findViewById(R.id.btnCancelarProyecto);
+
+
+
 
         btnGuardarProyecto.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -94,16 +100,30 @@ public class PublicarPrupuestasLaboralesFragment extends Fragment {
             }
         });
 
+
+        btnCancelarProyecto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                reiniciarCampos();
+            }
+        });
+
+
+
+
         return rootView;
     }
 
 
+
+
+
     private void reiniciarCampos(){
-        editTextName.setText("Nombre");
-        editTextUbicacion.setText("Ubicacion");
-        editTextDisponibilidad.setText("Disponibilidad");
-        editTextObjetivos.setText("Objetivos");
-        editTextDescripcion.setText("Desecripcion");
+        editTextName.setText("");
+        editTextUbicacion.setText("");
+        editTextDisponibilidad.setText("");
+        editTextObjetivos.setText("");
+        editTextDescripcion.setText("");
     }
 
     private Boolean validateInputsProyecto(String nombre, String descripcion, String objetivos, String disponibilidad, String ubicacion) {

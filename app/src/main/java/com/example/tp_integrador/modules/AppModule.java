@@ -21,12 +21,16 @@ import com.example.tp_integrador.data.dao.usuarios.UsuarioDao;
 import com.example.tp_integrador.data.dao.voluntarios.IVoluntarioDao;
 import com.example.tp_integrador.usecases.ongs.IOngGetByUserID;
 import com.example.tp_integrador.usecases.ongs.IOngGet;
+import com.example.tp_integrador.usecases.ongs.IOngProjectDelete;
+import com.example.tp_integrador.usecases.ongs.IOngProjectoUpdate;
 import com.example.tp_integrador.usecases.ongs.IOngProyectosGet;
 import com.example.tp_integrador.usecases.ongs.IOngSave;
 import com.example.tp_integrador.usecases.ongs.impl.OngGetByUserID;
 //import com.example.tp_integrador.usecases.ongs.OngSave;
 import com.example.tp_integrador.usecases.ongs.IOngUpdate;
 import com.example.tp_integrador.usecases.ongs.impl.OngGet;
+import com.example.tp_integrador.usecases.ongs.impl.OngProjectDelete;
+import com.example.tp_integrador.usecases.ongs.impl.OngProjectUpdate;
 import com.example.tp_integrador.usecases.ongs.impl.OngProyectosGet;
 import com.example.tp_integrador.usecases.ongs.impl.OngUpdate;
 import com.example.tp_integrador.usecases.proyectos.IProyectoSave;
@@ -148,6 +152,18 @@ public class AppModule {
     @Singleton
     static IOngProyectosGet provideOngProyectosGetDao(IOngDao ongDao) {
         return new OngProyectosGet(ongDao);
+    }
+
+    @Provides
+    @Singleton
+    static IOngProjectDelete provideOngProjectDeleteDao(IOngDao ongDao) {
+        return new OngProjectDelete(ongDao);
+    }
+
+    @Provides
+    @Singleton
+    static IOngProjectoUpdate provideOngProjectUpdateDao(IProyectoDao projectoUpdate) {
+        return new OngProjectUpdate(projectoUpdate);
     }
 
     @Provides

@@ -19,4 +19,9 @@ public class OngProyectosGet implements IOngProyectosGet {
     public List<Proyecto> getProjectsOng() throws ExecutionException, InterruptedException {
         return iOngDao.getProjectsOng().get();
     }
+
+    @Override
+    public List<Proyecto> getProjectsOngById(Integer id) throws ExecutionException, InterruptedException {
+        return iOngDao.getProjectsOngById(id).get();
+    }
 }

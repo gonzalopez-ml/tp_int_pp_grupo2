@@ -8,4 +8,5 @@ import java.util.concurrent.CompletableFuture;
 public interface IProyectoDao {
     CompletableFuture<Proyecto> get(Integer id);
     CompletableFuture<Boolean> save(Proyecto proyecto);
+    CompletableFuture<Boolean> update(Proyecto proyecto);
 }
