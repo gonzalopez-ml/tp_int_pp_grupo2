@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.SearchView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -33,6 +34,19 @@ public class BusquedaPropuestasFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_busquedapropuestas, container, false);
         mViewModel = new ViewModelProvider(this).get(BusquedaPropuestasViewModel.class);
 
+        SearchView searchView = rootView.findViewById(R.id.search_all_proyects);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                proyectoAdapter.filter(newText);
+                return true;
+            }
+        });
 
         recyclerView = rootView.findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -47,6 +61,6 @@ public class BusquedaPropuestasFragment extends Fragment {
     }
 
     private void updateUIWithProyectos(List<Proyecto> proyectos) {
-        proyectoAdapter.setProyectos(proyectos);
+        proyectoAdapter.setProjects(proyectos);
     }
 }

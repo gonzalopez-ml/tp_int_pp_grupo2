@@ -16,7 +16,8 @@ import java.util.List;
 
 public class ProyectoAdapter extends RecyclerView.Adapter<ProyectoAdapter.ProyectoViewHolder> {
 
-    private List<Proyecto> proyectos = new ArrayList<>();
+    private List<Proyecto> projects = new ArrayList<>();
+    private List<Proyecto> originalProjects;
 
     @NonNull
     @Override
@@ -27,7 +28,7 @@ public class ProyectoAdapter extends RecyclerView.Adapter<ProyectoAdapter.Proyec
 
     @Override
     public void onBindViewHolder(@NonNull ProyectoViewHolder holder, int position) {
-        Proyecto proyecto = proyectos.get(position);
+        Proyecto proyecto = projects.get(position);
         holder.nombreOng.setText(proyecto.getOng().getName());
         holder.nombreProyecto.setText(proyecto.getNombre());
         holder.descripcionProyeco.setText(proyecto.getDescripcion());
@@ -35,11 +36,12 @@ public class ProyectoAdapter extends RecyclerView.Adapter<ProyectoAdapter.Proyec
 
     @Override
     public int getItemCount() {
-        return proyectos.size();
+        return projects.size();
     }
 
-    public void setProyectos(List<Proyecto> proyectos) {
-        this.proyectos = proyectos;
+    public void setProjects(List<Proyecto> projects) {
+        this.projects = projects;
+        this.originalProjects = new ArrayList<>(projects);
         notifyDataSetChanged();
     }
 
@@ -55,5 +57,22 @@ public class ProyectoAdapter extends RecyclerView.Adapter<ProyectoAdapter.Proyec
             descripcionProyeco = itemView.findViewById(R.id.descripcionProyecto);
         }
     }
+
+    public void filter(String query) {
+        projects.clear();
+
+        if (query.isEmpty()) {
+            projects.addAll(originalProjects);
+        } else {
+            for (Proyecto proyecto : originalProjects) {
+                if (proyecto.getNombre().toLowerCase().contains(query.toLowerCase())) {
+                    projects.add(proyecto);
+                }
+            }
+        }
+
+        notifyDataSetChanged();
+    }
+
 }
 
