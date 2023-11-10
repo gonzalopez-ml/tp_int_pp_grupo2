@@ -1,10 +1,14 @@
 package com.example.tp_integrador.uiRegistro;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -25,6 +29,7 @@ import com.example.tp_integrador.utils.validarCamposVacios.IValidateInputs;
 import com.example.tp_integrador.utils.validarUsuario.IValidateMail;
 import com.example.tp_integrador.utils.validateJpgFiles.IValidateJpegFiles;
 
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
@@ -63,9 +68,35 @@ public class RegistroOng extends AppCompatActivity {
 
     private static final String JPG_TYPE = "image/jpeg";
 
+
+    /* ******* 840 INIT LOAD LOGO ********************/
+    private ActivityResultLauncher<Intent> activityResultLauncher;
+    /* ******************************* */
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        /* ************************* 840 ******************/
+        activityResultLauncher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+
+                    if (result.getResultCode() == Activity.RESULT_OK && result.getData() != null) {
+                        Uri uri = result.getData().getData();
+                        if (uri != null) {
+                            try {
+                                bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), uri);
+                                imageView.setImageBitmap(bitmap);
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+                }
+        );
+        /* **** 840 ******************************************/
+
         setContentView(R.layout.activity_registro_ong);
 
         editTextName = findViewById(R.id.txtOngName);
@@ -79,6 +110,20 @@ public class RegistroOng extends AppCompatActivity {
         guardarButton = findViewById(R.id.btnOngGuardar);
         cancelarOngButton = findViewById(R.id.cancelarOngButton);
         examinePhotoButton = findViewById(R.id.examinePhotoOngButton);
+
+
+        /* **************** 840 CLICK LOGO  *********************************/
+        imageView = findViewById(R.id.clicktoUploadImg);
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Intent.ACTION_PICK);
+                intent.setData(MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                activityResultLauncher.launch(intent);
+            }
+        });
+        /* ************* FIN CLICK LOGO */
+
 
         cancelarOngButton.setOnClickListener(new View.OnClickListener() {
             @Override
