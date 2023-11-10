@@ -1,6 +1,7 @@
 package com.example.tp_integrador.data.repository.voluntarios;
 
 import com.example.tp_integrador.data.tasks.usuarios.UpdateUsuarioTask;
+import com.example.tp_integrador.data.tasks.voluntarios.GetVoluntarioByUserIDTask;
 import com.example.tp_integrador.data.tasks.voluntarios.GetVoluntarioTask;
 import com.example.tp_integrador.data.tasks.voluntarios.SaveVoluntarioTask;
 import com.example.tp_integrador.data.tasks.voluntarios.UpdateVoluntarioTask;
@@ -40,6 +41,18 @@ public class VoluntarioRepository implements IVoluntariosRepository {
         return CompletableFuture.supplyAsync(() -> {
             try {
                 return new SaveVoluntarioTask().execute(idUser, voluntario).get();
+            } catch (ExecutionException | InterruptedException e) {
+                e.printStackTrace();
+            }
+            return null;
+        });
+    }
+
+    @Override
+    public CompletableFuture<Voluntario> getByUserID(Integer idUser) {
+        return CompletableFuture.supplyAsync(() -> {
+            try {
+                return new GetVoluntarioByUserIDTask().execute(idUser).get();
             } catch (ExecutionException | InterruptedException e) {
                 e.printStackTrace();
             }

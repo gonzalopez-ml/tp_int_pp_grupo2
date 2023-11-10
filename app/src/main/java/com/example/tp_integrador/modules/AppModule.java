@@ -11,14 +11,18 @@ import com.example.tp_integrador.data.repository.voluntarios.VoluntarioRepositor
 import com.example.tp_integrador.data.dao.usuarios.IUsuarioDao;
 import com.example.tp_integrador.data.dao.usuarios.UsuarioDao;
 import com.example.tp_integrador.data.dao.voluntarios.IVoluntarioDao;
+import com.example.tp_integrador.usecases.ongs.IOngGetByUserID;
 import com.example.tp_integrador.usecases.ongs.IOngSave;
+import com.example.tp_integrador.usecases.ongs.impl.OngGetByUserID;
 import com.example.tp_integrador.usecases.ongs.impl.OngSave;
 import com.example.tp_integrador.usecases.usuarios.ILoginAllowAccess;
 import com.example.tp_integrador.usecases.usuarios.impl.LoginAllowAccess;
 import com.example.tp_integrador.usecases.voluntarios.IVoluntarioGet;
+import com.example.tp_integrador.usecases.voluntarios.IVoluntarioGetByUserID;
 import com.example.tp_integrador.usecases.voluntarios.IVoluntarioSave;
 import com.example.tp_integrador.data.dao.voluntarios.VoluntarioDao;
 import com.example.tp_integrador.usecases.voluntarios.IVoluntarioUpdate;
+import com.example.tp_integrador.usecases.voluntarios.impl.VoluntarioGetByUserID;
 import com.example.tp_integrador.usecases.voluntarios.impl.VoluntarioSave;
 import com.example.tp_integrador.usecases.voluntarios.impl.VoluntarioGet;
 import com.example.tp_integrador.usecases.voluntarios.impl.VoluntarioUpdate;
@@ -92,6 +96,17 @@ public class AppModule {
         return new LoginAllowAccess(usuarioDao);
     }
 
+    @Provides
+    @Singleton
+    static IVoluntarioGetByUserID provideVoluntarioGetByUserID(IVoluntarioDao voluntarioDao){
+        return new VoluntarioGetByUserID(voluntarioDao);
+    }
+
+    @Provides
+    @Singleton
+    static IOngGetByUserID provideOngGetByUserID(IOngDao ongDao){
+        return new OngGetByUserID(ongDao);
+    }
     //repositories
     @Provides
     static IUsuariosRepository provideUsuariosRepository() {

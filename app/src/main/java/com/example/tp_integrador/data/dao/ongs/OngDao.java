@@ -42,4 +42,17 @@ public class OngDao implements IOngDao {
             return false;
         });
     }
+
+    @Override
+    public CompletableFuture<Ong> getByUserID(Integer idUser) {
+        return CompletableFuture.supplyAsync(() -> {
+            CompletableFuture<Ong> ongFuture = ongRepository.getByUserID(idUser);
+            try {
+                return ongFuture.get();
+            } catch (ExecutionException | InterruptedException e) {
+                e.printStackTrace();
+            }
+            return null;
+        });
+    }
 }

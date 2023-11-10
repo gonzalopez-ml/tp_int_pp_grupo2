@@ -12,6 +12,8 @@ public class Ong {
     private String mail;
     private String location;
 
+    private Usuario usuario;
+
     public Ong() {
     }
 
@@ -23,6 +25,10 @@ public class Ong {
         this.phone = phone;
         this.mail = mail;
         this.location = location;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
 
     @Nullable
