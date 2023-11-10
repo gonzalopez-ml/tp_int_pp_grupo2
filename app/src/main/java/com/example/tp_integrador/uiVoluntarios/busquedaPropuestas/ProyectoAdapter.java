@@ -3,6 +3,7 @@ package com.example.tp_integrador.uiVoluntarios.busquedaPropuestas;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -18,6 +19,17 @@ public class ProyectoAdapter extends RecyclerView.Adapter<ProyectoAdapter.Proyec
 
     private List<Proyecto> projects = new ArrayList<>();
     private List<Proyecto> originalProjects;
+    public Button botonVerProyecto;
+
+    public interface OnItemClickListener {
+        void onItemClick(Proyecto proyecto);
+    }
+
+    private final OnItemClickListener listener;
+
+    public ProyectoAdapter(OnItemClickListener listener) {
+        this.listener = listener;
+    }
 
     @NonNull
     @Override
@@ -32,6 +44,13 @@ public class ProyectoAdapter extends RecyclerView.Adapter<ProyectoAdapter.Proyec
         holder.nombreOng.setText(proyecto.getOng().getName());
         holder.nombreProyecto.setText(proyecto.getNombre());
         holder.descripcionProyeco.setText(proyecto.getDescripcion());
+
+        holder.botonVerProyecto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                listener.onItemClick(proyecto);
+            }
+        });
     }
 
     @Override
@@ -49,12 +68,14 @@ public class ProyectoAdapter extends RecyclerView.Adapter<ProyectoAdapter.Proyec
         public TextView nombreOng;
         public TextView nombreProyecto;
         public TextView descripcionProyeco;
+        public Button botonVerProyecto;
 
         public ProyectoViewHolder(@NonNull View itemView) {
             super(itemView);
             nombreOng = itemView.findViewById(R.id.nombreOng);
             nombreProyecto = itemView.findViewById(R.id.nombreProyecto);
             descripcionProyeco = itemView.findViewById(R.id.descripcionProyecto);
+            botonVerProyecto = itemView.findViewById(R.id.botonVerProyecto);
         }
     }
 

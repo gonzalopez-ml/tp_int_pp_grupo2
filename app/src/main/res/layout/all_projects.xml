@@ -1,7 +1,6 @@
 <androidx.cardview.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="8dp">
@@ -13,31 +12,48 @@
 
         <TextView
             android:id="@+id/nombreOng"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="20sp"
-            android:textStyle="bold"
+            android:layout_width="256dp"
+            android:layout_height="28dp"
+            android:layout_marginTop="4dp"
             android:textColor="#000000"
-            app:layout_constraintTop_toTopOf="parent"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.021"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/nombreProyecto"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="18sp"
-            app:layout_constraintTop_toBottomOf="@+id/nombreOng"
+            android:layout_width="257dp"
+            android:layout_height="24dp"
+            android:layout_marginTop="8dp"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.007"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
+            app:layout_constraintTop_toBottomOf="@+id/nombreOng" />
 
         <TextView
             android:id="@+id/descripcionProyecto"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="18sp"
-            app:layout_constraintTop_toBottomOf="@+id/nombreProyecto"
+            android:layout_width="260dp"
+            android:layout_height="22dp"
+            android:layout_marginTop="8dp"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.007"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
+            app:layout_constraintTop_toBottomOf="@+id/nombreProyecto" />
+
+        <Button
+            android:id="@+id/botonVerProyecto"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Ver"
+            app:layout_constraintBottom_toBottomOf="@+id/descripcionProyecto"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/descripcionProyecto"
+            app:layout_constraintTop_toTopOf="parent" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

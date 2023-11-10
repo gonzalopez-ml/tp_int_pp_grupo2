@@ -9,11 +9,13 @@ import android.widget.TextView;
 
 import com.example.tp_integrador.data.domain.Usuario;
 import com.example.tp_integrador.data.domain.Voluntario;
+import com.example.tp_integrador.uiVoluntarios.sharedData.SharedViewModel;
 import com.google.android.material.snackbar.Snackbar;
 
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -61,6 +63,8 @@ public class MainActivityVoluntarios extends AppCompatActivity {
             Usuario userLogin = (Usuario) getIntent().getSerializableExtra("usuarioLogeado");
             try {
                  voluntario = voluntarioGetByUserID.getVoluntarioByUserID(userLogin.getIdUser());
+                SharedViewModel sharedViewModel = new ViewModelProvider(this).get(SharedViewModel.class);
+                sharedViewModel.setVoluntario(voluntario); // -> Importante, setea el voluntario para poder usarlo en todos los fragments.
             } catch (ExecutionException e) {
                 throw new RuntimeException(e);
             } catch (InterruptedException e) {
@@ -81,16 +85,13 @@ public class MainActivityVoluntarios extends AppCompatActivity {
             }
         });
 
-        // Inicializa el DrawerLayout y el ActionBarDrawerToggle
         drawerLayout = findViewById(R.id.drawer_layout_voluntarios);
         actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawerLayout.addDrawerListener(actionBarDrawerToggle);
 
-        // Habilita el botón de hamburguesa en la barra de herramientas
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
 
-        // Configura la navegación
         navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
         appBarConfiguration = new AppBarConfiguration.Builder(navController.getGraph())
                 .setOpenableLayout(drawerLayout)

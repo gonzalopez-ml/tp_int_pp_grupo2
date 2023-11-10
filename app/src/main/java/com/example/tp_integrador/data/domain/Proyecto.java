@@ -1,6 +1,12 @@
 package com.example.tp_integrador.data.domain;
 
-public class Proyecto {
+
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import androidx.annotation.NonNull;
+
+public class Proyecto implements Parcelable {
 
     private Integer idProyecto;
     private Ong ong;
@@ -22,6 +28,32 @@ public class Proyecto {
         this.ubicacion = ubicacion;
         this.disponibilidad = disponibilidad;
     }
+
+    protected Proyecto(Parcel in) {
+        if (in.readByte() == 0) {
+            idProyecto = null;
+        } else {
+            idProyecto = in.readInt();
+        }
+        nombre = in.readString();
+        descripcion = in.readString();
+        objetivos = in.readString();
+        disponibilidad = in.readString();
+        ubicacion = in.readString();
+    }
+
+    public static final Creator<Proyecto> CREATOR = new Creator<Proyecto>() {
+        @Override
+        public Proyecto createFromParcel(Parcel in) {
+            return new Proyecto(in);
+        }
+
+        @Override
+        public Proyecto[] newArray(int size) {
+            return new Proyecto[size];
+        }
+    };
+
     public Integer getIdProyecto() {
         return idProyecto;
     }
@@ -78,4 +110,23 @@ public class Proyecto {
         this.disponibilidad = disponibilidad;
     }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(@NonNull Parcel dest, int flags) {
+        if (idProyecto == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeInt(idProyecto);
+        }
+        dest.writeString(nombre);
+        dest.writeString(descripcion);
+        dest.writeString(objetivos);
+        dest.writeString(disponibilidad);
+        dest.writeString(ubicacion);
+    }
 }

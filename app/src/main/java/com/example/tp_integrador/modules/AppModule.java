@@ -4,10 +4,14 @@ import com.example.tp_integrador.data.dao.ongs.IOngDao;
 import com.example.tp_integrador.data.dao.ongs.OngDao;
 import com.example.tp_integrador.data.dao.proyectos.IProyectoDao;
 import com.example.tp_integrador.data.dao.proyectos.ProyectoDao;
+import com.example.tp_integrador.data.dao.relaciones.IRelationDao;
+import com.example.tp_integrador.data.dao.relaciones.impl.RelationDao;
 import com.example.tp_integrador.data.repository.ongs.IOngRepository;
 import com.example.tp_integrador.data.repository.ongs.OngRepository;
 import com.example.tp_integrador.data.repository.proyectos.IProyectoRepository;
 import com.example.tp_integrador.data.repository.proyectos.ProyectoRepository;
+import com.example.tp_integrador.data.repository.relaciones.IRelationRepository;
+import com.example.tp_integrador.data.repository.relaciones.impl.RelationRepository;
 import com.example.tp_integrador.data.repository.usuarios.IUsuariosRepository;
 import com.example.tp_integrador.data.repository.usuarios.UsuarioRepository;
 import com.example.tp_integrador.data.repository.voluntarios.IVoluntariosRepository;
@@ -28,6 +32,8 @@ import com.example.tp_integrador.usecases.ongs.impl.OngUpdate;
 import com.example.tp_integrador.usecases.proyectos.IProyectoSave;
 import com.example.tp_integrador.usecases.proyectos.ProyectoSave;
 import com.example.tp_integrador.usecases.ongs.impl.OngSave;
+import com.example.tp_integrador.usecases.relaciones.ISaveRelation;
+import com.example.tp_integrador.usecases.relaciones.impl.SaveRelation;
 import com.example.tp_integrador.usecases.usuarios.ILoginAllowAccess;
 import com.example.tp_integrador.usecases.usuarios.impl.LoginAllowAccess;
 import com.example.tp_integrador.usecases.voluntarios.IVoluntarioGet;
@@ -144,6 +150,12 @@ public class AppModule {
         return new OngProyectosGet(ongDao);
     }
 
+    @Provides
+    @Singleton
+    static ISaveRelation provideSaveRelation(IRelationDao relationDao) {
+        return new SaveRelation(relationDao);
+    }
+
 
     //repositories
     @Provides
@@ -164,6 +176,11 @@ public class AppModule {
 
     @Provides
     static IProyectoRepository provideProyectoRepository(){return new ProyectoRepository();}
+
+    @Provides
+    static IRelationRepository provideRelationRepository() {
+        return new RelationRepository();
+    }
 
     //daos
     @Provides
@@ -187,6 +204,12 @@ public class AppModule {
     @Singleton
     static IProyectoDao provideProyectoDao(IProyectoRepository proyectoRepository){
         return new ProyectoDao(proyectoRepository);
+    }
+
+    @Provides
+    @Singleton
+    static IRelationDao provideRelationDao(IRelationRepository repository) {
+        return new RelationDao(repository);
     }
 
 }
