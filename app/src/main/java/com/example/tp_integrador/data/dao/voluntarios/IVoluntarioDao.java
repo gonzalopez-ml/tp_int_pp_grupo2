@@ -8,4 +8,5 @@ public interface IVoluntarioDao {
     CompletableFuture<Voluntario> get(Integer id);
     CompletableFuture<Boolean> save(Integer idUser, Voluntario voluntario);
     CompletableFuture<Boolean> update(Voluntario voluntario);
+    CompletableFuture<Voluntario> getByUserID(Integer idUser);
 }

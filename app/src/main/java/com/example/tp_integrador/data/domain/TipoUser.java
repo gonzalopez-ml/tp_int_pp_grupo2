@@ -1,6 +1,8 @@
 package com.example.tp_integrador.data.domain;
 
-public class TipoUser {
+import java.io.Serializable;
+
+public class TipoUser implements Serializable {
     int id;
 
     public Integer getId() {

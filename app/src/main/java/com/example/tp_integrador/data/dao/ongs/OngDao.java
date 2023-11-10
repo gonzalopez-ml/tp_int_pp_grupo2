@@ -2,7 +2,6 @@ package com.example.tp_integrador.data.dao.ongs;
 
 import com.example.tp_integrador.data.domain.Ong;
 import com.example.tp_integrador.data.domain.Proyecto;
-import com.example.tp_integrador.data.domain.Voluntario;
 import com.example.tp_integrador.data.repository.ongs.IOngRepository;
 import com.example.tp_integrador.data.tasks.ongs.GetProjectsOngByLocationTask;
 import com.example.tp_integrador.data.tasks.ongs.GetProjectsOngTask;
@@ -45,6 +44,19 @@ public class OngDao implements IOngDao {
                 e.printStackTrace();
             }
             return false;
+        });
+    }
+
+    @Override
+    public CompletableFuture<Ong> getByUserID(Integer idUser) {
+        return CompletableFuture.supplyAsync(() -> {
+            CompletableFuture<Ong> ongFuture = ongRepository.getByUserID(idUser);
+            try {
+                return ongFuture.get();
+            } catch (ExecutionException | InterruptedException e) {
+                e.printStackTrace();
+            }
+            return null;
         });
     }
 

@@ -1,12 +1,15 @@
 package com.example.tp_integrador.data.repository.ongs;
 
 import com.example.tp_integrador.data.domain.Ong;
+import com.example.tp_integrador.data.tasks.ongs.GetOngByUserIDTask;
 import com.example.tp_integrador.data.domain.Proyecto;
 import com.example.tp_integrador.data.tasks.ongs.GetOngTask;
 import com.example.tp_integrador.data.tasks.ongs.GetProjectsOngByLocationTask;
 import com.example.tp_integrador.data.tasks.ongs.GetProjectsOngTask;
 import com.example.tp_integrador.data.tasks.ongs.SaveOngTask;
 import com.example.tp_integrador.data.tasks.ongs.UpdateOngTask;
+import com.example.tp_integrador.data.tasks.voluntarios.GetVoluntarioByUserIDTask;
+
 
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
@@ -46,6 +49,18 @@ public class OngRepository implements IOngRepository {
         return CompletableFuture.supplyAsync(() -> {
             try {
                 return new SaveOngTask().execute(idUser, ong).get();
+            } catch (ExecutionException | InterruptedException e) {
+                e.printStackTrace();
+            }
+            return null;
+        });
+    }
+
+    @Override
+    public CompletableFuture<Ong> getByUserID(Integer idUser) {
+        return CompletableFuture.supplyAsync(() -> {
+            try {
+                return new GetOngByUserIDTask().execute(idUser).get();
             } catch (ExecutionException | InterruptedException e) {
                 e.printStackTrace();
             }

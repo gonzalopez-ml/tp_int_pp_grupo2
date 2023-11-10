@@ -55,4 +55,19 @@ public class VoluntarioDao implements IVoluntarioDao {
             return false;
         });
     }
+
+    @Override
+    public CompletableFuture<Voluntario> getByUserID(Integer idUser) {
+        return CompletableFuture.supplyAsync(() -> {
+            CompletableFuture<Voluntario> voluntarioFuture = voluntariosRepository.getByUserID(idUser);
+            try {
+                return voluntarioFuture.get();
+            } catch (ExecutionException | InterruptedException e) {
+                e.printStackTrace();
+            }
+            return null;
+        });
+    }
+
+
 }
