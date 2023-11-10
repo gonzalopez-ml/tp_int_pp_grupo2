@@ -11,12 +11,14 @@ import com.example.tp_integrador.databinding.ActivityMainBinding;
 import com.example.tp_integrador.data.domain.Ong;
 import com.example.tp_integrador.data.domain.Usuario;
 import com.example.tp_integrador.data.domain.Voluntario;
+import com.example.tp_integrador.uiVoluntarios.sharedData.SharedViewModel;
 import com.example.tp_integrador.usecases.ongs.IOngGetByUserID;
 import com.google.android.material.snackbar.Snackbar;
 
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -66,6 +68,8 @@ public class MainActivityONG extends AppCompatActivity {
             Usuario userLogin = (Usuario) getIntent().getSerializableExtra("usuarioLogeado");
             try {
                 ong = ongGetByUserID.getOngByUserID(userLogin.getIdUser());
+                SharedViewModel sharedViewModel = new ViewModelProvider(this).get(SharedViewModel.class);
+                sharedViewModel.setOng(ong); // -> Importante, setea la ong para poder usarlo en todos los fragments.
             } catch (ExecutionException e) {
                 throw new RuntimeException(e);
             } catch (InterruptedException e) {

@@ -36,6 +36,12 @@
         tools:layout="@layout/fragment_editar_perfil_o_n_g" />
 
     <fragment
+        android:id="@+id/nav_ver_voluntarios"
+        android:name="com.example.tp_integrador.uiONG.verVoluntarios.VerVoluntariosFragment"
+        android:label="Voluntarios"
+        tools:layout="@layout/fragment_ver_voluntarios" />
+
+    <fragment
         android:id="@+id/nav_cerrar_sesion_ong"
         android:name="com.example.tp_integrador.uiCerrarSesion.CerrarSesionFragment"
         android:label="Cerrar Sesion"
