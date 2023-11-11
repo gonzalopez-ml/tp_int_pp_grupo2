@@ -22,8 +22,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.tp_integrador.LoginActivity;
 import com.example.tp_integrador.MainActivityVoluntarios;
 import com.example.tp_integrador.R;
+import com.example.tp_integrador.data.domain.Ong;
 import com.example.tp_integrador.data.domain.Proyecto;
+import com.example.tp_integrador.data.domain.Voluntario;
 import com.example.tp_integrador.uiVoluntarios.detallePropuestasVol.DetalleProyectoOngFragment;
+import com.example.tp_integrador.uiVoluntarios.sharedData.SharedViewModel;
 
 import java.util.List;
 
@@ -38,11 +41,15 @@ public class BusquedaPropuestasFragment extends Fragment implements ProyectoAdap
 
     private ProyectoAdapter proyectoAdapter;
 
+    private SharedViewModel sharedViewModel;
+
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_busquedapropuestas, container, false);
         mViewModel = new ViewModelProvider(this).get(BusquedaPropuestasViewModel.class);
+
+        sharedViewModel = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
 
         SearchView searchView = rootView.findViewById(R.id.search_all_proyects);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -58,13 +65,14 @@ public class BusquedaPropuestasFragment extends Fragment implements ProyectoAdap
             }
         });
 
+        Voluntario voluntarioLogueado = sharedViewModel.getVoluntarioLiveData().getValue();
 
         recyclerView = rootView.findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         proyectoAdapter = new ProyectoAdapter(this);
         recyclerView.setAdapter(proyectoAdapter);
 
-        mViewModel.getAllProjects().observe(getViewLifecycleOwner(), proyectos -> {
+        mViewModel.getAllProjects(voluntarioLogueado.getIdVoluntario()).observe(getViewLifecycleOwner(), proyectos -> {
             updateUIWithProyectos(proyectos);
         });
 

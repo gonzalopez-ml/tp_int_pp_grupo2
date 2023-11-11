@@ -82,10 +82,10 @@ public class OngRepository implements IOngRepository {
     }
 
     @Override
-    public CompletableFuture<List<Proyecto>> getProjectsOng() {
+    public CompletableFuture<List<Proyecto>> getProjectsOngWithouthRelation(Integer id) {
         return CompletableFuture.supplyAsync(() -> {
             try {
-                return new GetProjectsOngTask().execute().get();
+                return new GetProjectsOngTask().execute(id).get();
             } catch (ExecutionException | InterruptedException e) {
                 e.printStackTrace();
             }
