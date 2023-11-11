@@ -29,14 +29,14 @@ public class ProyectoSave implements IProyectoSave{
             Boolean isProyectoSave = proyectoDao.save(proyecto).get();
 
             if (isProyectoSave) {
-                return new SaveResult(true, "Propuesta guardada correctamente");
+                return new SaveResult(true, "Propuesta guardada correctamente",0);
             }
 
 
 
         } catch (ExecutionException | InterruptedException e) {
-            return new SaveResult(false, "La propuesta no pudo ser registrada");
+            return new SaveResult(false, "La propuesta no pudo ser registrada",0);
         }
-        return new SaveResult(false, "La propuesta no pudo ser registrada");
+        return new SaveResult(false, "La propuesta no pudo ser registrada",0);
     }
 }

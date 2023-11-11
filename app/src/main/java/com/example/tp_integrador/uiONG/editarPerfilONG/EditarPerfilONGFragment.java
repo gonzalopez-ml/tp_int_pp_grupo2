@@ -290,7 +290,7 @@ public class EditarPerfilONGFragment extends Fragment {
 
             RequestQueue queue = Volley.newRequestQueue(getActivity().getApplicationContext());
 
-            String url ="https://www.btw.com.ar/app/upload.php";
+            String url ="https://btw.com.ar/app/upload.php";
 
             StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
                     new Response.Listener<String>() {

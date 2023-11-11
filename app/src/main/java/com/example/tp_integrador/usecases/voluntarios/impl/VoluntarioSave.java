@@ -27,7 +27,7 @@ public class VoluntarioSave implements IVoluntarioSave {
         try {
             Usuario userExist = usuarioDao.get(usuario).get();
             if (userExist != null) {
-                return new SaveResult(false, "El usuario ya esta registrado");
+                return new SaveResult(false, "El usuario ya esta registrado",0);
             } else {
                 Boolean isUserSave = usuarioDao.save(usuario).get();
 
@@ -36,14 +36,14 @@ public class VoluntarioSave implements IVoluntarioSave {
                     Boolean isVoluntarioSave = voluntarioDao.save(usuarioGuardado.getIdUser(), voluntario).get();
 
                     if (isVoluntarioSave) {
-                        return new SaveResult(true, "Usuario Voluntario guardado correctamente");
+                        return new SaveResult(true, "Usuario Voluntario guardado correctamente",0);
                     }
                 }
             }
         } catch (ExecutionException | InterruptedException e) {
-            return new SaveResult(false, "El Voluntario no pudo ser registrado");
+            return new SaveResult(false, "El Voluntario no pudo ser registrado",0);
         }
-        return new SaveResult(false, "El Voluntario no pudo ser registrado");
+        return new SaveResult(false, "El Voluntario no pudo ser registrado",0);
     }
 
 }
