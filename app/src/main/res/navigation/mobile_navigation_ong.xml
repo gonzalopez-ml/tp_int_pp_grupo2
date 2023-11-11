@@ -23,13 +23,13 @@
         android:label="Editar propuesta"
         tools:layout="@layout/fragment_editar_propuestas_laborales" />
     <action android:id="@+id/action_nav_editarPropuestas_to_verPropuestasFragment"
-        app:destination="@id/nav_eliminar_propuesta"/>
+        app:destination="@id/nav_ver_propuestas"/>
 
     <fragment
-        android:id="@+id/nav_eliminar_propuesta"
-        android:name="com.example.tp_integrador.uiONG.eliminarPropuestasLaborales.EliminarPropuestasLaboralesFragment"
+        android:id="@+id/nav_ver_propuestas"
+        android:name="com.example.tp_integrador.uiONG.verPropuestasLaborales.VerPropuestasLaboralesFragment"
         android:label="Eliminar propuesta"
-        tools:layout="@layout/fragment_eliminar_propuestas_laborales" />
+        tools:layout="@layout/fragment_ver_propuestas_laborales" />
     <!-- Acción para ir a EditarProyectos  -->
     <action android:id="@+id/action_nav_eliminarPropuestas_to_editarPropueestasFragment"
         app:destination="@id/nav_editar_propuesta"/>
