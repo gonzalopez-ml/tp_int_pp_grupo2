@@ -13,6 +13,5 @@ import java.util.concurrent.ExecutionException;
 
 public interface IOngSave {
     SaveResult save(Usuario usuario, Ong ong);
-    List<Proyecto> getProjectsOng() throws ExecutionException, InterruptedException;
     List<Proyecto> getProjectsOngByLocation(String location) throws ExecutionException, InterruptedException;
 }

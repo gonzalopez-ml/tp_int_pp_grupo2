@@ -13,19 +13,21 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GetProjectsOngTask extends AsyncTask<Object, Void, List<Proyecto>> {
+public class GetProjectsOngTask extends AsyncTask<Integer, Void, List<Proyecto>> {
 
     private static final String DB_URL = "jdbc:mysql://btw.com.ar:3306/btw_db";
     private static final String USER = "btw_db";
     private static final String PASSWORD = "12345";
 
     @Override
-    protected List<Proyecto> doInBackground(Object... params) {
+    protected List<Proyecto> doInBackground(Integer... params) {
         List<Proyecto> projects = new ArrayList<>();
+        Integer idVoluntario = params[0];
 
         try (Connection connection = DriverManager.getConnection(DB_URL, USER, PASSWORD)) {
-            String selectQuery = "SELECT * FROM Proyectos_ong INNER JOIN Perfil_ongs ON Proyectos_ong.id_perfil_ong = Perfil_ongs.id_perfil_ong LEFT JOIN relaciones ON Proyectos_ong.id_proyecto = relaciones.id_proyecto_ong WHERE relaciones.id_perfil_voluntario IS NULL";
+            String selectQuery = "SELECT * FROM Proyectos_ong INNER JOIN Perfil_ongs ON Proyectos_ong.id_perfil_ong = Perfil_ongs.id_perfil_ong LEFT JOIN relaciones ON Proyectos_ong.id_proyecto = relaciones.id_proyecto_ong WHERE relaciones.id_perfil_voluntario IS NULL OR relaciones.id_perfil_voluntario != ?";
             try (PreparedStatement preparedStatement = connection.prepareStatement(selectQuery)) {
+                preparedStatement.setInt(1, idVoluntario);
 
                 ResultSet resultSet = preparedStatement.executeQuery();
                 while (resultSet.next()) {

@@ -27,9 +27,9 @@ public class BusquedaPropuestasViewModel extends ViewModel {
         this.ongProyectosGet = ongProyectosGet;
     }
 
-    public LiveData<List<Proyecto>> getAllProjects() {
+    public LiveData<List<Proyecto>> getAllProjects(Integer idVoluntario) {
         try {
-            List<Proyecto> listProyects = ongProyectosGet.getProjectsOng();
+            List<Proyecto> listProyects = ongProyectosGet.getProjectsOng(idVoluntario);
             proyectosList.setValue(listProyects);
             return proyectosList;
         } catch (Exception e) {
