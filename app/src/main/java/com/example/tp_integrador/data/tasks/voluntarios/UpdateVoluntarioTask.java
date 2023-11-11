@@ -22,7 +22,7 @@ public class UpdateVoluntarioTask extends AsyncTask<Voluntario, Void, Boolean> {
 
         try (Connection connection = DriverManager.getConnection(DB_URL, USER, PASSWORD)) {
             String updateQuery = "UPDATE Perfil_voluntarios " +
-                    "SET nombre = ?, apellido = ?, dni = ?, habilidades = ?, telefono = ?, disponibilidad = ? " +
+                    "SET nombre = ?, apellido = ?, dni = ?, habilidades = ?, telefono = ?, disponibilidad = ?, curriculum = ? " +
                     "WHERE id_perfil_voluntario = ?";
 
             try (PreparedStatement preparedStatement = connection.prepareStatement(updateQuery)) {
@@ -32,9 +32,9 @@ public class UpdateVoluntarioTask extends AsyncTask<Voluntario, Void, Boolean> {
                 preparedStatement.setString(4, voluntario.getSkills());
                 preparedStatement.setString(5, voluntario.getPhone());
                 preparedStatement.setString(6, voluntario.getAvailability());
-                //preparedStatement.setString(7, voluntario.getCv());
+                preparedStatement.setString(7, voluntario.getCv());
                 //preparedStatement.setString(8, voluntario.getPhoto());
-                preparedStatement.setInt(7, voluntario.getIdVoluntario());
+                preparedStatement.setInt(8, voluntario.getIdVoluntario());
 
                 int rowsAffected = preparedStatement.executeUpdate();
 

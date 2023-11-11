@@ -179,7 +179,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="41dp"
         android:layout_marginTop="12dp"
-        android:text="Foto"
+        android:text="CV"
         android:textSize="14sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
@@ -227,11 +227,11 @@
         app:layout_constraintTop_toBottomOf="@+id/textView11" />
 
     <Button
-        android:id="@+id/button4"
+        android:id="@+id/examineEditCvButton"
         android:layout_width="107dp"
         android:layout_height="36dp"
-        android:layout_marginStart="80dp"
-        android:layout_marginTop="15dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="2dp"
         android:text="Examinar"
         android:textColor="#000000"
         android:textSize="10sp"
@@ -260,7 +260,7 @@
         android:layout_marginStart="20dp"
         android:layout_marginTop="16dp"
         android:text=""
-        app:layout_constraintStart_toEndOf="@+id/button4"
+        app:layout_constraintStart_toEndOf="@+id/examineEditCvButton"
          />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

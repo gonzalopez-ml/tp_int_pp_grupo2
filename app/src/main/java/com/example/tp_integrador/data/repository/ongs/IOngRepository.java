@@ -14,7 +14,7 @@ public interface IOngRepository {
     CompletableFuture<Boolean> save(Integer idUser, Ong ong);
     CompletableFuture<Boolean> delete(Integer id);
     CompletableFuture<Ong> getByUserID(Integer idUser);
-    CompletableFuture<List<Proyecto>> getProjectsOngByLocation(String location);
+    CompletableFuture<List<Proyecto>> getProjectsOngByLocation(String location, String idVoluntario);
     CompletableFuture<List<ProyectoVoluntario>> getVoluntariosProjectsOng(Integer idOng);
     CompletableFuture<List<Proyecto>> getProjectsOng(Integer id);
     CompletableFuture<List<Proyecto>> getProjectsOngWithouthRelation(Integer id);

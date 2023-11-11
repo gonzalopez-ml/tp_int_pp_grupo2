@@ -114,9 +114,9 @@ public class OngDao implements IOngDao {
     }
 
     @Override
-    public CompletableFuture<List<Proyecto>> getProjectsOngByLocation(String location) {
+    public CompletableFuture<List<Proyecto>> getProjectsOngByLocation(String location, String idVoluntario) {
         return CompletableFuture.supplyAsync(() -> {
-            CompletableFuture<List<Proyecto>> projectsOng = ongRepository.getProjectsOngByLocation(location);
+            CompletableFuture<List<Proyecto>> projectsOng = ongRepository.getProjectsOngByLocation(location, idVoluntario);
             try {
                 return projectsOng.get();
             } catch (ExecutionException | InterruptedException e) {

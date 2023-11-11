@@ -14,6 +14,7 @@ import com.example.tp_integrador.uiRegistro.RegistroOng;
 import com.example.tp_integrador.uiRegistro.RegistroVoluntario;
 import com.example.tp_integrador.usecases.usuarios.ILoginAllowAccess;
 import com.example.tp_integrador.utils.validarCamposVacios.IValidateInputs;
+import com.example.tp_integrador.utils.validarUsuario.IValidateMail;
 
 import java.util.Arrays;
 import java.util.List;
@@ -32,6 +33,9 @@ public class LoginActivity extends AppCompatActivity {
 
     @Inject
     IValidateInputs validateInputs;
+
+    @Inject
+    IValidateMail validateMail;
 
     @Inject
     ILoginAllowAccess loginAllowAccess;
@@ -82,9 +86,15 @@ public class LoginActivity extends AppCompatActivity {
         String password = editTextPassword.getText().toString();
 
         Boolean isValidateInputs = validateInputs(mail, password);
+        Boolean isValidateMailAndPass = validateMail(mail, password);
 
         if (!isValidateInputs) {
             showMessage("Por favor completar todos los campos");
+            return null;
+        }
+
+        if (!isValidateMailAndPass) {
+            showMessage("Por favor verifica los datos");
             return null;
         }
 
@@ -98,6 +108,10 @@ public class LoginActivity extends AppCompatActivity {
         List<String> inputs = Arrays.asList(mail, password);
 
         return validateInputs.apply(inputs);
+    }
+
+    private Boolean validateMail(String mail, String password) {
+        return validateMail.validate(mail, password);
     }
 
     private void showMessage(String message) {

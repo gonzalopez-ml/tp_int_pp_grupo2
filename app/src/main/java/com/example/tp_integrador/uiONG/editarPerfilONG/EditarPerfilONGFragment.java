@@ -33,6 +33,8 @@ import com.example.tp_integrador.R;
 import com.example.tp_integrador.data.domain.TipoUser;
 import com.example.tp_integrador.data.domain.Usuario;
 import com.example.tp_integrador.data.domain.Ong;
+import com.example.tp_integrador.data.domain.Voluntario;
+import com.example.tp_integrador.uiVoluntarios.sharedData.SharedViewModel;
 import com.example.tp_integrador.utils.validarCamposVacios.IValidateInputs;
 import com.example.tp_integrador.utils.validarUsuario.IValidateMail;
 import com.squareup.picasso.Callback;
@@ -79,6 +81,8 @@ public class EditarPerfilONGFragment extends Fragment {
     private EditText editTextTelefono;
     private EditText editTextMail;
 
+    private SharedViewModel sharedViewModel;
+
     private EditText editPassword;
 
     private Button btnEditarOng;
@@ -97,11 +101,8 @@ public class EditarPerfilONGFragment extends Fragment {
         return new EditarPerfilONGFragment();
     }
 
-    /* ******* 840 INIT LOAD LOGO ********************/
     private ActivityResultLauncher<Intent> activityResultLauncher;
-    /* ******************************* */
 
-    /* ******* 840 INIT LOAD LOGO ********************/
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -124,7 +125,7 @@ public class EditarPerfilONGFragment extends Fragment {
                 }
         );
     }
-    /* ************ FIN INIT LOAD LOGO *********/
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
@@ -133,10 +134,6 @@ public class EditarPerfilONGFragment extends Fragment {
 
         mViewModel = new ViewModelProvider(this).get(EditarPerfilONGViewModel.class);
 
-
-
-
-        /* **************** 840 CLICK LOGO  *********************************/
         imageView = rootView.findViewById(R.id.clicktoUploadImg);
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -146,30 +143,24 @@ public class EditarPerfilONGFragment extends Fragment {
                 activityResultLauncher.launch(intent);
             }
         });
-        /* ************* FIN CLICK LOGO */
 
-
-        Log.d("Aviso","Pasa Frame 1");
         editTextName = rootView.findViewById(R.id.txtOngName);
         editTextDescripcion = rootView.findViewById(R.id.txtOngDescription);
         editTextUbicacion = rootView.findViewById(R.id.txtOngLocation);
         editTextMail = rootView.findViewById(R.id.txtOngMail);
         editTextTelefono = rootView.findViewById(R.id.txtOngPhone);
-        //editTextLogo = rootView.findViewById(R.id.txtOngl);
-        //editTextMail = rootView.findViewById(R.id.editTxtMailEditVoluntario);
         editPassword = rootView.findViewById(R.id.txtOngPassword);
 
         btnEditarOng = rootView.findViewById(R.id.btnOngGuardar);
         btnCancelarOng = rootView.findViewById(R.id.btnOngCancelar);
 
-        Log.d("Aviso","Pasa Frame 2");
+        sharedViewModel = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
 
-        Log.d("Aviso","Pasa Frame clean");
-        mViewModel.getOngLiveData().observe(getViewLifecycleOwner(), ong -> {
+        Ong ongLogueada = sharedViewModel.getOng().getValue();
 
-            Log.d("Aviso","Pasa Frame 3");
+        mViewModel.getOngLiveData(ongLogueada.getIdOng()).observe(getViewLifecycleOwner(), ong -> {
+
             if (ong != null) {
-                Log.d("Aviso","Pasa Frame 4");
                 idUser = ong.getUsuario().getIdUser();
                 idType = ong.getUsuario().getTipoUser().getId();
                 editTextName.setText(ong.getName());
@@ -179,7 +170,6 @@ public class EditarPerfilONGFragment extends Fragment {
                 editTextTelefono.setText(ong.getPhone());
                 editPassword.setText(ong.getUsuario().getPassword());
 
-                /* **************** 840 LOAD LOGO  *********************************/
                 logo = "https://btw.com.ar/app/"+ong.getLogo();
                 if (!ong.getLogo().isEmpty())
                 {

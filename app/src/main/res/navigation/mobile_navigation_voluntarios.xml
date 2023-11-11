@@ -17,7 +17,6 @@
         android:label="@string/menu_gallery"
         tools:layout="@layout/fragment_busquedapropuestas">
 
-        <!-- Acción para ir a DetalleProyectoFragment -->
         <action
             android:id="@+id/action_nav_busquedapropuestas_to_detalleProyectoFragment"
             app:destination="@id/detalleProyectoFragment" />
@@ -37,7 +36,12 @@
         android:id="@+id/nav_busqueda_geo"
         android:name="com.example.tp_integrador.uiVoluntarios.busquedaPropuestasGeo.BusquedaPropuestasGeoFragment"
         android:label="Busqueda de Propuestas por Geolocalizacion"
-        tools:layout="@layout/fragment_busquedapropuestasgeo" />
+        tools:layout="@layout/fragment_busquedapropuestasgeo">
+
+    <action
+        android:id="@+id/action_nav_busquedapropuestas_to_detalleProyectoFragment"
+        app:destination="@id/detalleProyectoFragment"/>
+    </fragment>
 
     <fragment
         android:id="@+id/nav_editar_perfil"

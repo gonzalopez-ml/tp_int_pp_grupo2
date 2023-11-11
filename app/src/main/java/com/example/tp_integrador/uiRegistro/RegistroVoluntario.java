@@ -106,8 +106,6 @@ public class RegistroVoluntario extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
-        /* ************************* 840 ******************/
         activityResultLauncher = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
                 result -> {
@@ -125,7 +123,6 @@ public class RegistroVoluntario extends AppCompatActivity {
                     }
                 }
         );
-        /* **** 840 ******************************************/
 
         setContentView(R.layout.activity_registro_voluntario);
 
@@ -145,7 +142,6 @@ public class RegistroVoluntario extends AppCompatActivity {
         examinePhotoButton = findViewById(R.id.examinarFotoButton);
         cancelarVolutarioButton = findViewById(R.id.cancelarVoluntarioButton);
 
-        /* **************** 840 CLICK LOGO  *********************************/
         imageView = findViewById(R.id.clicktoUploadImg);
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -155,8 +151,6 @@ public class RegistroVoluntario extends AppCompatActivity {
                 activityResultLauncher.launch(intent);
             }
         });
-        /* ************* FIN CLICK LOGO */
-
 
         cancelarVolutarioButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -200,7 +194,6 @@ public class RegistroVoluntario extends AppCompatActivity {
 
                 SaveResult result = voluntarioSave.save(usuario, voluntario);
 
-                /* ***** 840 id usuario ************/
                 idUser = result.getUserId();
 
                 Log.d("Aviso","Pasa ID USUARIO:"+idUser);
