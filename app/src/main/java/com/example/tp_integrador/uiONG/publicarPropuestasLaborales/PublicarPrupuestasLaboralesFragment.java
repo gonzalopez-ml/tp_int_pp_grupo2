@@ -13,11 +13,14 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.tp_integrador.R;
+import com.example.tp_integrador.data.domain.Localidad;
 import com.example.tp_integrador.data.domain.Ong;
 import com.example.tp_integrador.data.domain.Proyecto;
 import com.example.tp_integrador.data.domain.Usuario;
@@ -47,8 +50,9 @@ public class PublicarPrupuestasLaboralesFragment extends Fragment {
     private EditText editTextDescripcion;
     private EditText editTextObjetivos;
     private EditText editTextDisponibilidad;
-    private EditText editTextUbicacion;
+    private Spinner spinnerUbicacion;
     private Button btnGuardarProyecto;
+    List<Localidad> localidades;
 
     private Button btnCancelarProyecto;
 
@@ -64,15 +68,29 @@ public class PublicarPrupuestasLaboralesFragment extends Fragment {
 
         mViewModel = new ViewModelProvider(this).get(PublicarPrupuestasLaboralesViewModel.class);
 
-        editTextName= rootView.findViewById(R.id.editTextProyectoNombre);
-        editTextDescripcion= rootView.findViewById(R.id.editTextProyectoDescripcion);
+        editTextName = rootView.findViewById(R.id.editTextProyectoNombre);
+        editTextDescripcion = rootView.findViewById(R.id.editTextProyectoDescripcion);
         editTextObjetivos = rootView.findViewById(R.id.editTextProyectoObjetivos);
         editTextDisponibilidad = rootView.findViewById(R.id.editTextProyectoDisponiblidad);
-        editTextUbicacion = rootView.findViewById(R.id.editTextProyectoUbicacion);
+        spinnerUbicacion = rootView.findViewById(R.id.spinnerProyectoUbicacion);
 
         btnGuardarProyecto = rootView.findViewById(R.id.btnGuardarProyecto);
         btnCancelarProyecto = rootView.findViewById(R.id.btnCancelarProyecto);
 
+        localidades = mViewModel.getLocalidades();
+
+        // Crear un array para almacenar los nombres
+        String[] nombresLocalidades = new String[localidades.size()];
+
+        // Recorrer el array de objetos Localidad y extraer los nombres
+        for (int i = 0; i < localidades.size(); i++) {
+            nombresLocalidades[i] = localidades.get(i).getNombre();
+        }
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_spinner_item, nombresLocalidades);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        spinnerUbicacion.setAdapter(adapter);
 
 
 
@@ -83,7 +101,7 @@ public class PublicarPrupuestasLaboralesFragment extends Fragment {
                 String descripcion = editTextDescripcion.getText().toString();
                 String objetivos = editTextObjetivos.getText().toString();
                 String disponiblidad = editTextDisponibilidad.getText().toString();
-                String ubicacion = editTextUbicacion.getText().toString();
+                String ubicacion = spinnerUbicacion.getSelectedItem().toString();//.getText().toString();
 
                 Boolean isValidateInputs = validateInputsProyecto(nombre,descripcion,objetivos,disponiblidad,ubicacion);
 
@@ -126,7 +144,7 @@ public class PublicarPrupuestasLaboralesFragment extends Fragment {
 
     private void reiniciarCampos(){
         editTextName.setText("");
-        editTextUbicacion.setText("");
+        spinnerUbicacion.setSelection(0);
         editTextDisponibilidad.setText("");
         editTextObjetivos.setText("");
         editTextDescripcion.setText("");
