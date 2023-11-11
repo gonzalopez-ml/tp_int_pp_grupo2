@@ -40,9 +40,9 @@ public class EditarPerfilVoluntariosViewModel extends ViewModel {
     public EditarPerfilVoluntariosViewModel() {
     }
 
-    public LiveData<Voluntario> getVoluntarioLiveData() {
+    public LiveData<Voluntario> getVoluntarioLiveData(Integer idVoluntario) {
         try {
-            Voluntario voluntario = voluntarioGet.getVoluntario(17);
+            Voluntario voluntario = voluntarioGet.getVoluntario(idVoluntario);
 
             if (voluntario != null) {
                 voluntarioLiveData.setValue(voluntario);
