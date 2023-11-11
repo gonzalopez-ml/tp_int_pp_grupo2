@@ -62,8 +62,7 @@ public class LoginActivity extends AppCompatActivity {
                         if (userLogin.getTipoUser().getId() == 1) {
                             redirect(MainActivityONG.class);
                         } else redirect(MainActivityVoluntarios.class);
-                    }
-                    showMessage("Usuario o contraseña incorrecto");
+                    } else showMessage("Usuario o contraseña incorrecto");
                 }
             }
         });

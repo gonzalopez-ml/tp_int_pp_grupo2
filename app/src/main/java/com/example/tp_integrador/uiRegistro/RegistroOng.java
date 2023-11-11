@@ -173,6 +173,7 @@ public class RegistroOng extends AppCompatActivity {
                 } else return;
 
                 SaveResult result = ongSave.save(usuario, ong);
+
                 /* ***** 840 id usuario ************/
                 idUser = result.getUserId();
 

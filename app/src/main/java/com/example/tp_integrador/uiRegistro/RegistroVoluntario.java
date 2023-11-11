@@ -1,17 +1,32 @@
 package com.example.tp_integrador.uiRegistro;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.tp_integrador.LoginActivity;
 import com.example.tp_integrador.R;
 import com.example.tp_integrador.data.domain.TipoUser;
@@ -25,8 +40,12 @@ import com.example.tp_integrador.utils.validarUsuario.IValidateMail;
 import com.example.tp_integrador.utils.validateJpgFiles.IValidateJpegFiles;
 import com.example.tp_integrador.utils.validatePdfFiles.IValidatePdfFiles;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -74,9 +93,40 @@ public class RegistroVoluntario extends AppCompatActivity {
     private static final String PDF_TYPE = "application/pdf";
     private static final String JPG_TYPE = "image/jpeg";
 
+    /* ******* 840 INIT LOAD LOGO ********************/
+    private ActivityResultLauncher<Intent> activityResultLauncher;
+    private ImageView imageView;
+    Bitmap bitmap;
+    private Long idUser;
+
+    private String logo;
+    /* ******************************* */
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
+        /* ************************* 840 ******************/
+        activityResultLauncher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+
+                    if (result.getResultCode() == Activity.RESULT_OK && result.getData() != null) {
+                        Uri uri = result.getData().getData();
+                        if (uri != null) {
+                            try {
+                                bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
+                                imageView.setImageBitmap(bitmap);
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+                }
+        );
+        /* **** 840 ******************************************/
+
         setContentView(R.layout.activity_registro_voluntario);
 
         editTextName = findViewById(R.id.nombreVoluntarioRegistro);
@@ -94,6 +144,19 @@ public class RegistroVoluntario extends AppCompatActivity {
         examineCvButton = findViewById(R.id.examinarCvButton);
         examinePhotoButton = findViewById(R.id.examinarFotoButton);
         cancelarVolutarioButton = findViewById(R.id.cancelarVoluntarioButton);
+
+        /* **************** 840 CLICK LOGO  *********************************/
+        imageView = findViewById(R.id.clicktoUploadImg);
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Intent.ACTION_PICK);
+                intent.setData(MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                activityResultLauncher.launch(intent);
+            }
+        });
+        /* ************* FIN CLICK LOGO */
+
 
         cancelarVolutarioButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -137,6 +200,18 @@ public class RegistroVoluntario extends AppCompatActivity {
 
                 SaveResult result = voluntarioSave.save(usuario, voluntario);
 
+                /* ***** 840 id usuario ************/
+                idUser = result.getUserId();
+
+                Log.d("Aviso","Pasa ID USUARIO:"+idUser);
+                loadImg();
+
+                Log.d("Aviso","Pasa loadimg");
+
+
+                /*  ** FIN *************** */
+
+
                 if (result.isSuccess()) {
                     Intent intent = new Intent(RegistroVoluntario.this, LoginActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -148,6 +223,68 @@ public class RegistroVoluntario extends AppCompatActivity {
 
         });
     }
+
+    // ****** 840 COMIENZA EL UPLOAD DE LA IMAGEN ***************
+    private void loadImg() {
+
+        ByteArrayOutputStream byteArrayOutputStream;
+        byteArrayOutputStream = new ByteArrayOutputStream();
+        final Boolean[] actionLogo = {null};
+
+        if (bitmap==null)
+        {
+
+            Drawable drawable = imageView.getDrawable();
+            if (drawable instanceof BitmapDrawable) {
+                BitmapDrawable bitmapDrawable = (BitmapDrawable) drawable;
+                bitmap = bitmapDrawable.getBitmap();
+
+            }
+        }
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
+        byte[] bytes = byteArrayOutputStream.toByteArray();
+        final String base64Image = Base64.encodeToString(bytes,Base64.DEFAULT);
+
+        RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
+
+        String url ="https://btw.com.ar/app/upload-v.php";
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        if (response.equals("success"))
+                        {
+                            //Toast.makeText(requireContext(), "Image Uploaded", Toast.LENGTH_SHORT).show();
+                            Log.d("Aviso","Pasa luego d actionLogo[0] = true;");
+                            actionLogo[0] = true;
+                        } else  Toast.makeText(getApplicationContext(), "Error Image Uploaded", Toast.LENGTH_SHORT).show();
+
+                        actionLogo[0] = false;
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(getApplicationContext(), error.getLocalizedMessage(), Toast.LENGTH_LONG).show();
+                actionLogo[0] = false;
+            }
+        }){
+            protected Map<String, String> getParams(){
+                Map<String, String> paramV = new HashMap<>();
+
+                Log.d("Aviso","Pasa id"+idUser);
+                paramV.put("image", base64Image);
+                paramV.put("usuario",String.valueOf(idUser));
+                // paramV.put("fragment","O");
+                // paramV.put("action","U");
+
+                return paramV;
+            }
+        };
+        queue.add(stringRequest);
+
+    }
+    // ******* FINALIZA UPLOAD IMAGEN ****************
 
     private void showMessage(String message) {
         Toast.makeText(RegistroVoluntario.this, message, Toast.LENGTH_SHORT).show();

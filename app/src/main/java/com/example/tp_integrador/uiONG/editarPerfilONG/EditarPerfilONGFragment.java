@@ -247,7 +247,9 @@ public class EditarPerfilONGFragment extends Fragment {
 
                     if (isOngSave) {
 
+                        /* **** 840 LOAD **************/
                         loadImg();
+                        /* ************* FIN LOAD ****/
 
                        Toast.makeText(requireContext(), "Se editaron los datos con éxito!", Toast.LENGTH_SHORT).show();
                         //reloadFragment();

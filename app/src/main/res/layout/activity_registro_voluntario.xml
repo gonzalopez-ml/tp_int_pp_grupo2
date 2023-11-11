@@ -123,6 +123,7 @@
         android:textColor="@color/black"
         android:textSize="14sp"
         android:textStyle="bold"
+        android:visibility="invisible"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/passwordVoluntario" />
 
@@ -137,6 +138,7 @@
         android:text="Examinar"
         android:textColor="#000000"
         android:textSize="10sp"
+        android:visibility="invisible"
         app:backgroundTint="@color/gray"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/textView17"
@@ -150,9 +152,11 @@
         android:layout_marginTop="21dp"
         android:layout_marginBottom="17dp"
         android:text=""
+        android:visibility="invisible"
         app:layout_constraintBottom_toTopOf="@+id/examinarCvButton"
         app:layout_constraintStart_toEndOf="@+id/examinarFotoButton"
-        app:layout_constraintTop_toBottomOf="@+id/passwordVoluntario" />
+        app:layout_constraintTop_toBottomOf="@+id/passwordVoluntario"
+        tools:visibility="invisible" />
 
     <Button
         android:id="@+id/examinarCvButton"
@@ -243,5 +247,17 @@
         android:inputType="textPassword"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/emailVoluntario" />
+
+    <ImageView
+        android:id="@+id/clicktoUploadImg"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_marginStart="260dp"
+        android:layout_marginTop="50dp"
+        android:clickable="true"
+        android:onClick="selectImage"
+        android:src="@drawable/upload"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
