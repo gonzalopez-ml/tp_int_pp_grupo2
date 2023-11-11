@@ -1,20 +1,20 @@
 package com.example.tp_integrador.data.repository.ongs;
 
 import com.example.tp_integrador.data.domain.Ong;
+import com.example.tp_integrador.data.domain.ProyectoVoluntario;
 import com.example.tp_integrador.data.tasks.ongs.GetOngByUserIDTask;
 import com.example.tp_integrador.data.domain.Proyecto;
 import com.example.tp_integrador.data.tasks.ongs.GetOngTask;
 import com.example.tp_integrador.data.tasks.ongs.GetProjectsOngByLocationTask;
 import com.example.tp_integrador.data.tasks.ongs.GetProjectsOngTask;
+import com.example.tp_integrador.data.tasks.ongs.GetRelationshipVoluntariosTask;
 import com.example.tp_integrador.data.tasks.ongs.SaveOngTask;
 import com.example.tp_integrador.data.tasks.ongs.UpdateOngTask;
-import com.example.tp_integrador.data.tasks.voluntarios.GetVoluntarioByUserIDTask;
 
 
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
-import android.util.Log;
 
 public class OngRepository implements IOngRepository {
 
@@ -22,7 +22,6 @@ public class OngRepository implements IOngRepository {
     public CompletableFuture<Ong> get(Integer id) {
         return CompletableFuture.supplyAsync(() -> {
             try {
-                Log.d("Aviso", "GetOngTask");
                 return new GetOngTask().execute(id).get();
             } catch (ExecutionException | InterruptedException e) {
                 e.printStackTrace();
@@ -85,6 +84,18 @@ public class OngRepository implements IOngRepository {
         return CompletableFuture.supplyAsync(() -> {
             try {
                 return new GetProjectsOngByLocationTask().execute(location).get();
+            } catch (ExecutionException | InterruptedException e) {
+                e.printStackTrace();
+            }
+            return null;
+        });
+    }
+
+    @Override
+    public CompletableFuture<List<ProyectoVoluntario>> getVoluntariosProjectsOng(Integer idOng) {
+        return CompletableFuture.supplyAsync(() -> {
+            try {
+                return new GetRelationshipVoluntariosTask().execute(idOng).get();
             } catch (ExecutionException | InterruptedException e) {
                 e.printStackTrace();
             }

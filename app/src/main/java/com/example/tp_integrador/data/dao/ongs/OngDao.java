@@ -2,9 +2,9 @@ package com.example.tp_integrador.data.dao.ongs;
 
 import com.example.tp_integrador.data.domain.Ong;
 import com.example.tp_integrador.data.domain.Proyecto;
+import com.example.tp_integrador.data.domain.ProyectoVoluntario;
 import com.example.tp_integrador.data.repository.ongs.IOngRepository;
-import com.example.tp_integrador.data.tasks.ongs.GetProjectsOngByLocationTask;
-import com.example.tp_integrador.data.tasks.ongs.GetProjectsOngTask;
+import com.example.tp_integrador.data.tasks.ongs.GetRelationshipVoluntariosTask;
 
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
@@ -77,8 +77,9 @@ public class OngDao implements IOngDao {
     @Override
     public CompletableFuture<List<Proyecto>> getProjectsOng() {
         return CompletableFuture.supplyAsync(() -> {
+            CompletableFuture<List<Proyecto>> projectsOng = ongRepository.getProjectsOng();
             try {
-                return new GetProjectsOngTask().execute().get();
+                return projectsOng.get();
             } catch (ExecutionException | InterruptedException e) {
                 e.printStackTrace();
             }
@@ -89,8 +90,22 @@ public class OngDao implements IOngDao {
     @Override
     public CompletableFuture<List<Proyecto>> getProjectsOngByLocation(String location) {
         return CompletableFuture.supplyAsync(() -> {
+            CompletableFuture<List<Proyecto>> projectsOng = ongRepository.getProjectsOngByLocation(location);
             try {
-                return new GetProjectsOngByLocationTask().execute(location).get();
+                return projectsOng.get();
+            } catch (ExecutionException | InterruptedException e) {
+                e.printStackTrace();
+            }
+            return null;
+        });
+    }
+
+
+    @Override
+    public CompletableFuture<List<ProyectoVoluntario>> getVoluntariosProjectsOng(Integer idOng) {
+        return CompletableFuture.supplyAsync(() -> {
+            try {
+                return new GetRelationshipVoluntariosTask().execute(idOng).get();
             } catch (ExecutionException | InterruptedException e) {
                 e.printStackTrace();
             }
