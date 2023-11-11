@@ -23,11 +23,11 @@ public class OngProjectUpdate implements IOngProjectoUpdate {
         try{
             Boolean isProyectoSave = proyectoDao.update(proyecto).get();
             if (isProyectoSave) {
-                return new SaveResult(true, "Propuesta guardada correctamente");
+                return new SaveResult(true, "Propuesta guardada correctamente", proyecto.getIdProyecto());
             }
         } catch (ExecutionException | InterruptedException e) {
-            return new SaveResult(false, "La propuesta no pudo ser registrada");
+            return new SaveResult(false, "La propuesta no pudo ser registrada", proyecto.getIdProyecto());
         }
-        return new SaveResult(false, "La propuesta no pudo ser registrada");
+        return new SaveResult(false, "La propuesta no pudo ser registrada", proyecto.getIdProyecto());
     }
 }

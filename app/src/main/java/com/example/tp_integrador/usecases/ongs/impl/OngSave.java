@@ -26,26 +26,27 @@ public class OngSave implements IOngSave {
 
     @Override
     public SaveResult save(Usuario usuario, Ong ong) {
+        Usuario usuarioGuardado = null;
         try {
             Usuario userExist = usuarioDao.get(usuario).get();
             if (userExist != null) {
-                return new SaveResult(false, "El usuario ya esta registrado");
+                return new SaveResult(false, "El usuario ya esta registrado", usuarioGuardado.getIdUser());
             } else {
                 Boolean isUserSave = usuarioDao.save(usuario).get();
 
                 if (isUserSave) {
-                    Usuario usuarioGuardado = usuarioDao.get(usuario).get();
+                    usuarioGuardado = usuarioDao.get(usuario).get();
                     Boolean isOngSave = ongDao.save(usuarioGuardado.getIdUser(), ong).get();
 
                     if (isOngSave) {
-                        return new SaveResult(true, "Usuario Ong guardado correctamente");
+                        return new SaveResult(true, "Usuario Ong guardado correctamente", usuarioGuardado.getIdUser());
                     }
                 }
             }
         } catch (ExecutionException | InterruptedException e) {
-            return new SaveResult(false, "La Ong no pudo ser registrada");
+            return new SaveResult(false, "La Ong no pudo ser registrada 1", usuarioGuardado.getIdUser());
         }
-        return new SaveResult(false, "La Ong no pudo ser registrada");
+        return new SaveResult(false, "La Ong no pudo ser registrada 2", usuarioGuardado.getIdUser());
     }
 
     @Override

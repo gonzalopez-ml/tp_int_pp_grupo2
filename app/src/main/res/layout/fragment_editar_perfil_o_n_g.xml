@@ -10,8 +10,10 @@
         android:id="@+id/fragment_editar_perfil_ong"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:layout_editor_absoluteX="-55dp"
-        tools:layout_editor_absoluteY="-406dp">
+        android:layout_marginTop="100dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="200dp">
 
     </FrameLayout>
 
@@ -103,21 +105,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtOngLocation" />
 
-    <Button
-        android:id="@+id/examinePhotoOngButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="43dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="255dp"
-        android:text="Examinar"
-        android:textColor="#000000"
-        app:backgroundTint="@color/gray"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.52"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView20" />
-
     <EditText
         android:id="@+id/txtOngPhone"
         android:layout_width="wrap_content"
@@ -150,24 +137,38 @@
         android:id="@+id/btnOngGuardar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="45dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginEnd="50dp"
         android:text="Guardar"
         android:textColor="#000000"
         app:backgroundTint="@color/gray"
         app:layout_constraintEnd_toStartOf="@+id/btnOngCancelar"
-        app:layout_constraintTop_toBottomOf="@+id/examinePhotoOngButton" />
+        app:layout_constraintTop_toBottomOf="@+id/clicktoUploadImg" />
 
     <Button
         android:id="@+id/btnOngCancelar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="200dp"
-        android:layout_marginTop="44dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginEnd="250dp"
         android:text="Cancelar"
         android:textColor="#000000"
         app:backgroundTint="@color/gray"
-        app:layout_constraintStart_toStartOf="@+id/fragment_editar_perfil_ong"
-        app:layout_constraintTop_toBottomOf="@+id/examinePhotoOngButton" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/fragment_editar_perfil_ong"
+        app:layout_constraintTop_toBottomOf="@+id/clicktoUploadImg" />
+
+    <ImageView
+        android:id="@+id/clicktoUploadImg"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:layout_marginStart="5dp"
+        android:clickable="true"
+        android:onClick="selectImage"
+        android:src="@drawable/upload"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView20" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

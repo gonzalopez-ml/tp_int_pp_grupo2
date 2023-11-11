@@ -1,7 +1,6 @@
 package com.example.tp_integrador;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,22 +9,14 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.tp_integrador.data.domain.Ong;
 import com.example.tp_integrador.data.domain.Usuario;
-import com.example.tp_integrador.data.domain.Voluntario;
 import com.example.tp_integrador.uiRegistro.RegistroOng;
 import com.example.tp_integrador.uiRegistro.RegistroVoluntario;
-import com.example.tp_integrador.uiVoluntarios.homeVoluntarios.HomeVoluntariosFragment;
 import com.example.tp_integrador.usecases.usuarios.ILoginAllowAccess;
-import com.example.tp_integrador.usecases.voluntarios.IVoluntarioGet;
-
-import com.example.tp_integrador.usecases.voluntarios.impl.VoluntarioGet;
-import com.example.tp_integrador.utils.customMessages.LoginResult;
 import com.example.tp_integrador.utils.validarCamposVacios.IValidateInputs;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
 
 import javax.inject.Inject;
 
@@ -66,13 +57,10 @@ public class LoginActivity extends AppCompatActivity {
                     if (userLogin != null) {
                         if (userLogin.getTipoUser().getId() == 1) {
                             redirect(MainActivityONG.class, userLogin);
-                        } else{
+                        } else {
                             redirect(MainActivityVoluntarios.class, userLogin);
                         }
-
-
-                    }
-                    showMessage("Usuario o contraseña incorrecto");
+                    } else showMessage("Usuario o contraseña incorrecto");
                 }
             }
         });

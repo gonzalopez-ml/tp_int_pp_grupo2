@@ -52,7 +52,7 @@ public class ValidateJpegFiles implements IValidateJpegFiles {
         }
 
         String fileName = getFileName(uri, ctx);
-        return fileName.toLowerCase().endsWith(".jpeg");
+        return fileName.toLowerCase().endsWith(".jpg");
     }
 
 
