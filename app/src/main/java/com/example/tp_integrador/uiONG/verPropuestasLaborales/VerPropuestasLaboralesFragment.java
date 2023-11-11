@@ -16,8 +16,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+
 import com.example.tp_integrador.R;
+import com.example.tp_integrador.data.domain.Ong;
 import com.example.tp_integrador.data.domain.Proyecto;
+import com.example.tp_integrador.uiVoluntarios.sharedData.SharedViewModel;
+
 import java.util.List;
 import dagger.hilt.android.AndroidEntryPoint;
 
@@ -40,8 +44,9 @@ public class VerPropuestasLaboralesFragment extends Fragment implements Proyecto
         proyectoVerAdapter = new ProyectoVerAdapter(this,this);
         recyclerView.setAdapter(proyectoVerAdapter);
 
-        //Se manda 1 pero aca va el id de la ONG logueada:
-        mViewModel.getAllProjectsById(1).observe(getViewLifecycleOwner(),proyectos -> {
+        SharedViewModel sharedViewModel = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
+        Ong ong = sharedViewModel.getOng().getValue();
+        mViewModel.getAllProjectsById(ong.getIdOng()).observe(getViewLifecycleOwner(),proyectos -> {
             updateUIWithProyectos(proyectos);
         });
         return rootView;

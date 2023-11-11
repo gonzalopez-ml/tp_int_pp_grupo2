@@ -19,12 +19,12 @@ public class SaveProyectoTask extends AsyncTask<Object,Void,Boolean> {
     @Override
     protected Boolean doInBackground(Object... params) {
         Proyecto proyecto = (Proyecto) params[0];
-        Integer idOng = 1; // proyecto.getOng().getIdOng();
+
 
         try(Connection connection = DriverManager.getConnection(DB_URL,USER,PASSWORD)){
             String insertQuery= "INSERT INTO Proyectos_ong (id_perfil_ong, nombre, necesidades, descripcion, disponibilidad ,ubicacion) VALUES (?, ?, ?, ?, ?, ?)";
             try(PreparedStatement preparedStatement = connection.prepareStatement(insertQuery)){
-                preparedStatement.setObject(1,idOng);
+                preparedStatement.setObject(1,proyecto.getOng().getIdOng());
                 preparedStatement.setString(2,proyecto.getNombre());
                 preparedStatement.setString(3,proyecto.getObjetivos());
                 preparedStatement.setString(4,proyecto.getDescripcion());
