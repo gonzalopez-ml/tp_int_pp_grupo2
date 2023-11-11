@@ -19,8 +19,14 @@ public class ProyectoRepository implements IProyectoRepository{
 
     @Override
     public CompletableFuture<Boolean> update(Proyecto proyecto) {
-        new UpdateProyectoTask().execute(proyecto);
-        return null;
+        return CompletableFuture.supplyAsync(() -> {
+            try {
+                return new UpdateProyectoTask().execute(proyecto).get();
+            } catch (ExecutionException | InterruptedException e) {
+                e.printStackTrace();
+            }
+            return null;
+        });
     }
 
     @Override
