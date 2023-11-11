@@ -22,6 +22,7 @@ import com.example.tp_integrador.data.domain.Ong;
 import com.example.tp_integrador.data.domain.Proyecto;
 import com.example.tp_integrador.data.domain.Usuario;
 import com.example.tp_integrador.uiVoluntarios.EditarPefilVoluntarios.EditarPerfilVoluntariosFragment;
+import com.example.tp_integrador.uiVoluntarios.sharedData.SharedViewModel;
 import com.example.tp_integrador.utils.validarCamposVacios.IValidateInputs;
 import com.example.tp_integrador.utils.validarUsuario.IValidateMail;
 
@@ -90,7 +91,8 @@ public class PublicarPrupuestasLaboralesFragment extends Fragment {
                     Toast.makeText(requireContext(), "Por favor verificar los campos", Toast.LENGTH_SHORT).show();
                 } else {
 
-                    Ong ong = new Ong();
+                    SharedViewModel sharedViewModel = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
+                    Ong ong = sharedViewModel.getOng().getValue();
                     Proyecto  proyecto = new Proyecto(null,ong,nombre,descripcion,objetivos,disponiblidad,ubicacion);
                     Boolean isProyectoSave = mViewModel.saveProyectoLiveData(proyecto);
 
