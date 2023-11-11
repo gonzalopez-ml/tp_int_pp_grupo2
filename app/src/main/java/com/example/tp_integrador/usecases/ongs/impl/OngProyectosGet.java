@@ -2,6 +2,7 @@ package com.example.tp_integrador.usecases.ongs.impl;
 
 import com.example.tp_integrador.data.dao.ongs.IOngDao;
 import com.example.tp_integrador.data.domain.Proyecto;
+import com.example.tp_integrador.data.domain.ProyectoVoluntario;
 import com.example.tp_integrador.usecases.ongs.IOngProyectosGet;
 
 import java.util.List;
@@ -23,5 +24,10 @@ public class OngProyectosGet implements IOngProyectosGet {
     @Override
     public List<Proyecto> getProjectsOngById(Integer id) throws ExecutionException, InterruptedException {
         return iOngDao.getProjectsOngById(id).get();
+    }
+
+    @Override
+    public List<ProyectoVoluntario> getVoluntariosProjects(Integer idOng) throws ExecutionException, InterruptedException {
+        return iOngDao.getVoluntariosProjectsOng(idOng).get();
     }
 }

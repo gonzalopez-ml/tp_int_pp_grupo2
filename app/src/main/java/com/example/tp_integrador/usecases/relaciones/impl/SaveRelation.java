@@ -21,4 +21,9 @@ public class SaveRelation implements ISaveRelation {
     public Boolean save(Relacion relacion) throws ExecutionException, InterruptedException {
         return relationDao.save(relacion).get();
     }
+
+    @Override
+    public Boolean update(Integer idVoluntario, Integer idProyecto) throws ExecutionException, InterruptedException {
+        return relationDao.update(idVoluntario, idProyecto).get();
+    }
 }

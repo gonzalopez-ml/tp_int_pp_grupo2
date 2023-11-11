@@ -75,7 +75,7 @@ public class ProyectoAdapter extends RecyclerView.Adapter<ProyectoAdapter.Proyec
             nombreOng = itemView.findViewById(R.id.nombreOng);
             nombreProyecto = itemView.findViewById(R.id.nombreProyecto);
             descripcionProyeco = itemView.findViewById(R.id.descripcionProyecto);
-            botonVerProyecto = itemView.findViewById(R.id.botonEliminarProyecto);
+            botonVerProyecto = itemView.findViewById(R.id.botonRechazoVoluntario);
         }
     }
 

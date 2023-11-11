@@ -70,9 +70,7 @@ public class MainActivityONG extends AppCompatActivity {
                 ong = ongGetByUserID.getOngByUserID(userLogin.getIdUser());
                 SharedViewModel sharedViewModel = new ViewModelProvider(this).get(SharedViewModel.class);
                 sharedViewModel.setOng(ong); // -> Importante, setea la ong para poder usarlo en todos los fragments.
-            } catch (ExecutionException e) {
-                throw new RuntimeException(e);
-            } catch (InterruptedException e) {
+            } catch (ExecutionException | InterruptedException e) {
                 throw new RuntimeException(e);
             }
 

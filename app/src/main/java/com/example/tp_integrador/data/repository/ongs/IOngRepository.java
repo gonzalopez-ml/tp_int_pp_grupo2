@@ -2,6 +2,7 @@ package com.example.tp_integrador.data.repository.ongs;
 
 import com.example.tp_integrador.data.domain.Ong;
 import com.example.tp_integrador.data.domain.Proyecto;
+import com.example.tp_integrador.data.domain.ProyectoVoluntario;
 import com.example.tp_integrador.data.domain.Voluntario;
 
 import java.util.List;
@@ -15,6 +16,6 @@ public interface IOngRepository {
     CompletableFuture<Ong> getByUserID(Integer idUser);
     CompletableFuture<List<Proyecto>> getProjectsOng();
     CompletableFuture<List<Proyecto>> getProjectsOngByLocation(String location);
-
+    CompletableFuture<List<ProyectoVoluntario>> getVoluntariosProjectsOng(Integer idOng);
     CompletableFuture<List<Proyecto>> getProjectsOng(Integer id);
 }
