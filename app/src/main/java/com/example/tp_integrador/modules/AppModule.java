@@ -6,6 +6,7 @@ import com.example.tp_integrador.data.dao.proyectos.IProyectoDao;
 import com.example.tp_integrador.data.dao.proyectos.ProyectoDao;
 import com.example.tp_integrador.data.dao.relaciones.IRelationDao;
 import com.example.tp_integrador.data.dao.relaciones.impl.RelationDao;
+import com.example.tp_integrador.data.domain.Localidad;
 import com.example.tp_integrador.data.repository.ongs.IOngRepository;
 import com.example.tp_integrador.data.repository.ongs.OngRepository;
 import com.example.tp_integrador.data.repository.proyectos.IProyectoRepository;
@@ -33,9 +34,11 @@ import com.example.tp_integrador.usecases.ongs.impl.OngProjectDelete;
 import com.example.tp_integrador.usecases.ongs.impl.OngProjectUpdate;
 import com.example.tp_integrador.usecases.ongs.impl.OngProyectosGet;
 import com.example.tp_integrador.usecases.ongs.impl.OngUpdate;
+import com.example.tp_integrador.usecases.proyectos.IProyectoGetLocalidades;
 import com.example.tp_integrador.usecases.proyectos.IProyectoSave;
 import com.example.tp_integrador.usecases.proyectos.ProyectoSave;
 import com.example.tp_integrador.usecases.ongs.impl.OngSave;
+import com.example.tp_integrador.usecases.proyectos.impl.ProyectoGetLocalidades;
 import com.example.tp_integrador.usecases.relaciones.ISaveRelation;
 import com.example.tp_integrador.usecases.relaciones.impl.SaveRelation;
 import com.example.tp_integrador.usecases.usuarios.ILoginAllowAccess;
@@ -57,6 +60,9 @@ import com.example.tp_integrador.utils.validateJpgFiles.IValidateJpegFiles;
 import com.example.tp_integrador.utils.validateJpgFiles.ValidateJpegFiles;
 import com.example.tp_integrador.utils.validatePdfFiles.IValidatePdfFiles;
 import com.example.tp_integrador.utils.validatePdfFiles.ValidatePdfFiles;
+
+import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 import javax.inject.Singleton;
 
@@ -172,6 +178,11 @@ public class AppModule {
         return new SaveRelation(relationDao);
     }
 
+    @Provides
+    @Singleton
+    static IProyectoGetLocalidades provideProyectoGetLocalideades(IProyectoDao proyectoDao){
+        return new ProyectoGetLocalidades(proyectoDao);
+    }
 
     //repositories
     @Provides
