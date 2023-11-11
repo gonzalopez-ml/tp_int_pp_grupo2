@@ -20,10 +20,6 @@
             android:title="Busqueda de Propuestas por Geolocalizacion" />
 
         <item
-            android:id="@+id/nav_ver_perfil_ong"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="Ver perfil de ONGs" />
-        <item
             android:id="@+id/nav_editar_perfil"
             android:icon="@drawable/ic_menu_slideshow"
             android:title="Editar Perfil" />
