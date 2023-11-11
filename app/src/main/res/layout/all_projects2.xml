@@ -50,8 +50,8 @@
 
         <TextView
             android:id="@+id/descripcionProyecto"
-            android:layout_width="255dp"
-            android:layout_height="28dp"
+            android:layout_width="254dp"
+            android:layout_height="60dp"
             android:layout_marginTop="4dp"
             android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"

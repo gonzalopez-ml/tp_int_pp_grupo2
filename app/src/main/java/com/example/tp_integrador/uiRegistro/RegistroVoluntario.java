@@ -277,7 +277,6 @@ public class RegistroVoluntario extends AppCompatActivity {
         queue.add(stringRequest);
 
     }
-    // ******* FINALIZA UPLOAD IMAGEN ****************
 
     private void showMessage(String message) {
         Toast.makeText(RegistroVoluntario.this, message, Toast.LENGTH_SHORT).show();

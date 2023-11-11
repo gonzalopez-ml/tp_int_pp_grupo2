@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".uiONG.editarPerfilONG.EditarPerfilONGFragment">
 
+
     <FrameLayout
         android:id="@+id/fragment_editar_perfil_ong"
         android:layout_width="match_parent"
@@ -16,6 +17,15 @@
         tools:layout_editor_absoluteX="200dp">
 
     </FrameLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".uiONG.editarPerfilONG.EditarPerfilONGFragment">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
     <TextView
         android:id="@+id/textView20"
@@ -98,8 +108,11 @@
         android:layout_marginStart="41dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="160dp"
+        android:background="@android:color/darker_gray"
         android:ems="10"
         android:hint="Correo electrónico"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
         android:inputType="textEmailAddress"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -133,33 +146,33 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtOngPhone" />
 
-    <Button
-        android:id="@+id/btnOngGuardar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
-        android:layout_marginEnd="50dp"
-        android:text="Guardar"
-        android:textColor="#000000"
-        app:backgroundTint="@color/gray"
-        app:layout_constraintEnd_toStartOf="@+id/btnOngCancelar"
-        app:layout_constraintTop_toBottomOf="@+id/clicktoUploadImg" />
-
-    <Button
-        android:id="@+id/btnOngCancelar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
-        android:layout_marginTop="50dp"
-        android:layout_marginEnd="250dp"
-        android:text="Cancelar"
-        android:textColor="#000000"
-        app:backgroundTint="@color/gray"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/fragment_editar_perfil_ong"
-        app:layout_constraintTop_toBottomOf="@+id/clicktoUploadImg" />
-
-    <ImageView
+            <Button
+                android:id="@+id/btnOngGuardar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Guardar"
+                android:textColor="#000000"
+                app:backgroundTint="@color/gray"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/clicktoUploadImg"
+                app:layout_constraintEnd_toStartOf="@+id/btnOngCancelar"
+                android:layout_marginStart="82dp"
+                android:layout_marginTop="32dp"
+                android:layout_marginEnd="8dp"
+                />
+            <Button
+                android:id="@+id/btnOngCancelar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Cancelar"
+                android:textColor="#000000"
+                app:backgroundTint="@color/gray"
+                app:layout_constraintTop_toBottomOf="@+id/clicktoUploadImg"
+                app:layout_constraintStart_toEndOf="@id/btnOngGuardar"
+                android:layout_marginTop="32dp"
+                android:layout_marginStart="8dp"
+                />
+            <ImageView
         android:id="@+id/clicktoUploadImg"
         android:layout_width="match_parent"
         android:layout_height="150dp"
@@ -169,6 +182,10 @@
         android:src="@drawable/upload"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView20" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
