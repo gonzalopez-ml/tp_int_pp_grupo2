@@ -1,11 +1,15 @@
 package com.example.tp_integrador.data.repository.proyectos;
 
+import com.example.tp_integrador.data.domain.Localidad;
 import com.example.tp_integrador.data.domain.Ong;
 import com.example.tp_integrador.data.domain.Proyecto;
+import com.example.tp_integrador.data.tasks.ongs.GetProjectsOngTask;
+import com.example.tp_integrador.data.tasks.proyectos.GetLocalidadesProyectoTask;
 import com.example.tp_integrador.data.tasks.proyectos.GetProyectoTask;
 import com.example.tp_integrador.data.tasks.proyectos.SaveProyectoTask;
 import com.example.tp_integrador.data.tasks.proyectos.UpdateProyectoTask;
 
+import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
@@ -19,8 +23,14 @@ public class ProyectoRepository implements IProyectoRepository{
 
     @Override
     public CompletableFuture<Boolean> update(Proyecto proyecto) {
-        new UpdateProyectoTask().execute(proyecto);
-        return null;
+        return CompletableFuture.supplyAsync(() -> {
+            try {
+                return new UpdateProyectoTask().execute(proyecto).get();
+            } catch (ExecutionException | InterruptedException e) {
+                e.printStackTrace();
+            }
+            return null;
+        });
     }
 
     @Override
@@ -28,6 +38,18 @@ public class ProyectoRepository implements IProyectoRepository{
         return CompletableFuture.supplyAsync(() -> {
             try {
                 return new SaveProyectoTask().execute(proyecto).get();
+            } catch (ExecutionException | InterruptedException e) {
+                e.printStackTrace();
+            }
+            return null;
+        });
+    }
+
+    @Override
+    public CompletableFuture<List<Localidad>> getLocalidades() {
+        return CompletableFuture.supplyAsync(() -> {
+            try {
+                return new GetLocalidadesProyectoTask().execute().get();
             } catch (ExecutionException | InterruptedException e) {
                 e.printStackTrace();
             }

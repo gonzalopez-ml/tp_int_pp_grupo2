@@ -3,6 +3,7 @@ package com.example.tp_integrador.uiONG.publicarPropuestasLaborales;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -12,19 +13,25 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.tp_integrador.R;
+import com.example.tp_integrador.data.domain.Localidad;
 import com.example.tp_integrador.data.domain.Ong;
 import com.example.tp_integrador.data.domain.Proyecto;
+import com.example.tp_integrador.data.domain.Usuario;
 import com.example.tp_integrador.uiVoluntarios.EditarPefilVoluntarios.EditarPerfilVoluntariosFragment;
+import com.example.tp_integrador.uiVoluntarios.sharedData.SharedViewModel;
 import com.example.tp_integrador.utils.validarCamposVacios.IValidateInputs;
 import com.example.tp_integrador.utils.validarUsuario.IValidateMail;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 import javax.inject.Inject;
 
@@ -43,8 +50,11 @@ public class PublicarPrupuestasLaboralesFragment extends Fragment {
     private EditText editTextDescripcion;
     private EditText editTextObjetivos;
     private EditText editTextDisponibilidad;
-    private EditText editTextUbicacion;
+    private Spinner spinnerUbicacion;
     private Button btnGuardarProyecto;
+    List<Localidad> localidades;
+
+    private Button btnCancelarProyecto;
 
 
     public static PublicarPrupuestasLaboralesFragment newInstance() {
@@ -58,13 +68,31 @@ public class PublicarPrupuestasLaboralesFragment extends Fragment {
 
         mViewModel = new ViewModelProvider(this).get(PublicarPrupuestasLaboralesViewModel.class);
 
-        editTextName= rootView.findViewById(R.id.editTextProyectoNombre);
-        editTextDescripcion= rootView.findViewById(R.id.editTextProyectoDescripcion);
+        editTextName = rootView.findViewById(R.id.editTextProyectoNombre);
+        editTextDescripcion = rootView.findViewById(R.id.editTextProyectoDescripcion);
         editTextObjetivos = rootView.findViewById(R.id.editTextProyectoObjetivos);
         editTextDisponibilidad = rootView.findViewById(R.id.editTextProyectoDisponiblidad);
-        editTextUbicacion = rootView.findViewById(R.id.editTextProyectoUbicacion);
+        spinnerUbicacion = rootView.findViewById(R.id.spinnerProyectoUbicacion);
 
         btnGuardarProyecto = rootView.findViewById(R.id.btnGuardarProyecto);
+        btnCancelarProyecto = rootView.findViewById(R.id.btnCancelarProyecto);
+
+        localidades = mViewModel.getLocalidades();
+
+        // Crear un array para almacenar los nombres
+        String[] nombresLocalidades = new String[localidades.size()];
+
+        // Recorrer el array de objetos Localidad y extraer los nombres
+        for (int i = 0; i < localidades.size(); i++) {
+            nombresLocalidades[i] = localidades.get(i).getNombre();
+        }
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_spinner_item, nombresLocalidades);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        spinnerUbicacion.setAdapter(adapter);
+
+
 
         btnGuardarProyecto.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -73,14 +101,16 @@ public class PublicarPrupuestasLaboralesFragment extends Fragment {
                 String descripcion = editTextDescripcion.getText().toString();
                 String objetivos = editTextObjetivos.getText().toString();
                 String disponiblidad = editTextDisponibilidad.getText().toString();
-                String ubicacion = editTextUbicacion.getText().toString();
+                String ubicacion = spinnerUbicacion.getSelectedItem().toString();//.getText().toString();
 
                 Boolean isValidateInputs = validateInputsProyecto(nombre,descripcion,objetivos,disponiblidad,ubicacion);
 
                 if (!isValidateInputs) {
                     Toast.makeText(requireContext(), "Por favor verificar los campos", Toast.LENGTH_SHORT).show();
                 } else {
-                    Ong ong = new Ong();
+
+                    SharedViewModel sharedViewModel = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
+                    Ong ong = sharedViewModel.getOng().getValue();
                     Proyecto  proyecto = new Proyecto(null,ong,nombre,descripcion,objetivos,disponiblidad,ubicacion);
                     Boolean isProyectoSave = mViewModel.saveProyectoLiveData(proyecto);
 
@@ -94,16 +124,30 @@ public class PublicarPrupuestasLaboralesFragment extends Fragment {
             }
         });
 
+
+        btnCancelarProyecto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                reiniciarCampos();
+            }
+        });
+
+
+
+
         return rootView;
     }
 
 
+
+
+
     private void reiniciarCampos(){
-        editTextName.setText("Nombre");
-        editTextUbicacion.setText("Ubicacion");
-        editTextDisponibilidad.setText("Disponibilidad");
-        editTextObjetivos.setText("Objetivos");
-        editTextDescripcion.setText("Desecripcion");
+        editTextName.setText("");
+        spinnerUbicacion.setSelection(0);
+        editTextDisponibilidad.setText("");
+        editTextObjetivos.setText("");
+        editTextDescripcion.setText("");
     }
 
     private Boolean validateInputsProyecto(String nombre, String descripcion, String objetivos, String disponibilidad, String ubicacion) {

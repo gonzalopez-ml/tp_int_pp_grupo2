@@ -8,4 +8,5 @@ public interface IVoluntariosRepository {
     CompletableFuture<Voluntario> get(Integer id);
     CompletableFuture<Boolean> update(Voluntario voluntario);
     CompletableFuture<Boolean> save(Integer idUser, Voluntario voluntario);
+    CompletableFuture<Voluntario> getByUserID(Integer idUser);
 }

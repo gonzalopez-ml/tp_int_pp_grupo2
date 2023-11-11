@@ -50,11 +50,6 @@ public class OngSave implements IOngSave {
     }
 
     @Override
-    public List<Proyecto> getProjectsOng() throws ExecutionException, InterruptedException {
-        return ongDao.getProjectsOng().get();
-    }
-
-    @Override
     public List<Proyecto> getProjectsOngByLocation(String location) throws ExecutionException, InterruptedException {
         return ongDao.getProjectsOngByLocation(location).get();
     }

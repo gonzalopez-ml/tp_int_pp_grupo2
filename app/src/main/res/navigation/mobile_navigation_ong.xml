@@ -22,18 +22,29 @@
         android:name="com.example.tp_integrador.uiONG.editarPropuestasLaborales.EditarPropuestasLaboralesFragment"
         android:label="Editar propuesta"
         tools:layout="@layout/fragment_editar_propuestas_laborales" />
+    <action android:id="@+id/action_nav_editarPropuestas_to_verPropuestasFragment"
+        app:destination="@id/nav_ver_propuestas"/>
 
     <fragment
-        android:id="@+id/nav_eliminar_propuesta"
-        android:name="com.example.tp_integrador.uiONG.eliminarPropuestasLaborales.EliminarPropuestasLaboralesFragment"
-        android:label="Eliminar propuesta"
-        tools:layout="@layout/fragment_eliminar_propuestas_laborales" />
+        android:id="@+id/nav_ver_propuestas"
+        android:name="com.example.tp_integrador.uiONG.verPropuestasLaborales.VerPropuestasLaboralesFragment"
+        android:label="Ver Proyectos"
+        tools:layout="@layout/fragment_ver_propuestas_laborales" />
+    <!-- Acción para ir a EditarProyectos  -->
+    <action android:id="@+id/action_nav_eliminarPropuestas_to_editarPropueestasFragment"
+        app:destination="@id/nav_editar_propuesta"/>
 
     <fragment
         android:id="@+id/nav_editar_perfil_ong"
         android:name="com.example.tp_integrador.uiONG.editarPerfilONG.EditarPerfilONGFragment"
         android:label="Editar perfil"
         tools:layout="@layout/fragment_editar_perfil_o_n_g" />
+
+    <fragment
+        android:id="@+id/nav_ver_voluntarios"
+        android:name="com.example.tp_integrador.uiONG.verVoluntarios.VerVoluntariosFragment"
+        android:label="Voluntarios"
+        tools:layout="@layout/fragment_ver_voluntarios" />
 
     <fragment
         android:id="@+id/nav_cerrar_sesion_ong"

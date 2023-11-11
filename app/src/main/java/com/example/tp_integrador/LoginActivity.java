@@ -1,7 +1,6 @@
 package com.example.tp_integrador;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,12 +10,9 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.tp_integrador.data.domain.Usuario;
-import com.example.tp_integrador.data.domain.Voluntario;
 import com.example.tp_integrador.uiRegistro.RegistroOng;
 import com.example.tp_integrador.uiRegistro.RegistroVoluntario;
-import com.example.tp_integrador.uiVoluntarios.homeVoluntarios.HomeVoluntariosFragment;
 import com.example.tp_integrador.usecases.usuarios.ILoginAllowAccess;
-import com.example.tp_integrador.utils.customMessages.LoginResult;
 import com.example.tp_integrador.utils.validarCamposVacios.IValidateInputs;
 
 import java.util.Arrays;
@@ -60,8 +56,10 @@ public class LoginActivity extends AppCompatActivity {
 
                     if (userLogin != null) {
                         if (userLogin.getTipoUser().getId() == 1) {
-                            redirect(MainActivityONG.class);
-                        } else redirect(MainActivityVoluntarios.class);
+                            redirect(MainActivityONG.class, userLogin);
+                        } else {
+                            redirect(MainActivityVoluntarios.class, userLogin);
+                        }
                     } else showMessage("Usuario o contraseña incorrecto");
                 }
             }
@@ -106,9 +104,10 @@ public class LoginActivity extends AppCompatActivity {
         Toast.makeText(LoginActivity.this, message, Toast.LENGTH_SHORT).show();
     }
 
-    private void redirect(Class activity) {
+    private void redirect(Class activity, Usuario userLogin) {
         showMessage("Bienvenido!");
         Intent intent = new Intent(LoginActivity.this, activity);
+        intent.putExtra("usuarioLogeado", userLogin);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
         finish();

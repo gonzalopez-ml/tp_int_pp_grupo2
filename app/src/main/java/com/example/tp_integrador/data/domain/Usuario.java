@@ -1,6 +1,8 @@
 package com.example.tp_integrador.data.domain;
 
-public class Usuario {
+import java.io.Serializable;
+
+public class Usuario implements Serializable {
     private Integer idUser;
     private String mail;
     private String password;

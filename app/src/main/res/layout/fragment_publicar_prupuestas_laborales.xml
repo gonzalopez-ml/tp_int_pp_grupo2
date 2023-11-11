@@ -44,8 +44,8 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="175dp"
         android:ems="10"
+        android:hint="Nombre"
         android:inputType="text"
-        android:text="Nombre"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -59,23 +59,22 @@
         android:layout_marginTop="20dp"
         android:layout_marginEnd="175dp"
         android:ems="10"
+        android:hint="Descripción"
         android:inputType="text"
-        android:text="Descripción"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextProyectoNombre" />
 
-        <EditText
-        android:id="@+id/editTextProyectoUbicacion"
+    <Spinner
+        android:id="@+id/spinnerProyectoUbicacion"
         android:layout_width="278dp"
         android:layout_height="41dp"
         android:layout_marginStart="26dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="175dp"
         android:ems="10"
-        android:inputType="text"
-        android:text="Ubicacion"
+        android:hint="Ubicacion"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -90,8 +89,8 @@
         android:layout_marginTop="20dp"
         android:layout_marginEnd="176dp"
         android:ems="10"
+        android:hint="Objetivos"
         android:inputType="text"
-        android:text="Objetivos"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -105,8 +104,8 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="175dp"
         android:ems="10"
-        android:inputType="datetime"
-        android:text="Dias y horarios"
+        android:hint="Dias y horarios"
+        android:inputType="text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -123,7 +122,7 @@
         android:textColor="#000000"
         app:backgroundTint="@color/gray"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextProyectoUbicacion" />
+        app:layout_constraintTop_toBottomOf="@+id/spinnerProyectoUbicacion" />
 
     <Button
         android:id="@+id/btnCancelarProyecto"
@@ -135,6 +134,6 @@
         android:textColor="#000000"
         app:backgroundTint="@color/gray"
         app:layout_constraintStart_toEndOf="@+id/btnGuardarProyecto"
-        app:layout_constraintTop_toBottomOf="@+id/editTextProyectoUbicacion" />
+        app:layout_constraintTop_toBottomOf="@+id/spinnerProyectoUbicacion" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

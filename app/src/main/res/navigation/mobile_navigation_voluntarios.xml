@@ -15,19 +15,29 @@
         android:id="@+id/nav_busquedapropuestas"
         android:name="com.example.tp_integrador.uiVoluntarios.busquedaPropuestas.BusquedaPropuestasFragment"
         android:label="@string/menu_gallery"
-        tools:layout="@layout/fragment_busquedapropuestas" />
+        tools:layout="@layout/fragment_busquedapropuestas">
+
+        <!-- Acción para ir a DetalleProyectoFragment -->
+        <action
+            android:id="@+id/action_nav_busquedapropuestas_to_detalleProyectoFragment"
+            app:destination="@id/detalleProyectoFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/detalleProyectoFragment"
+        android:name="com.example.tp_integrador.uiVoluntarios.detallePropuestasVol.DetalleProyectoOngFragment"
+        android:label="Proyecto"
+        tools:layout="@layout/fragment_detalle_proyecto_ong">
+        <argument
+            android:name="proyectoSeleccionado"
+            app:argType="com.example.tp_integrador.data.domain.Proyecto" />
+    </fragment>
 
     <fragment
         android:id="@+id/nav_busqueda_geo"
         android:name="com.example.tp_integrador.uiVoluntarios.busquedaPropuestasGeo.BusquedaPropuestasGeoFragment"
         android:label="Busqueda de Propuestas por Geolocalizacion"
         tools:layout="@layout/fragment_busquedapropuestasgeo" />
-
-    <fragment
-        android:id="@+id/nav_ver_perfil_ong"
-        android:name="com.example.tp_integrador.uiVoluntarios.verONGsVoluntarios.PerfilONGVoluntariosFragment"
-        android:label="Ver perfil de ONG"
-        tools:layout="@layout/fragment_perfil_o_n_g_voluntarios" />
 
     <fragment
         android:id="@+id/nav_editar_perfil"

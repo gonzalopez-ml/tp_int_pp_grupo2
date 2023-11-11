@@ -32,9 +32,11 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.tp_integrador.R;
+import com.example.tp_integrador.data.domain.Ong;
 import com.example.tp_integrador.data.domain.TipoUser;
 import com.example.tp_integrador.data.domain.Usuario;
 import com.example.tp_integrador.data.domain.Voluntario;
+import com.example.tp_integrador.uiVoluntarios.sharedData.SharedViewModel;
 import com.example.tp_integrador.utils.validarCamposVacios.IValidateInputs;
 import com.example.tp_integrador.utils.validarUsuario.IValidateMail;
 import com.squareup.picasso.Callback;
@@ -73,6 +75,7 @@ public class EditarPerfilVoluntariosFragment extends Fragment {
     private EditText editTextPhoto;
     private EditText editTextMail;
     private EditText editPassword;
+    private SharedViewModel sharedViewModel;
 
     private Button btnEditarVoluntario;
 
@@ -126,6 +129,8 @@ public class EditarPerfilVoluntariosFragment extends Fragment {
 
         mViewModel = new ViewModelProvider(this).get(EditarPerfilVoluntariosViewModel.class);
 
+        sharedViewModel = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
+
         /* **************** 840 CLICK LOGO  *********************************/
         imageView = rootView.findViewById(R.id.clicktoUploadImg);
         imageView.setOnClickListener(new View.OnClickListener() {
@@ -150,8 +155,9 @@ public class EditarPerfilVoluntariosFragment extends Fragment {
 
         btnEditarVoluntario = rootView.findViewById(R.id.btnEditEditarVoluntario);
 
-        mViewModel.getVoluntarioLiveData().observe(getViewLifecycleOwner(), voluntario -> {
-            Log.d("Aviso","pasa");
+        Voluntario voluntarioLogueado = sharedViewModel.getVoluntarioLiveData().getValue();
+
+        mViewModel.getVoluntarioLiveData(voluntarioLogueado.getIdVoluntario()).observe(getViewLifecycleOwner(), voluntario -> {
 
             if (voluntario != null) {
                 idUser = voluntario.getUsuario().getIdUser();

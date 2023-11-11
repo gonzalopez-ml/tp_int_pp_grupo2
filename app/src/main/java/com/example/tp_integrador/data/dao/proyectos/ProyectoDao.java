@@ -1,9 +1,13 @@
 package com.example.tp_integrador.data.dao.proyectos;
 
+import com.example.tp_integrador.data.domain.Localidad;
 import com.example.tp_integrador.data.domain.Ong;
 import com.example.tp_integrador.data.domain.Proyecto;
 import com.example.tp_integrador.data.repository.proyectos.IProyectoRepository;
+import com.example.tp_integrador.data.tasks.ongs.GetProjectsOngTask;
+import com.example.tp_integrador.data.tasks.proyectos.GetLocalidadesProyectoTask;
 
+import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
@@ -43,4 +47,31 @@ public class ProyectoDao implements IProyectoDao {
             return false;
         });
     }
+
+    @Override
+    public CompletableFuture<Boolean> update(Proyecto proyecto) {
+        return CompletableFuture.supplyAsync(()->{
+            CompletableFuture<Boolean> isProyectoSave = proyectoRepository.update(proyecto);
+            try{
+                return isProyectoSave.get();
+            }catch (ExecutionException | InterruptedException e){
+                e.printStackTrace();
+            }
+            return false;
+        });
+    }
+
+    @Override
+    public CompletableFuture<List<Localidad>> getLocalidades() {
+        return CompletableFuture.supplyAsync(() -> {
+            try {
+                return new GetLocalidadesProyectoTask().execute().get();
+            } catch (ExecutionException | InterruptedException e) {
+                e.printStackTrace();
+            }
+            return null;
+        });
+    }
+
+
 }

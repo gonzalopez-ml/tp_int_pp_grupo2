@@ -4,10 +4,15 @@ import com.example.tp_integrador.data.dao.ongs.IOngDao;
 import com.example.tp_integrador.data.dao.ongs.OngDao;
 import com.example.tp_integrador.data.dao.proyectos.IProyectoDao;
 import com.example.tp_integrador.data.dao.proyectos.ProyectoDao;
+import com.example.tp_integrador.data.dao.relaciones.IRelationDao;
+import com.example.tp_integrador.data.dao.relaciones.impl.RelationDao;
+import com.example.tp_integrador.data.domain.Localidad;
 import com.example.tp_integrador.data.repository.ongs.IOngRepository;
 import com.example.tp_integrador.data.repository.ongs.OngRepository;
 import com.example.tp_integrador.data.repository.proyectos.IProyectoRepository;
 import com.example.tp_integrador.data.repository.proyectos.ProyectoRepository;
+import com.example.tp_integrador.data.repository.relaciones.IRelationRepository;
+import com.example.tp_integrador.data.repository.relaciones.impl.RelationRepository;
 import com.example.tp_integrador.data.repository.usuarios.IUsuariosRepository;
 import com.example.tp_integrador.data.repository.usuarios.UsuarioRepository;
 import com.example.tp_integrador.data.repository.voluntarios.IVoluntariosRepository;
@@ -15,21 +20,35 @@ import com.example.tp_integrador.data.repository.voluntarios.VoluntarioRepositor
 import com.example.tp_integrador.data.dao.usuarios.IUsuarioDao;
 import com.example.tp_integrador.data.dao.usuarios.UsuarioDao;
 import com.example.tp_integrador.data.dao.voluntarios.IVoluntarioDao;
+import com.example.tp_integrador.usecases.ongs.IOngGetByUserID;
 import com.example.tp_integrador.usecases.ongs.IOngGet;
+import com.example.tp_integrador.usecases.ongs.IOngProjectDelete;
+import com.example.tp_integrador.usecases.ongs.IOngProjectoUpdate;
+import com.example.tp_integrador.usecases.ongs.IOngProyectosGet;
 import com.example.tp_integrador.usecases.ongs.IOngSave;
+import com.example.tp_integrador.usecases.ongs.impl.OngGetByUserID;
 //import com.example.tp_integrador.usecases.ongs.OngSave;
 import com.example.tp_integrador.usecases.ongs.IOngUpdate;
 import com.example.tp_integrador.usecases.ongs.impl.OngGet;
+import com.example.tp_integrador.usecases.ongs.impl.OngProjectDelete;
+import com.example.tp_integrador.usecases.ongs.impl.OngProjectUpdate;
+import com.example.tp_integrador.usecases.ongs.impl.OngProyectosGet;
 import com.example.tp_integrador.usecases.ongs.impl.OngUpdate;
+import com.example.tp_integrador.usecases.proyectos.IProyectoGetLocalidades;
 import com.example.tp_integrador.usecases.proyectos.IProyectoSave;
 import com.example.tp_integrador.usecases.proyectos.ProyectoSave;
 import com.example.tp_integrador.usecases.ongs.impl.OngSave;
+import com.example.tp_integrador.usecases.proyectos.impl.ProyectoGetLocalidades;
+import com.example.tp_integrador.usecases.relaciones.ISaveRelation;
+import com.example.tp_integrador.usecases.relaciones.impl.SaveRelation;
 import com.example.tp_integrador.usecases.usuarios.ILoginAllowAccess;
 import com.example.tp_integrador.usecases.usuarios.impl.LoginAllowAccess;
 import com.example.tp_integrador.usecases.voluntarios.IVoluntarioGet;
+import com.example.tp_integrador.usecases.voluntarios.IVoluntarioGetByUserID;
 import com.example.tp_integrador.usecases.voluntarios.IVoluntarioSave;
 import com.example.tp_integrador.data.dao.voluntarios.VoluntarioDao;
 import com.example.tp_integrador.usecases.voluntarios.IVoluntarioUpdate;
+import com.example.tp_integrador.usecases.voluntarios.impl.VoluntarioGetByUserID;
 import com.example.tp_integrador.usecases.voluntarios.impl.VoluntarioSave;
 import com.example.tp_integrador.usecases.voluntarios.impl.VoluntarioGet;
 import com.example.tp_integrador.usecases.voluntarios.impl.VoluntarioUpdate;
@@ -41,6 +60,9 @@ import com.example.tp_integrador.utils.validateJpgFiles.IValidateJpegFiles;
 import com.example.tp_integrador.utils.validateJpgFiles.ValidateJpegFiles;
 import com.example.tp_integrador.utils.validatePdfFiles.IValidatePdfFiles;
 import com.example.tp_integrador.utils.validatePdfFiles.ValidatePdfFiles;
+
+import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 import javax.inject.Singleton;
 
@@ -114,11 +136,52 @@ public class AppModule {
         return new LoginAllowAccess(usuarioDao);
     }
 
+    @Provides
+    @Singleton
+    static IVoluntarioGetByUserID provideVoluntarioGetByUserID(IVoluntarioDao voluntarioDao){
+        return new VoluntarioGetByUserID(voluntarioDao);
+    }
+
+    @Provides
+    @Singleton
+    static IOngGetByUserID provideOngGetByUserID(IOngDao ongDao){
+        return new OngGetByUserID(ongDao);
+    }
 
     @Provides
     @Singleton
     static IProyectoSave provideProyectoSave(IProyectoDao proyectoDao,IOngDao ongDao){
         return new ProyectoSave(proyectoDao,ongDao);
+    }
+
+    @Provides
+    @Singleton
+    static IOngProyectosGet provideOngProyectosGetDao(IOngDao ongDao) {
+        return new OngProyectosGet(ongDao);
+    }
+
+    @Provides
+    @Singleton
+    static IOngProjectDelete provideOngProjectDeleteDao(IOngDao ongDao) {
+        return new OngProjectDelete(ongDao);
+    }
+
+    @Provides
+    @Singleton
+    static IOngProjectoUpdate provideOngProjectUpdateDao(IProyectoDao projectoUpdate) {
+        return new OngProjectUpdate(projectoUpdate);
+    }
+
+    @Provides
+    @Singleton
+    static ISaveRelation provideSaveRelation(IRelationDao relationDao) {
+        return new SaveRelation(relationDao);
+    }
+
+    @Provides
+    @Singleton
+    static IProyectoGetLocalidades provideProyectoGetLocalideades(IProyectoDao proyectoDao){
+        return new ProyectoGetLocalidades(proyectoDao);
     }
 
     //repositories
@@ -140,6 +203,11 @@ public class AppModule {
 
     @Provides
     static IProyectoRepository provideProyectoRepository(){return new ProyectoRepository();}
+
+    @Provides
+    static IRelationRepository provideRelationRepository() {
+        return new RelationRepository();
+    }
 
     //daos
     @Provides
@@ -163,6 +231,12 @@ public class AppModule {
     @Singleton
     static IProyectoDao provideProyectoDao(IProyectoRepository proyectoRepository){
         return new ProyectoDao(proyectoRepository);
+    }
+
+    @Provides
+    @Singleton
+    static IRelationDao provideRelationDao(IRelationRepository repository) {
+        return new RelationDao(repository);
     }
 
 }
