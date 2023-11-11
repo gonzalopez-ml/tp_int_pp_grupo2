@@ -15,7 +15,7 @@ public interface IOngDao {
     CompletableFuture<Boolean> delete(Integer id);
     CompletableFuture<List<Proyecto>> getProjectsOng(Integer idVoluntario);
     CompletableFuture<List<Proyecto>> getProjectsOngById(Integer id);
-    CompletableFuture<List<Proyecto>> getProjectsOngByLocation(String location);
+    CompletableFuture<List<Proyecto>> getProjectsOngByLocation(String location, String idVoluntario);
     CompletableFuture<Ong> getByUserID(Integer idUser);
     CompletableFuture<List<ProyectoVoluntario>> getVoluntariosProjectsOng(Integer idOng);
 }

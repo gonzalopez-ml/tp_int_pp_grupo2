@@ -41,9 +41,9 @@ public class EditarPropuestasLaboralesFragment extends Fragment {
     private EditText editTextDescripcion;
     private EditText editTextObjetivos;
     private EditText editTextDisponibilidad;
-    private EditText editTextUbicacion;
     private Button btnGuardarProyecto;
     private Button btnCancelarProyecto;
+    private String ubicacion;
 
     private Proyecto proyectoModificado = new Proyecto();
 
@@ -61,7 +61,6 @@ public class EditarPropuestasLaboralesFragment extends Fragment {
         editTextDescripcion= rootView.findViewById(R.id.editTextProyectoDescripcion);
         editTextObjetivos = rootView.findViewById(R.id.editTextProyectoObjetivos);
         editTextDisponibilidad = rootView.findViewById(R.id.editTextProyectoDisponiblidad);
-        editTextUbicacion = rootView.findViewById(R.id.editTextProyectoUbicacion);
         btnGuardarProyecto = rootView.findViewById(R.id.btnGuardarProyecto);
         btnCancelarProyecto = rootView.findViewById(R.id.btnCancelarProyecto);
 
@@ -70,14 +69,13 @@ public class EditarPropuestasLaboralesFragment extends Fragment {
         if (bundle != null) {
             Proyecto proyecto = bundle.getParcelable("proyecto");
 
-            // Hacer algo con el objeto Proyecto
             if (proyecto != null) {
 
                 editTextName.setText(proyecto.getNombre());
                 editTextDescripcion.setText(proyecto.getDescripcion());
                 editTextObjetivos.setText(proyecto.getObjetivos());
                 editTextDisponibilidad.setText(proyecto.getDisponibilidad());
-                editTextUbicacion.setText(proyecto.getUbicacion());
+                ubicacion = proyecto.getUbicacion();
                 proyectoModificado = proyecto;
              }
         }
@@ -90,7 +88,7 @@ public class EditarPropuestasLaboralesFragment extends Fragment {
                 proyectoModificado.setDescripcion(editTextDescripcion.getText().toString());
                 proyectoModificado.setObjetivos(editTextObjetivos.getText().toString());
                 proyectoModificado.setDisponibilidad(editTextDisponibilidad.getText().toString());
-                proyectoModificado.setUbicacion(editTextUbicacion.getText().toString());
+                proyectoModificado.setUbicacion(ubicacion);
                 Boolean isValidateInputs = validateInputsProyecto(proyectoModificado.getNombre(),proyectoModificado.getDescripcion(),proyectoModificado.getObjetivos(),proyectoModificado.getDisponibilidad(),proyectoModificado.getUbicacion());
 
                 if (!isValidateInputs) {

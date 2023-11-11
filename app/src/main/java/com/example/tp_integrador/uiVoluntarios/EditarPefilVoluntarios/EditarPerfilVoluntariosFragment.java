@@ -31,14 +31,19 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.tp_integrador.LoginActivity;
+import com.example.tp_integrador.MainActivityVoluntarios;
 import com.example.tp_integrador.R;
 import com.example.tp_integrador.data.domain.Ong;
 import com.example.tp_integrador.data.domain.TipoUser;
 import com.example.tp_integrador.data.domain.Usuario;
 import com.example.tp_integrador.data.domain.Voluntario;
+import com.example.tp_integrador.data.domain.enums.RequestType;
+import com.example.tp_integrador.uiRegistro.RegistroVoluntario;
 import com.example.tp_integrador.uiVoluntarios.sharedData.SharedViewModel;
 import com.example.tp_integrador.utils.validarCamposVacios.IValidateInputs;
 import com.example.tp_integrador.utils.validarUsuario.IValidateMail;
+import com.example.tp_integrador.utils.validatePdfFiles.IValidatePdfFiles;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
@@ -63,6 +68,9 @@ public class EditarPerfilVoluntariosFragment extends Fragment {
     @Inject
     IValidateMail validateMail;
 
+    @Inject
+    IValidatePdfFiles validatePdfFiles;
+
     private EditarPerfilVoluntariosViewModel mViewModel;
 
     private EditText editTextName;
@@ -78,26 +86,24 @@ public class EditarPerfilVoluntariosFragment extends Fragment {
     private SharedViewModel sharedViewModel;
 
     private Button btnEditarVoluntario;
+    private Button cancelarEditarVolutario;
+    private Button examineCvButton;
 
     private Integer idUser;
     private int idType;
-
-    /* ***** 840 VARIABLES *********************************/
     Bitmap bitmap;
     private ImageView imageView;
     private String logo;
-    /* ***** FIN *****************************/
+    private String cvFileName;
 
+    private static final String PDF_TYPE = "application/pdf";
 
     public static EditarPerfilVoluntariosFragment newInstance() {
         return new EditarPerfilVoluntariosFragment();
     }
 
-    /* ******* 840 INIT LOAD LOGO ********************/
     private ActivityResultLauncher<Intent> activityResultLauncher;
-    /* ******************************* */
 
-    /* ******* 840 INIT LOAD LOGO ********************/
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -120,7 +126,6 @@ public class EditarPerfilVoluntariosFragment extends Fragment {
                 }
         );
     }
-    /* ************ FIN INIT LOAD LOGO *********/
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -131,7 +136,6 @@ public class EditarPerfilVoluntariosFragment extends Fragment {
 
         sharedViewModel = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
 
-        /* **************** 840 CLICK LOGO  *********************************/
         imageView = rootView.findViewById(R.id.clicktoUploadImg);
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -141,7 +145,6 @@ public class EditarPerfilVoluntariosFragment extends Fragment {
                 activityResultLauncher.launch(intent);
             }
         });
-        /* ************* FIN CLICK LOGO */
 
 
         editTextName = rootView.findViewById(R.id.editTextNameVoluntario);
@@ -152,8 +155,10 @@ public class EditarPerfilVoluntariosFragment extends Fragment {
         editTextSkills = rootView.findViewById(R.id.editTxtHabilidadesVoluntario);
         editTextMail = rootView.findViewById(R.id.editTxtMailEditVoluntario);
         editPassword = rootView.findViewById(R.id.editTxtContraVoluntario);
+        examineCvButton = rootView.findViewById(R.id.examineEditCvButton);
 
         btnEditarVoluntario = rootView.findViewById(R.id.btnEditEditarVoluntario);
+        cancelarEditarVolutario = rootView.findViewById(R.id.btnCancelarEditVoluntario);
 
         Voluntario voluntarioLogueado = sharedViewModel.getVoluntarioLiveData().getValue();
 
@@ -168,19 +173,13 @@ public class EditarPerfilVoluntariosFragment extends Fragment {
                 editTextSkills.setText(voluntario.getSkills());
                 editTextPhone.setText(voluntario.getPhone());
                 editTextAvailability.setText(voluntario.getAvailability());
-                //editTextCurriculum.setText(voluntario.getCv());
-                //editTextPhoto.setText(voluntario.getPhoto());
                 editTextMail.setText(voluntario.getUsuario().getMail());
                 editPassword.setText(voluntario.getUsuario().getPassword());
 
-
-                /* **************** 840 LOAD LOGO  *********************************/
                 logo = "https://btw.com.ar/app/"+voluntario.getPhoto();
                 if (!voluntario.getPhoto().isEmpty())
                 {
                     logo = "https://btw.com.ar/app/"+voluntario.getPhoto();
-
-                    //imageView.setImageBitmap(bitmap);
                 } else {
                     logo = "https://btw.com.ar/app/images/upload.jpg";
                 }
@@ -200,7 +199,20 @@ public class EditarPerfilVoluntariosFragment extends Fragment {
                                 e.printStackTrace();
                             }
                         });
-                /* ********** FIN LOAD LOGO *************/
+            }
+        });
+
+        examineCvButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                examineCvFile(view);
+            }
+        });
+
+        cancelarEditarVolutario.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                requireActivity().onBackPressed();
             }
         });
 
@@ -216,7 +228,11 @@ public class EditarPerfilVoluntariosFragment extends Fragment {
                 String mail = editTextMail.getText().toString();
                 String contraseña = editPassword.getText().toString();
 
-                Boolean isValidateInputs = validateInputsVoluntarios(name, lastName, dni, skills, phone, availability, mail, contraseña);
+                if (cvFileName == null) {
+                    cvFileName = voluntarioLogueado.getCv();
+                }
+
+                Boolean isValidateInputs = validateInputsVoluntarios(name, lastName, dni, skills, phone, availability, mail, contraseña, cvFileName);
 
                 if (!isValidateInputs) {
                     Toast.makeText(requireContext(), "Por favor verificar los campos", Toast.LENGTH_SHORT).show();
@@ -224,19 +240,16 @@ public class EditarPerfilVoluntariosFragment extends Fragment {
                     TipoUser tipoUser = new TipoUser(idType);
                     Usuario usuario = new Usuario(mail, contraseña, tipoUser);
                     usuario.setIdUser(idUser);
-                    Voluntario voluntario = new Voluntario(17, name, lastName, dni, phone, skills, availability, "", "");
+                    Voluntario voluntario = new Voluntario(voluntarioLogueado.getIdVoluntario(), name, lastName, dni, phone, skills, availability, cvFileName, "");
                     voluntario.setUsuario(usuario);
 
                     Boolean isVoluntarioSave = mViewModel.saveVoluntarioLiveData(voluntario);
 
                     if (isVoluntarioSave) {
 
-                        /* **** 840 LOAD **************/
                         loadImg();
-                        /* ************* FIN LOAD ****/
 
                         Toast.makeText(requireContext(), "Se editaron los datos con éxito!", Toast.LENGTH_SHORT).show();
-                        //reloadFragment();
                     } else {
                         Toast.makeText(requireContext(), "Error al guardar el voluntario, intente nuevamente", Toast.LENGTH_SHORT).show();
                     }
@@ -254,7 +267,6 @@ public class EditarPerfilVoluntariosFragment extends Fragment {
     }
 
 
-    // ****** 840 COMIENZA EL UPLOAD DE LA IMAGEN ***************
     private void loadImg() {
 
         ByteArrayOutputStream byteArrayOutputStream;
@@ -305,8 +317,6 @@ public class EditarPerfilVoluntariosFragment extends Fragment {
                 Log.d("Aviso","id usario imagen: "+idUser);
                 paramV.put("image", base64Image);
                 paramV.put("usuario",String.valueOf(idUser));
-                // paramV.put("fragment","O");
-                // paramV.put("action","U");
 
                 return paramV;
             }
@@ -314,11 +324,10 @@ public class EditarPerfilVoluntariosFragment extends Fragment {
         queue.add(stringRequest);
 
     }
-    // ******* FINALIZA UPLOAD IMAGEN ****************
 
     private Boolean validateInputsVoluntarios(String name, String lastName, String dni, String skills, String phone,
-                                              String availability, String mail,String contraseña) {
-        List<String> inputs = Arrays.asList(name, lastName, dni, dni, skills, phone, availability, mail, contraseña);
+                                              String availability, String mail,String contraseña, String cvFileName) {
+        List<String> inputs = Arrays.asList(name, lastName, dni, dni, skills, phone, availability, mail, contraseña, cvFileName);
 
         Boolean isValidateInputs = validateInputs.apply(inputs);
 
@@ -326,6 +335,28 @@ public class EditarPerfilVoluntariosFragment extends Fragment {
             return validateMail.validate(mail, contraseña);
         }
         return false;
+    }
+
+    private void examineCvFile(View view) {
+        Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+        intent.setType(PDF_TYPE);
+
+        startActivityForResult(intent, RequestType.PDF.getValue());
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == RequestType.PDF.getValue()) {
+            Uri selectedFileUri = data.getData();
+
+            cvFileName = validatePdfFiles.processSelectedPdfFile(requireContext(), selectedFileUri);
+        }
+    }
+
+    private void showMessage(String message) {
+        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show();
     }
 
 }
