@@ -1,4 +1,4 @@
-package com.example.tp_integrador.uiONG.eliminarPropuestasLaborales;
+package com.example.tp_integrador.uiONG.verPropuestasLaborales;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -15,7 +15,7 @@ import javax.inject.Inject;
 import dagger.hilt.android.lifecycle.HiltViewModel;
 
 @HiltViewModel
-public class EliminarPropuestasLaboralesViewModel extends ViewModel {
+public class VerPropuestasLaboralesViewModel extends ViewModel {
 
     private final IOngProyectosGet ongProyectosGet;
 
@@ -24,7 +24,7 @@ public class EliminarPropuestasLaboralesViewModel extends ViewModel {
     private final MutableLiveData<List<Proyecto>> proyectosList = new MutableLiveData<>();
 
     @Inject
-    public EliminarPropuestasLaboralesViewModel(IOngProyectosGet ongProyectosGet,IOngProjectDelete ongProjectDelete){
+    public VerPropuestasLaboralesViewModel(IOngProyectosGet ongProyectosGet, IOngProjectDelete ongProjectDelete){
         this.ongProyectosGet = ongProyectosGet;
         this.ongProjectDelete = ongProjectDelete;
     }

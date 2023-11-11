@@ -1,4 +1,4 @@
-package com.example.tp_integrador.uiONG.eliminarPropuestasLaborales;
+package com.example.tp_integrador.uiONG.verPropuestasLaborales;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,7 +12,7 @@ import com.example.tp_integrador.data.domain.Proyecto;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ProyectoEliminarAdapter extends RecyclerView.Adapter<ProyectoEliminarAdapter.ProyectoEliminarViewHolder> {
+public class ProyectoVerAdapter extends RecyclerView.Adapter<ProyectoVerAdapter.ProyectoEliminarViewHolder> {
     private List<Proyecto> projects = new ArrayList<>();
     private List<Proyecto> originalProjects;
     public Button botonEliminarProyecto;
@@ -34,7 +34,7 @@ public class ProyectoEliminarAdapter extends RecyclerView.Adapter<ProyectoElimin
     }
     */
 
-    public ProyectoEliminarAdapter(OnItemClickListener listener, OnEditItemClickListener editListener) {
+    public ProyectoVerAdapter(OnItemClickListener listener, OnEditItemClickListener editListener) {
         this.listener = listener;
         this.editListener = editListener;
     }

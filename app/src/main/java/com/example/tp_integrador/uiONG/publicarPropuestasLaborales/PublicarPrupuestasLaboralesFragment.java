@@ -3,6 +3,7 @@ package com.example.tp_integrador.uiONG.publicarPropuestasLaborales;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -19,12 +20,14 @@ import android.widget.Toast;
 import com.example.tp_integrador.R;
 import com.example.tp_integrador.data.domain.Ong;
 import com.example.tp_integrador.data.domain.Proyecto;
+import com.example.tp_integrador.data.domain.Usuario;
 import com.example.tp_integrador.uiVoluntarios.EditarPefilVoluntarios.EditarPerfilVoluntariosFragment;
 import com.example.tp_integrador.utils.validarCamposVacios.IValidateInputs;
 import com.example.tp_integrador.utils.validarUsuario.IValidateMail;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 import javax.inject.Inject;
 
@@ -86,6 +89,7 @@ public class PublicarPrupuestasLaboralesFragment extends Fragment {
                 if (!isValidateInputs) {
                     Toast.makeText(requireContext(), "Por favor verificar los campos", Toast.LENGTH_SHORT).show();
                 } else {
+
                     Ong ong = new Ong();
                     Proyecto  proyecto = new Proyecto(null,ong,nombre,descripcion,objetivos,disponiblidad,ubicacion);
                     Boolean isProyectoSave = mViewModel.saveProyectoLiveData(proyecto);
