@@ -37,6 +37,7 @@ public class DetalleProyectoOngFragment extends Fragment {
     private TextView txtDescripcionProyecto;
     private TextView txtUbicacionProyecto;
     private TextView txtDisponibilidadProyecto;
+    private TextView txtNobreOngProyecto;
     private Button btnApply;
     private Button btnReject;
     private Voluntario loggedVoluntario;
@@ -59,6 +60,7 @@ public class DetalleProyectoOngFragment extends Fragment {
         txtDescripcionProyecto = rootView.findViewById(R.id.txtDescripcionProyecto);
         txtUbicacionProyecto = rootView.findViewById(R.id.txtUbicacionProyecto);
         txtDisponibilidadProyecto = rootView.findViewById(R.id.txtDisponibilidadProyecto);
+        txtNobreOngProyecto = rootView.findViewById(R.id.txtNombreOngDetalleProyecto);
         btnApply = rootView.findViewById(R.id.buttonApply);
         btnReject = rootView.findViewById(R.id.buttonReject);
 
@@ -146,6 +148,7 @@ public class DetalleProyectoOngFragment extends Fragment {
             txtDescripcionProyecto.setText(proyecto.getDescripcion());
             txtUbicacionProyecto.setText(proyecto.getUbicacion());
             txtDisponibilidadProyecto.setText(proyecto.getDisponibilidad());
+            txtNobreOngProyecto.setText(proyecto.getOng().getName());
             mViewModel.setProyecto(proyecto);
         }
     }
