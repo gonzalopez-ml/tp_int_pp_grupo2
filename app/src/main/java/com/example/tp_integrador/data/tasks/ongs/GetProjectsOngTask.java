@@ -1,5 +1,6 @@
 package com.example.tp_integrador.data.tasks.ongs;
 
+import android.hardware.camera2.CameraExtensionSession;
 import android.os.AsyncTask;
 
 import com.example.tp_integrador.data.domain.Ong;
@@ -25,7 +26,14 @@ public class GetProjectsOngTask extends AsyncTask<Integer, Void, List<Proyecto>>
         Integer idVoluntario = params[0];
 
         try (Connection connection = DriverManager.getConnection(DB_URL, USER, PASSWORD)) {
-            String selectQuery = "SELECT * FROM Proyectos_ong INNER JOIN Perfil_ongs ON Proyectos_ong.id_perfil_ong = Perfil_ongs.id_perfil_ong LEFT JOIN relaciones ON Proyectos_ong.id_proyecto = relaciones.id_proyecto_ong WHERE relaciones.id_perfil_voluntario IS NULL OR relaciones.id_perfil_voluntario != ?";
+            String selectQuery = "SELECT * " +
+                    "FROM Proyectos_ong " +
+                    "INNER JOIN Perfil_ongs ON Proyectos_ong.id_perfil_ong = Perfil_ongs.id_perfil_ong " +
+                    "WHERE NOT EXISTS (" +
+                    "    SELECT 1" +
+                    "    FROM relaciones " +
+                    "    WHERE Proyectos_ong.id_proyecto = relaciones.id_proyecto_ong " +
+                    "    AND relaciones.id_perfil_voluntario = ?)";
             try (PreparedStatement preparedStatement = connection.prepareStatement(selectQuery)) {
                 preparedStatement.setInt(1, idVoluntario);
 
