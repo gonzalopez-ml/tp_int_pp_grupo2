@@ -181,7 +181,7 @@ public class RegistroVoluntario extends AppCompatActivity {
                 Usuario usuario = new Usuario();
 
                 if (cvFileName == null || photoFileName == null) {
-                    showMessage("Selecciono archivos inválidos, por favor para CV utilize pdf y para la foto JPG.");
+                    showMessage("Por favor verificar todos los campos.");
                     return;
                 }
 
