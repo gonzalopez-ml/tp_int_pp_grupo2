@@ -85,11 +85,12 @@ public class VerPropuestasLaboralesFragment extends Fragment implements Proyecto
 
     private void deleteProyecto(Proyecto proyecto) {
         Boolean isProyectoDelete = mViewModel.deleteProjectLiveData(proyecto.getIdProyecto());
+        Ong ong = proyecto.getOng();
 
         if (isProyectoDelete) {
             Toast.makeText(requireContext(), "Se eliminó el proyecto con éxito!", Toast.LENGTH_SHORT).show();
             // Volvemos a cargar los proyectos después de eliminar uno
-            mViewModel.getAllProjectsById(1).observe(getViewLifecycleOwner(), proyectos -> {
+            mViewModel.getAllProjectsById(ong.getIdOng()).observe(getViewLifecycleOwner(), proyectos -> {
                 updateUIWithProyectos(proyectos);
             });
         } else {
