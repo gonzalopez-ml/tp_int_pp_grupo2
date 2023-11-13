@@ -100,7 +100,7 @@ public class BusquedaPropuestasGeoFragment extends Fragment implements ProyectoA
 
     private void updateUIWithProyectos(List<Proyecto> proyectos) {
         proyectoAdapter.setProjects(proyectos);
-        proyectoAdapter.notifyDataSetChanged(); // Notifica al adaptador que los datos han cambiado
+        proyectoAdapter.notifyDataSetChanged();
     }
 
     @Override
