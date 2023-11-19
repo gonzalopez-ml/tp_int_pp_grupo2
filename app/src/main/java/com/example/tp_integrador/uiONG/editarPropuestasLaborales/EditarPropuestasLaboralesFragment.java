@@ -13,8 +13,10 @@ import androidx.navigation.Navigation;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.tp_integrador.R;
@@ -40,10 +42,11 @@ public class EditarPropuestasLaboralesFragment extends Fragment {
     private EditText editTextName;
     private EditText editTextDescripcion;
     private EditText editTextObjetivos;
-    private EditText editTextDisponibilidad;
+    private Spinner spinnerDisponibilidad;
     private Button btnGuardarProyecto;
     private Button btnCancelarProyecto;
     private String ubicacion;
+
 
     private Proyecto proyectoModificado = new Proyecto();
 
@@ -60,9 +63,19 @@ public class EditarPropuestasLaboralesFragment extends Fragment {
         editTextName= rootView.findViewById(R.id.editTextProyectoNombre);
         editTextDescripcion= rootView.findViewById(R.id.editTextProyectoDescripcion);
         editTextObjetivos = rootView.findViewById(R.id.editTextProyectoObjetivos);
-        editTextDisponibilidad = rootView.findViewById(R.id.editTextProyectoDisponiblidad);
+        spinnerDisponibilidad = rootView.findViewById(R.id.spinnerProyectoDisponiblidad);
         btnGuardarProyecto = rootView.findViewById(R.id.btnGuardarProyecto);
         btnCancelarProyecto = rootView.findViewById(R.id.btnCancelarProyecto);
+
+        String[] disponibilidades = new String[2];
+
+        disponibilidades[0] = "Part time";
+        disponibilidades[1] = "Full time";
+
+        ArrayAdapter<String> adapterDisponibilidad = new ArrayAdapter<>(requireContext(), android.R.layout.simple_spinner_item, disponibilidades);
+        adapterDisponibilidad.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        spinnerDisponibilidad.setAdapter(adapterDisponibilidad);
 
 
         Bundle bundle = getArguments();
@@ -74,7 +87,11 @@ public class EditarPropuestasLaboralesFragment extends Fragment {
                 editTextName.setText(proyecto.getNombre());
                 editTextDescripcion.setText(proyecto.getDescripcion());
                 editTextObjetivos.setText(proyecto.getObjetivos());
-                editTextDisponibilidad.setText(proyecto.getDisponibilidad());
+                // Encuentra la posición del elemento seleccionado en el array
+                int seleccionado = Arrays.asList(disponibilidades).indexOf(proyecto.getDisponibilidad());
+
+                // Configura la selección en el Spinner
+                spinnerDisponibilidad.setSelection(seleccionado);
                 ubicacion = proyecto.getUbicacion();
                 proyectoModificado = proyecto;
              }
@@ -87,7 +104,7 @@ public class EditarPropuestasLaboralesFragment extends Fragment {
                 proyectoModificado.setNombre(editTextName.getText().toString());
                 proyectoModificado.setDescripcion(editTextDescripcion.getText().toString());
                 proyectoModificado.setObjetivos(editTextObjetivos.getText().toString());
-                proyectoModificado.setDisponibilidad(editTextDisponibilidad.getText().toString());
+                proyectoModificado.setDisponibilidad(spinnerDisponibilidad.getSelectedItem().toString());
                 proyectoModificado.setUbicacion(ubicacion);
                 Boolean isValidateInputs = validateInputsProyecto(proyectoModificado.getNombre(),proyectoModificado.getDescripcion(),proyectoModificado.getObjetivos(),proyectoModificado.getDisponibilidad(),proyectoModificado.getUbicacion());
 

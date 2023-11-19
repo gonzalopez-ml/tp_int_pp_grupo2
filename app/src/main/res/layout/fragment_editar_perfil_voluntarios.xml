@@ -106,7 +106,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTxtDispoVoluntario" />
+        app:layout_constraintTop_toBottomOf="@+id/spinnerDispoVoluntario" />
 
     <EditText
         android:id="@+id/editTxtMailEditVoluntario"
@@ -158,17 +158,15 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextDniVoluntario" />
 
-    <EditText
-        android:id="@+id/editTxtDispoVoluntario"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <Spinner
+        android:id="@+id/spinnerDispoVoluntario"
+        android:layout_width="213dp"
+        android:layout_height="41dp"
         android:layout_marginStart="41dp"
         android:layout_marginTop="9dp"
         android:layout_marginEnd="160dp"
-        android:digits="abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ"
         android:ems="10"
         android:hint="Disponibilidad"
-        android:inputType="text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextPhoneVolntario" />

@@ -49,7 +49,7 @@ public class PublicarPrupuestasLaboralesFragment extends Fragment {
     private EditText editTextName;
     private EditText editTextDescripcion;
     private EditText editTextObjetivos;
-    private EditText editTextDisponibilidad;
+    private Spinner spinnerDisponibilidad;
     private Spinner spinnerUbicacion;
     private Button btnGuardarProyecto;
     List<Localidad> localidades;
@@ -71,13 +71,14 @@ public class PublicarPrupuestasLaboralesFragment extends Fragment {
         editTextName = rootView.findViewById(R.id.editTextProyectoNombre);
         editTextDescripcion = rootView.findViewById(R.id.editTextProyectoDescripcion);
         editTextObjetivos = rootView.findViewById(R.id.editTextProyectoObjetivos);
-        editTextDisponibilidad = rootView.findViewById(R.id.editTextProyectoDisponiblidad);
+        spinnerDisponibilidad = rootView.findViewById(R.id.spinnerProyectoDisponiblidad);
         spinnerUbicacion = rootView.findViewById(R.id.spinnerProyectoUbicacion);
 
         btnGuardarProyecto = rootView.findViewById(R.id.btnGuardarProyecto);
         btnCancelarProyecto = rootView.findViewById(R.id.btnCancelarProyecto);
 
         localidades = mViewModel.getLocalidades();
+
 
         // Crear un array para almacenar los nombres
         String[] nombresLocalidades = new String[localidades.size()];
@@ -86,13 +87,19 @@ public class PublicarPrupuestasLaboralesFragment extends Fragment {
         for (int i = 0; i < localidades.size(); i++) {
             nombresLocalidades[i] = localidades.get(i).getNombre();
         }
-
         ArrayAdapter<String> adapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_spinner_item, nombresLocalidades);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         spinnerUbicacion.setAdapter(adapter);
 
+        String[] disponibilidades = new String[2];
+        disponibilidades[0] = "Part time";
+        disponibilidades[1] = "Full time";
 
+        ArrayAdapter<String> adapterDisponibilidad = new ArrayAdapter<>(requireContext(), android.R.layout.simple_spinner_item, disponibilidades);
+        adapterDisponibilidad.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        spinnerDisponibilidad.setAdapter(adapterDisponibilidad);
 
         btnGuardarProyecto.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -100,7 +107,7 @@ public class PublicarPrupuestasLaboralesFragment extends Fragment {
                 String nombre= editTextName.getText().toString();
                 String descripcion = editTextDescripcion.getText().toString();
                 String objetivos = editTextObjetivos.getText().toString();
-                String disponiblidad = editTextDisponibilidad.getText().toString();
+                String disponiblidad = spinnerDisponibilidad.getSelectedItem().toString();
                 String ubicacion = spinnerUbicacion.getSelectedItem().toString();//.getText().toString();
 
                 Boolean isValidateInputs = validateInputsProyecto(nombre,descripcion,objetivos,disponiblidad,ubicacion);
@@ -145,7 +152,6 @@ public class PublicarPrupuestasLaboralesFragment extends Fragment {
     private void reiniciarCampos(){
         editTextName.setText("");
         spinnerUbicacion.setSelection(0);
-        editTextDisponibilidad.setText("");
         editTextObjetivos.setText("");
         editTextDescripcion.setText("");
     }

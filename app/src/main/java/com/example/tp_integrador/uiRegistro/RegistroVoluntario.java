@@ -1,5 +1,7 @@
 package com.example.tp_integrador.uiRegistro;
 
+import static androidx.core.content.ContentProviderCompat.requireContext;
+
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,9 +17,11 @@ import android.provider.MediaStore;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -59,7 +63,7 @@ public class RegistroVoluntario extends AppCompatActivity {
     EditText editTextLastName;
     EditText editTextDni;
     EditText editTextPhone;
-    EditText editTextAvailability;
+    Spinner editTextAvailability;
     EditText editTextSkills;
     EditText editTextEmail;
     EditText editTextPassword;
@@ -174,6 +178,16 @@ public class RegistroVoluntario extends AppCompatActivity {
             }
         });
 
+        String[] disponibilidades = new String[2];
+        disponibilidades[0] = "Part time";
+        disponibilidades[1] = "Full time";
+
+        ArrayAdapter<String> adapterDisponibilidad = new ArrayAdapter<>(RegistroVoluntario.this, android.R.layout.simple_spinner_item, disponibilidades);
+        adapterDisponibilidad.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        editTextAvailability.setAdapter(adapterDisponibilidad);
+
+
         guardarButton.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -287,7 +301,7 @@ public class RegistroVoluntario extends AppCompatActivity {
         String lastname = editTextLastName.getText().toString();
         String dni = editTextDni.getText().toString();
         String phone = editTextPhone.getText().toString();
-        String availability = editTextAvailability.getText().toString();
+        String availability = editTextAvailability.getSelectedItem().toString();
         String skills = editTextSkills.getText().toString();
 
         Boolean isValidateInputs = validateInputs(name, lastname, dni, phone, availability, skills, cvFileName, photoFileName);
@@ -306,7 +320,7 @@ public class RegistroVoluntario extends AppCompatActivity {
         savedInstanceState.putString("lastname", editTextLastName.getText().toString());
         savedInstanceState.putString("dni", editTextDni.getText().toString());
         savedInstanceState.putString("phone", editTextPhone.getText().toString());
-        savedInstanceState.putString("availability", editTextAvailability.getText().toString());
+        savedInstanceState.putString("availability", editTextAvailability.getSelectedItem().toString());
         savedInstanceState.putString("skills", editTextSkills.getText().toString());
 
         super.onSaveInstanceState(savedInstanceState);
@@ -320,7 +334,13 @@ public class RegistroVoluntario extends AppCompatActivity {
         editTextLastName.setText(savedInstanceState.getString("lastname"));
         editTextDni.setText(savedInstanceState.getString("dni"));
         editTextPhone.setText(savedInstanceState.getString("phone"));
-        editTextAvailability.setText(savedInstanceState.getString("availability"));
+
+        String[] disponibilidades = new String[2];
+        disponibilidades[0] = "Part time";
+        disponibilidades[1] = "Full time";
+        int seleccionado = Arrays.asList(disponibilidades).indexOf(savedInstanceState.getString("availability"));
+        editTextAvailability.setSelection(seleccionado);
+
         editTextSkills.setText(savedInstanceState.getString("skills"));
     }
 

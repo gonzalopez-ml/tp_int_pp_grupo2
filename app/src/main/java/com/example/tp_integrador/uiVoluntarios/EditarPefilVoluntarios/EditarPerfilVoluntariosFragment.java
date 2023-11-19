@@ -12,9 +12,11 @@ import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
@@ -78,7 +80,7 @@ public class EditarPerfilVoluntariosFragment extends Fragment {
     private EditText editTextDNI;
     private EditText editTextSkills;
     private EditText editTextPhone;
-    private EditText editTextAvailability;
+    private Spinner spinnerAvailability;
     private EditText editTextCurriculum;
     private EditText editTextPhoto;
     private EditText editTextMail;
@@ -151,7 +153,7 @@ public class EditarPerfilVoluntariosFragment extends Fragment {
         editTextLastName = rootView.findViewById(R.id.editTextLastNameVoluntario);
         editTextDNI = rootView.findViewById(R.id.editTextDniVoluntario);
         editTextPhone = rootView.findViewById(R.id.editTextPhoneVolntario);
-        editTextAvailability = rootView.findViewById(R.id.editTxtDispoVoluntario);
+        spinnerAvailability = rootView.findViewById(R.id.spinnerDispoVoluntario);
         editTextSkills = rootView.findViewById(R.id.editTxtHabilidadesVoluntario);
         editTextMail = rootView.findViewById(R.id.editTxtMailEditVoluntario);
         editPassword = rootView.findViewById(R.id.editTxtContraVoluntario);
@@ -159,6 +161,20 @@ public class EditarPerfilVoluntariosFragment extends Fragment {
 
         btnEditarVoluntario = rootView.findViewById(R.id.btnEditEditarVoluntario);
         cancelarEditarVolutario = rootView.findViewById(R.id.btnCancelarEditVoluntario);
+
+        String[] disponibilidades = new String[2];
+
+        disponibilidades[0] = "Part time";
+        disponibilidades[1] = "Full time";
+
+        ArrayAdapter<String> adapterDisponibilidad = new ArrayAdapter<>(requireContext(), android.R.layout.simple_spinner_item, disponibilidades);
+        adapterDisponibilidad.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        spinnerAvailability.setAdapter(adapterDisponibilidad);
+
+
+
+
 
         Voluntario voluntarioLogueado = sharedViewModel.getVoluntarioLiveData().getValue();
 
@@ -172,7 +188,11 @@ public class EditarPerfilVoluntariosFragment extends Fragment {
                 editTextDNI.setText(voluntario.getDni());
                 editTextSkills.setText(voluntario.getSkills());
                 editTextPhone.setText(voluntario.getPhone());
-                editTextAvailability.setText(voluntario.getAvailability());
+                // Encuentra la posición del elemento seleccionado en el array
+                int seleccionado = Arrays.asList(disponibilidades).indexOf(voluntario.getAvailability());
+
+                // Configura la selección en el Spinner
+                spinnerAvailability.setSelection(seleccionado);
                 editTextMail.setText(voluntario.getUsuario().getMail());
                 editPassword.setText(voluntario.getUsuario().getPassword());
 
@@ -224,7 +244,7 @@ public class EditarPerfilVoluntariosFragment extends Fragment {
                 String dni = editTextDNI.getText().toString();
                 String skills = editTextSkills.getText().toString();
                 String phone = editTextPhone.getText().toString();
-                String availability = editTextAvailability.getText().toString();
+                String availability = spinnerAvailability.getSelectedItem().toString();
                 String mail = editTextMail.getText().toString();
                 String contraseña = editPassword.getText().toString();
 
