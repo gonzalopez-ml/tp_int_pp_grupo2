@@ -83,16 +83,15 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextProyectoDescripcion" />
 
-    <EditText
-        android:id="@+id/editTextProyectoDisponiblidad"
-        android:layout_width="275dp"
-        android:layout_height="39dp"
+    <Spinner
+        android:id="@+id/spinnerProyectoDisponiblidad"
+        android:layout_width="278dp"
+        android:layout_height="41dp"
         android:layout_marginStart="26dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="175dp"
         android:ems="10"
-        android:hint="Dias y horarios"
-        android:inputType="text"
+        android:hint="Disponibilidad"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -109,7 +108,7 @@
         android:textColor="#000000"
         app:backgroundTint="@color/gray"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextProyectoDisponiblidad" />
+        app:layout_constraintTop_toBottomOf="@+id/spinnerProyectoDisponiblidad" />
 
     <Button
         android:id="@+id/btnCancelarProyecto"
@@ -121,6 +120,6 @@
         android:textColor="#000000"
         app:backgroundTint="@color/gray"
         app:layout_constraintStart_toEndOf="@+id/btnGuardarProyecto"
-        app:layout_constraintTop_toBottomOf="@+id/editTextProyectoDisponiblidad" />
+        app:layout_constraintTop_toBottomOf="@+id/spinnerProyectoDisponiblidad" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
