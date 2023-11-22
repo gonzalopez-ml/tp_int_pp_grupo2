@@ -22,7 +22,7 @@ public class UsuarioDao implements IUsuarioDao {
         return CompletableFuture.supplyAsync(() -> {
             CompletableFuture<Usuario> usuarioFuture = usuariosRepository.get(usuario);
             try {
-                return usuarioFuture.get(); // Espera a que el CompletableFuture se complete y devuelve el usuario.
+                return usuarioFuture.get();
             } catch (ExecutionException | InterruptedException e) {
                 e.printStackTrace();
             }

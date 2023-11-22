@@ -27,7 +27,6 @@ import com.example.tp_integrador.usecases.ongs.IOngProjectoUpdate;
 import com.example.tp_integrador.usecases.ongs.IOngProyectosGet;
 import com.example.tp_integrador.usecases.ongs.IOngSave;
 import com.example.tp_integrador.usecases.ongs.impl.OngGetByUserID;
-//import com.example.tp_integrador.usecases.ongs.OngSave;
 import com.example.tp_integrador.usecases.ongs.IOngUpdate;
 import com.example.tp_integrador.usecases.ongs.impl.OngGet;
 import com.example.tp_integrador.usecases.ongs.impl.OngProjectDelete;
@@ -72,26 +71,30 @@ import dagger.hilt.InstallIn;
 import dagger.hilt.components.SingletonComponent;
 
 @Module
-@InstallIn(SingletonComponent.class) // Especifica el ámbito en el que se proporcionará la implementación
+@InstallIn(SingletonComponent.class)
 public class AppModule {
 
     //Validates or utils
     @Provides
+    @Singleton
     static IValidateInputs provideValidateInputs() {
-        return new ValidateInputs(); // Reemplaza con tu implementación concreta
+        return new ValidateInputs();
     }
 
     @Provides
+    @Singleton
     static IValidateMail provideValidateMail() {
         return new ValidateMail();
     }
 
     @Provides
+    @Singleton
     static IValidatePdfFiles provideValidatePdfFiles() {
         return new ValidatePdfFiles();
     }
 
     @Provides
+    @Singleton
     static IValidateJpegFiles provideValidateJpgFiles() {
         return new ValidateJpegFiles();
     }
@@ -104,22 +107,25 @@ public class AppModule {
     }
 
     @Provides
+    @Singleton
     static IVoluntarioUpdate provideVoluntarioUpdate(IUsuarioDao usuarioDao, IVoluntarioDao voluntarioDao) {
         return new VoluntarioUpdate(usuarioDao, voluntarioDao);
     }
 
-
     @Provides
+    @Singleton
     static IOngUpdate provideOngUpdate(IUsuarioDao usuarioDao, IOngDao ongDao) {
         return new OngUpdate(usuarioDao, ongDao);
     }
 
     @Provides
+    @Singleton
     static IVoluntarioGet provideVoluntarioGet(IVoluntarioDao voluntarioDao) {
         return new VoluntarioGet(voluntarioDao);
     }
 
     @Provides
+    @Singleton
     static IOngGet provideOngGet(IOngDao ongDao) {
         return new OngGet(ongDao);
     }
@@ -186,31 +192,36 @@ public class AppModule {
 
     //repositories
     @Provides
+    @Singleton
     static IUsuariosRepository provideUsuariosRepository() {
         return new UsuarioRepository();
     }
 
     @Provides
+    @Singleton
     static IVoluntariosRepository provideVoluntariosRepository() {
         return new VoluntarioRepository();
     }
 
     @Provides
+    @Singleton
     static IOngRepository provideOngRepository() {
         return new OngRepository();
     }
 
-
     @Provides
+    @Singleton
     static IProyectoRepository provideProyectoRepository(){return new ProyectoRepository();}
 
     @Provides
+    @Singleton
     static IRelationRepository provideRelationRepository() {
         return new RelationRepository();
     }
 
     //daos
     @Provides
+    @Singleton
     static IVoluntarioDao provideVoluntarioDao(IVoluntariosRepository voluntariosRepository) {
         return new VoluntarioDao(voluntariosRepository);
     }

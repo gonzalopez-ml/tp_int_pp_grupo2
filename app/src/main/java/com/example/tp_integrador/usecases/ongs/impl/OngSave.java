@@ -30,7 +30,7 @@ public class OngSave implements IOngSave {
         try {
             Usuario userExist = usuarioDao.get(usuario).get();
             if (userExist != null) {
-                return new SaveResult(false, "El usuario ya esta registrado", usuarioGuardado.getIdUser());
+                return new SaveResult(false, "El usuario ya esta registrado", userExist.getIdUser());
             } else {
                 Boolean isUserSave = usuarioDao.save(usuario).get();
 

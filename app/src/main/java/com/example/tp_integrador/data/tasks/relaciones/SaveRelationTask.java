@@ -38,6 +38,5 @@ public class SaveRelationTask extends AsyncTask<Relacion, Void, Boolean> {
 
     @Override
     protected void onPostExecute(Boolean success) {
-        // Aquí puedes realizar acciones después de completar la tarea, si es necesario.
     }
 }

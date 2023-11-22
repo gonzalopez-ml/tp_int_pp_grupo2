@@ -194,7 +194,7 @@ public class RegistroVoluntario extends AppCompatActivity {
             public void onClick(View view) {
                 Usuario usuario = new Usuario();
 
-                if (cvFileName == null || photoFileName == null) {
+                if (cvFileName == null) {
                     showMessage("Por favor verificar todos los campos.");
                     return;
                 }
@@ -210,13 +210,8 @@ public class RegistroVoluntario extends AppCompatActivity {
 
                 idUser = result.getUserId();
 
-                Log.d("Aviso","Pasa ID USUARIO:"+idUser);
-                loadImg();
-
-                Log.d("Aviso","Pasa loadimg");
 
 
-                /*  ** FIN *************** */
 
 
                 if (result.isSuccess()) {
@@ -304,14 +299,14 @@ public class RegistroVoluntario extends AppCompatActivity {
         String availability = editTextAvailability.getSelectedItem().toString();
         String skills = editTextSkills.getText().toString();
 
-        Boolean isValidateInputs = validateInputs(name, lastname, dni, phone, availability, skills, cvFileName, photoFileName);
+        Boolean isValidateInputs = validateInputs(name, lastname, dni, phone, availability, skills, cvFileName, "");
 
         if (!isValidateInputs) {
             showMessage("Por favor completar todos los campos");
             return null;
         }
 
-        return new Voluntario(null, name, lastname, dni, phone, availability, skills, cvFileName, photoFileName);
+        return new Voluntario(null, name, lastname, dni, phone, availability, skills, cvFileName, "");
     }
 
     @Override
@@ -358,7 +353,7 @@ public class RegistroVoluntario extends AppCompatActivity {
 
 
     private Boolean validateInputs(String nombre, String apellido, String dni, String telefono, String dispo, String habilidad, String cvFile, String photoFile) {
-        List<String> inputs = Arrays.asList(nombre, apellido, dni, telefono, dispo, habilidad, cvFile, photoFile);
+        List<String> inputs = Arrays.asList(nombre, apellido, dni, telefono, dispo, habilidad, cvFile);
 
         return validateInputs.apply(inputs);
     }
