@@ -65,7 +65,6 @@ public class VerPropuestasLaboralesFragment extends Fragment implements Proyecto
         builder.setPositiveButton("Sí", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                // Si el usuario hace clic en "Sí", procede con la eliminación del proyecto
                 deleteProyecto(proyecto);
             }
         });
@@ -73,7 +72,6 @@ public class VerPropuestasLaboralesFragment extends Fragment implements Proyecto
         builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                // Si el usuario hace clic en "No", cierra el diálogo sin hacer nada
                 dialog.dismiss();
             }
         });
@@ -89,7 +87,6 @@ public class VerPropuestasLaboralesFragment extends Fragment implements Proyecto
 
         if (isProyectoDelete) {
             Toast.makeText(requireContext(), "Se eliminó el proyecto con éxito!", Toast.LENGTH_SHORT).show();
-            // Volvemos a cargar los proyectos después de eliminar uno
             mViewModel.getAllProjectsById(ong.getIdOng()).observe(getViewLifecycleOwner(), proyectos -> {
                 updateUIWithProyectos(proyectos);
             });

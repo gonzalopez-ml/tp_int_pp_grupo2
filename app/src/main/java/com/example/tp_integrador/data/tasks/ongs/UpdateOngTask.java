@@ -3,14 +3,6 @@ package com.example.tp_integrador.data.tasks.ongs;
 import android.os.AsyncTask;
 
 import com.example.tp_integrador.data.domain.Ong;
-//import com.example.tp_integrador.data.domain.Voluntario;
-import com.example.tp_integrador.data.repository.ongs.IOngRepository;
-import com.example.tp_integrador.data.repository.voluntarios.IVoluntariosRepository;
-
-import android.os.AsyncTask;
-
-import com.example.tp_integrador.data.repository.voluntarios.IVoluntariosRepository;
-//import com.example.tp_integrador.data.domain.Voluntario;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -39,8 +31,7 @@ public class UpdateOngTask extends AsyncTask<Ong, Void, Boolean> {
                 preparedStatement.setString(4, ong.getPhone());
                 preparedStatement.setString(5, ong.getMail());
                 preparedStatement.setString(6, ong.getLocation());
-                //preparedStatement.setString(7, voluntario.getCv());
-                //preparedStatement.setString(8, voluntario.getPhoto());
+                //preparedStatement.setString(8, ong.getPhoto());
                 preparedStatement.setInt(7, ong.getIdOng());
 
                 int rowsAffected = preparedStatement.executeUpdate();

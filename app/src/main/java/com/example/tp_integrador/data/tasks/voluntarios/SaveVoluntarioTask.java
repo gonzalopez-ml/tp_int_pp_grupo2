@@ -37,11 +37,11 @@ public class SaveVoluntarioTask extends AsyncTask<Object, Void, Boolean> {
                 int rowsAffected = preparedStatement.executeUpdate();
                 preparedStatement.close();
 
-                return rowsAffected > 0; // Devuelve true si se insertó correctamente.
+                return rowsAffected > 0;
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            return false; // Devuelve false si hubo un error en la inserción.
+            return false;
         }
 
     }

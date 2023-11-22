@@ -37,7 +37,6 @@ public class GetProjectsOngByIdPerfilOngTask extends AsyncTask<Object,Void, List
                     String disponibilidad = resultSet.getString("disponibilidad");
                     String ubicacion = resultSet.getString("ubicacion");
 
-                    // Llenamos la propiedad ong de la clase Project
                     Ong ong = new Ong();
                     ong.setIdOng(resultSet.getInt("id_perfil_ong"));
                     ong.setName(resultSet.getString("nombre"));
