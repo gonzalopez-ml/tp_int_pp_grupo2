@@ -20,6 +20,11 @@
             android:title="Busqueda por Localizacion" />
 
         <item
+            android:id="@+id/nav_postulaciones"
+            android:icon="@drawable/ic_menu_slideshow"
+            android:title="Mis postulaciones" />
+
+        <item
             android:id="@+id/nav_editar_perfil"
             android:icon="@drawable/ic_menu_slideshow"
             android:title="Editar Perfil" />

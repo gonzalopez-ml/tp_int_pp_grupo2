@@ -44,6 +44,12 @@
     </fragment>
 
     <fragment
+        android:id="@+id/nav_postulaciones"
+        android:name="com.example.tp_integrador.uiVoluntarios.misPropuestas.MisPropuestasFragment"
+        android:label="Mis postulaciones"
+        tools:layout="@layout/fragment_mis_propuestas" />
+
+    <fragment
         android:id="@+id/nav_editar_perfil"
         android:name="com.example.tp_integrador.uiVoluntarios.EditarPefilVoluntarios.EditarPerfilVoluntariosFragment"
         android:label="Editar Perfil"

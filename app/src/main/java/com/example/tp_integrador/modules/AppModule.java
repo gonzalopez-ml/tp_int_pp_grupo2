@@ -120,8 +120,8 @@ public class AppModule {
 
     @Provides
     @Singleton
-    static IVoluntarioGet provideVoluntarioGet(IVoluntarioDao voluntarioDao) {
-        return new VoluntarioGet(voluntarioDao);
+    static IVoluntarioGet provideVoluntarioGet(IVoluntarioDao voluntarioDao, IVoluntariosRepository voluntariosRepository) {
+        return new VoluntarioGet(voluntarioDao, voluntariosRepository);
     }
 
     @Provides

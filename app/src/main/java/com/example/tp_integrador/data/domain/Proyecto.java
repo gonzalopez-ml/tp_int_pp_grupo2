@@ -15,9 +15,11 @@ public class Proyecto implements Parcelable {
     private String objetivos; //necesidades
     private String disponibilidad;
     private String ubicacion;
+    private Integer estadoProyecto;
 
     public Proyecto() {
     }
+
 
     public Proyecto(Integer idProyecto, Ong ong, String nombre, String descripcion, String objetivos, String ubicacion,String disponibilidad) {
         this.idProyecto = idProyecto;
@@ -27,6 +29,14 @@ public class Proyecto implements Parcelable {
         this.objetivos = objetivos;
         this.ubicacion = ubicacion;
         this.disponibilidad = disponibilidad;
+    }
+
+    public Integer getEstadoProyecto() {
+        return estadoProyecto;
+    }
+
+    public void setEstadoProyecto(Integer estadoProyecto) {
+        this.estadoProyecto = estadoProyecto;
     }
 
     protected Proyecto(Parcel in) {

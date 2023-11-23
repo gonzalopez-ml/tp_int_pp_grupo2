@@ -1,5 +1,8 @@
 package com.example.tp_integrador.data.repository.voluntarios;
 
+import com.example.tp_integrador.data.domain.Proyecto;
+import com.example.tp_integrador.data.tasks.ongs.GetProjectsOngByIdPerfilOngTask;
+import com.example.tp_integrador.data.tasks.proyectos.GetProyectosVoluntariosTask;
 import com.example.tp_integrador.data.tasks.usuarios.UpdateUsuarioTask;
 import com.example.tp_integrador.data.tasks.voluntarios.GetVoluntarioByUserIDTask;
 import com.example.tp_integrador.data.tasks.voluntarios.GetVoluntarioTask;
@@ -7,6 +10,7 @@ import com.example.tp_integrador.data.tasks.voluntarios.SaveVoluntarioTask;
 import com.example.tp_integrador.data.tasks.voluntarios.UpdateVoluntarioTask;
 import com.example.tp_integrador.data.domain.Voluntario;
 
+import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
@@ -53,6 +57,18 @@ public class VoluntarioRepository implements IVoluntariosRepository {
         return CompletableFuture.supplyAsync(() -> {
             try {
                 return new GetVoluntarioByUserIDTask().execute(idUser).get();
+            } catch (ExecutionException | InterruptedException e) {
+                e.printStackTrace();
+            }
+            return null;
+        });
+    }
+
+    @Override
+    public CompletableFuture<List<Proyecto>> getProjectsVoluntarioPostulado(Integer id) {
+        return CompletableFuture.supplyAsync(() -> {
+            try {
+                return new GetProyectosVoluntariosTask().execute(id).get();
             } catch (ExecutionException | InterruptedException e) {
                 e.printStackTrace();
             }
