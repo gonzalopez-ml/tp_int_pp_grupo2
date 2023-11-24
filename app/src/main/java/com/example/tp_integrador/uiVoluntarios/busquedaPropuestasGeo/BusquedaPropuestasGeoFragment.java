@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.SearchView;
@@ -42,12 +43,16 @@ public class BusquedaPropuestasGeoFragment extends Fragment implements ProyectoA
 
     private Button btnBuscar;
 
+    private Spinner spinner;
+
+
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_busquedapropuestasgeo, container, false);
         mViewModel = new ViewModelProvider(this).get(BusquedaPropuestasGeoViewModel.class);
 
         spinnerLocalidadesGeo = rootView.findViewById(R.id.spinnerLocalidadesGeo);
         btnBuscar = rootView.findViewById(R.id.btnBuscarGeo);
+        spinner = rootView.findViewById(R.id.spinnerGeo2);
 
         sharedViewModel = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
 
@@ -90,6 +95,23 @@ public class BusquedaPropuestasGeoFragment extends Fragment implements ProyectoA
             }
         });
 
+        String[] valoresPorDefecto = {"", "Full Time", "Part Time"};
+        ArrayAdapter<String> adapter2 = new ArrayAdapter<>(requireContext(), android.R.layout.simple_spinner_item, valoresPorDefecto);
+        spinner.setAdapter(adapter2);
+
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+                String disponibilidadSeleccionada = (String) parentView.getItemAtPosition(position);
+                proyectoAdapter.filterByDisponibilidad(disponibilidadSeleccionada);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parentView) {
+            }
+        });
+
+
         recyclerView = rootView.findViewById(R.id.recyclerView2);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         proyectoAdapter = new ProyectoAdapterGeo(this);
@@ -97,6 +119,8 @@ public class BusquedaPropuestasGeoFragment extends Fragment implements ProyectoA
 
         return rootView;
     }
+
+
 
     private void updateUIWithProyectos(List<Proyecto> proyectos) {
         proyectoAdapter.setProjects(proyectos);

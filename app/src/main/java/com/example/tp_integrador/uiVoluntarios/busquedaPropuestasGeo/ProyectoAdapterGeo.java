@@ -42,7 +42,7 @@ public class ProyectoAdapterGeo extends RecyclerView.Adapter<ProyectoAdapterGeo.
     public void onBindViewHolder(@NonNull ProyectoViewHolder holder, int position) {
         Proyecto proyecto = projects.get(position);
         holder.nombreOng.setText(proyecto.getOng().getName());
-        holder.nombreProyecto.setText(proyecto.getNombre());
+        holder.nombreProyecto.setText(proyecto.getDisponibilidad());
         holder.descripcionProyeco.setText(proyecto.getDescripcion());
 
         holder.botonVerProyecto.setOnClickListener(new View.OnClickListener() {
@@ -86,7 +86,34 @@ public class ProyectoAdapterGeo extends RecyclerView.Adapter<ProyectoAdapterGeo.
             projects.addAll(originalProjects);
         } else {
             for (Proyecto proyecto : originalProjects) {
-                if (proyecto.getNombre().toLowerCase().contains(query.toLowerCase())) {
+                String nombreProyecto = proyecto.getNombre().toLowerCase();
+                String disponibilidad = proyecto.getDisponibilidad().toLowerCase();
+
+                if (nombreProyecto.contains(query.toLowerCase()) || disponibilidad.contains(query.toLowerCase())) {
+                    projects.add(proyecto);
+                }
+            }
+        }
+
+        notifyDataSetChanged();
+    }
+
+    public void filterByDisponibilidad(String disponibilidad) {
+        projects.clear();
+
+        if (disponibilidad.isEmpty()) {
+            if (originalProjects == null) {
+                return;
+            }
+            projects.addAll(originalProjects);
+        } else {
+            if (originalProjects == null) {
+                return;
+            }
+            for (Proyecto proyecto : originalProjects) {
+                String disponibilidadProyecto = proyecto.getDisponibilidad().toLowerCase();
+
+                if (disponibilidadProyecto.contains(disponibilidad.toLowerCase())) {
                     projects.add(proyecto);
                 }
             }

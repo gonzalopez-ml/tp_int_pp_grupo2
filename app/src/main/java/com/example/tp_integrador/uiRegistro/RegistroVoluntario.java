@@ -306,7 +306,7 @@ public class RegistroVoluntario extends AppCompatActivity {
             return null;
         }
 
-        return new Voluntario(null, name, lastname, dni, phone, availability, skills, cvFileName, "");
+        return new Voluntario(null, name, lastname, dni, phone, skills, availability, cvFileName, "");
     }
 
     @Override

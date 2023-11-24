@@ -42,7 +42,7 @@ public class ProyectoAdapter extends RecyclerView.Adapter<ProyectoAdapter.Proyec
     public void onBindViewHolder(@NonNull ProyectoViewHolder holder, int position) {
         Proyecto proyecto = projects.get(position);
         holder.nombreOng.setText(proyecto.getOng().getName());
-        holder.nombreProyecto.setText(proyecto.getNombre());
+        holder.nombreProyecto.setText(proyecto.getDisponibilidad());
         holder.descripcionProyeco.setText(proyecto.getDescripcion());
 
         holder.botonVerProyecto.setOnClickListener(new View.OnClickListener() {
@@ -86,7 +86,10 @@ public class ProyectoAdapter extends RecyclerView.Adapter<ProyectoAdapter.Proyec
             projects.addAll(originalProjects);
         } else {
             for (Proyecto proyecto : originalProjects) {
-                if (proyecto.getNombre().toLowerCase().contains(query.toLowerCase())) {
+                String nombreProyecto = proyecto.getNombre().toLowerCase();
+                String disponibilidad = proyecto.getDisponibilidad().toLowerCase();
+
+                if (nombreProyecto.contains(query.toLowerCase()) || disponibilidad.contains(query.toLowerCase())) {
                     projects.add(proyecto);
                 }
             }
@@ -94,6 +97,26 @@ public class ProyectoAdapter extends RecyclerView.Adapter<ProyectoAdapter.Proyec
 
         notifyDataSetChanged();
     }
+
+    public void filterByDisponibilidad(String disponibilidad) {
+        projects.clear();
+
+        if (disponibilidad.isEmpty()) {
+            projects.addAll(originalProjects);
+        } else {
+            for (Proyecto proyecto : originalProjects) {
+                String disponibilidadProyecto = proyecto.getDisponibilidad().toLowerCase();
+
+                if (disponibilidadProyecto.contains(disponibilidad.toLowerCase())) {
+                    projects.add(proyecto);
+                }
+            }
+        }
+
+        notifyDataSetChanged();
+    }
+
+
 
 }
 

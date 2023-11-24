@@ -4,7 +4,10 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.SearchView;
+import android.widget.Spinner;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -34,6 +37,7 @@ public class BusquedaPropuestasFragment extends Fragment implements ProyectoAdap
 
     private SharedViewModel sharedViewModel;
 
+    private Spinner spinner;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -62,6 +66,24 @@ public class BusquedaPropuestasFragment extends Fragment implements ProyectoAdap
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         proyectoAdapter = new ProyectoAdapter(this);
         recyclerView.setAdapter(proyectoAdapter);
+        spinner = rootView.findViewById(R.id.spinner);
+
+
+        String[] valoresPorDefecto = {"", "Full Time", "Part Time"};
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_spinner_item, valoresPorDefecto);
+        spinner.setAdapter(adapter);
+
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+                String disponibilidadSeleccionada = (String) parentView.getItemAtPosition(position);
+                proyectoAdapter.filterByDisponibilidad(disponibilidadSeleccionada);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parentView) {
+            }
+        });
 
         mViewModel.getAllProjects(voluntarioLogueado.getIdVoluntario()).observe(getViewLifecycleOwner(), proyectos -> {
             updateUIWithProyectos(proyectos);

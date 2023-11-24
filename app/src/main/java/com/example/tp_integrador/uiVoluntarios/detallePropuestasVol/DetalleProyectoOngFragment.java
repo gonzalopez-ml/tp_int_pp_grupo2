@@ -87,7 +87,7 @@ public class DetalleProyectoOngFragment extends Fragment {
                 });
                 Boolean result = mViewModel.saveRelation(loggedVoluntario.getIdVoluntario());
                 if (result) {
-                    showMessage("Felicitaciones, aplicaste al projecto");
+                    showMessage("Felicitaciones, aplicaste al proyecto");
                     navigateToBusquedaPropuestasFragment();
                 } else showMessage("Se produjo un error al aplicar al proyecto, intenta nuevamente mas tarde");
             } catch (ExecutionException | InterruptedException e) {
