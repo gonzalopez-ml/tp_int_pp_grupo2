@@ -118,6 +118,32 @@ public class PropuestaAdapter extends RecyclerView.Adapter<PropuestaAdapter.Prop
         return (estado == 1) ? "En revisión" : "Rechazado";
     }
 
+    public void filterByStatus(String disponibilidad) {
+        projects.clear();
+
+        if (disponibilidad.isEmpty()) {
+            if (originalProjects == null) {
+                return;
+            }
+            projects.addAll(originalProjects);
+        } else {
+            if (originalProjects == null) {
+                return;
+            }
+            for (Proyecto proyecto : originalProjects) {
+                String estadoProyecto = convertirEstadoAString(proyecto.getEstadoProyecto());
+
+                // Filtrar por el valor de disponibilidad ("Rechazado" o "En revisión")
+                if (estadoProyecto.equals(disponibilidad)) {
+                    projects.add(proyecto);
+                }
+            }
+        }
+
+        notifyDataSetChanged();
+    }
+
+
 
 }
 

@@ -15,7 +15,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.SearchView;
+import android.widget.Spinner;
 
 import com.example.tp_integrador.R;
 import com.example.tp_integrador.data.domain.Proyecto;
@@ -37,11 +40,14 @@ public class MisPropuestasFragment extends Fragment implements PropuestaAdapter.
 
     private SharedViewModel sharedViewModel;
 
+    private Spinner spinner;
+
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_mis_propuestas, container, false);
         mViewModel = new ViewModelProvider(this).get(MisPropuestasViewModel.class);
+        spinner = rootView.findViewById(R.id.spinner2MISPROP);
 
         sharedViewModel = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
 
@@ -56,6 +62,23 @@ public class MisPropuestasFragment extends Fragment implements PropuestaAdapter.
             public boolean onQueryTextChange(String newText) {
                 proyectoAdapter.filter(newText);
                 return true;
+            }
+        });
+
+
+        String[] valoresPorDefecto = {"", "Rechazado", "En revisión"};
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_spinner_item, valoresPorDefecto);
+        spinner.setAdapter(adapter);
+
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+                String disponibilidadSeleccionada = (String) parentView.getItemAtPosition(position);
+                proyectoAdapter.filterByStatus(disponibilidadSeleccionada);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parentView) {
             }
         });
 
