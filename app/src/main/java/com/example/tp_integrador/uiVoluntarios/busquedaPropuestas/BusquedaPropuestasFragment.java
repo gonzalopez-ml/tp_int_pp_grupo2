@@ -68,7 +68,6 @@ public class BusquedaPropuestasFragment extends Fragment implements ProyectoAdap
         recyclerView.setAdapter(proyectoAdapter);
         spinner = rootView.findViewById(R.id.spinner);
 
-
         String[] valoresPorDefecto = {"", "Full Time", "Part Time"};
         ArrayAdapter<String> adapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_spinner_item, valoresPorDefecto);
         spinner.setAdapter(adapter);

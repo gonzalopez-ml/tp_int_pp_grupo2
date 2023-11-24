@@ -97,6 +97,25 @@ public class ProyectoVerAdapter extends RecyclerView.Adapter<ProyectoVerAdapter.
     }
 
 
+    public void filter(String query) {
+        projects.clear();
+
+        if (query.isEmpty()) {
+            projects.addAll(originalProjects);
+        } else {
+            for (Proyecto proyecto : originalProjects) {
+                String nombreProyecto = proyecto.getNombre().toLowerCase();
+                String disponibilidad = proyecto.getDisponibilidad().toLowerCase();
+
+                if (nombreProyecto.contains(query.toLowerCase()) || disponibilidad.contains(query.toLowerCase())) {
+                    projects.add(proyecto);
+                }
+            }
+        }
+
+        notifyDataSetChanged();
+    }
+
 
 
 }

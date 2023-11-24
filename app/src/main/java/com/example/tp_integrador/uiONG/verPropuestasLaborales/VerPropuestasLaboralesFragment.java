@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.SearchView;
 import android.widget.Toast;
 
 
@@ -43,6 +44,22 @@ public class VerPropuestasLaboralesFragment extends Fragment implements Proyecto
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         proyectoVerAdapter = new ProyectoVerAdapter(this,this);
         recyclerView.setAdapter(proyectoVerAdapter);
+
+        SearchView searchView = rootView.findViewById(R.id.searchViewVerProPUESTAS);
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                proyectoVerAdapter.filter(newText);
+                return true;
+            }
+        });
+
 
         SharedViewModel sharedViewModel = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
         Ong ong = sharedViewModel.getOng().getValue();
