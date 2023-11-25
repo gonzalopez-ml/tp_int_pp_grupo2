@@ -10,17 +10,63 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 public class ValidatePdfFiles implements IValidatePdfFiles {
 
     @Override
     public String processSelectedPdfFile(Context ctx, Uri uri) {
         if (isValidPdfFile(uri, ctx)) {
-            return savePdfFileToStorage(uri, ctx);
-        } else {
-            return null;
+            String localFilePath = savePdfFileToStorage(uri, ctx);
+
+            if (localFilePath != null) {
+                // Ahora, realiza la carga del archivo al servidor externo y obtén la dirección del servidor
+                String serverFilePath = uploadPdfFileToFirebaseStorage(localFilePath);
+
+                // Devuelve la dirección del servidor
+                return serverFilePath;
+            }
         }
+
+        return null;
     }
+
+    private String uploadPdfFileToFirebaseStorage(String localFilePath) {
+        // Obtén una referencia a tu Firebase Storage
+        FirebaseStorage storage = FirebaseStorage.getInstance();
+        StorageReference storageRef = storage.getReference();
+
+        // Define la referencia del archivo en el almacenamiento de Firebase
+        StorageReference pdfRef = storageRef.child("archivos_pdf/" + System.currentTimeMillis() + "_archivo.pdf");
+
+        // Sube el archivo PDF
+        UploadTask uploadTask = pdfRef.putFile(Uri.fromFile(new File(localFilePath)));
+
+        // Maneja el éxito o el fracaso de la carga
+        uploadTask.addOnSuccessListener(taskSnapshot -> {
+            // La carga fue exitosa
+            // Obtén la URL de descarga del archivo
+            Task<Uri> downloadUrlTask = pdfRef.getDownloadUrl();
+            downloadUrlTask.addOnSuccessListener(uri -> {
+                String downloadUrl = uri.toString();
+                // Aquí puedes usar la URL de descarga según tus necesidades
+                // Por ejemplo, puedes almacenar esta URL en tu base de datos
+                // junto con otros detalles del archivo subido.
+                Log.d("Upload", "Archivo subido con éxito. URL de descarga: " + downloadUrl);
+            });
+        }).addOnFailureListener(exception -> {
+            // La carga falló
+            Log.e("Upload", "Error al subir el archivo: " + exception.getMessage());
+        });
+        return downloadUrl;
+    }
+
+
+
+
 
     private String savePdfFileToStorage(Uri fileUri, Context ctx) {
         String fileName = getFileName(fileUri, ctx);

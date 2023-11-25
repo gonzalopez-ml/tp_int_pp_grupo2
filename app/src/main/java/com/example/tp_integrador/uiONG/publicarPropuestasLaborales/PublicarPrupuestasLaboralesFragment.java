@@ -138,15 +138,8 @@ public class PublicarPrupuestasLaboralesFragment extends Fragment {
                 reiniciarCampos();
             }
         });
-
-
-
-
-        return rootView;
+       return rootView;
     }
-
-
-
 
 
     private void reiniciarCampos(){
